@@ -3,17 +3,17 @@
 inherit LIB_SIT;
 
 private int          MaxLiers = 1;
-private object* Liers    = ({});
+private object array Liers    = ({});
 
 int GetMaxLiers(){
     return MaxLiers;
 }
 
-protected int SetMaxLiers(int x){
+static int SetMaxLiers(int x){
     return (MaxLiers = x);
 }
 
-object* GetLiers(){
+object array GetLiers(){
     return copy(Liers);
 }
 

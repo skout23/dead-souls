@@ -10,21 +10,21 @@
 inherit LIB_SOCKET;
 
 private string Password;
-private nosave mapping Connections;
-private nosave int FD = -1;
+private static mapping Connections;
+private static int FD = -1;
 
-protected void Setup();
+static void Setup();
 
 void eventRead(int fd, string str);
-protected void eventProcess(int fd, string str);
+static void eventProcess(int fd, string str);
 
-protected void create(int fd, object owner){
+static void create(int fd, object owner){
     socket::create(fd, owner);
     FD = fd;
     Connections = ([]);
 }
 
-protected void eventSocketClosed(int fd) {
+static void eventSocketClosed(int fd) {
     map_delete(Connections, fd);
 }
 
@@ -37,7 +37,7 @@ void eventRead(string str) {
     eventProcess(FD, str);
 }
 
-nosave private void eventProcess(int fd, string str) {
+static private void eventProcess(int fd, string str) {
     string tmp, cmd, arg, file, val;
     int x;
     if( Connections[fd] && Connections[fd]["in edit"] > 0 ) {
@@ -75,7 +75,7 @@ nosave private void eventProcess(int fd, string str) {
     if( (Connections[fd]["buffer"] += str) == "" ) return;
     if( (x = strsrch(Connections[fd]["buffer"], "\n")) == -1 ) return;
     str = Connections[fd]["buffer"][0..(x-1)];
-    if( x != strlen(Connections[fd]["buffer"]) - 1 )
+    if( x != strlen(Connections[fd]["buffer"]) - 1 ) 
         Connections[fd]["buffer"] = Connections[fd]["buffer"][(x+1)..];
     else Connections[fd]["buffer"] = "";
     if( sscanf(str, "%s %s", cmd, arg) != 2) {
@@ -103,13 +103,13 @@ nosave private void eventProcess(int fd, string str) {
         }
         RestoreObject(DIR_CRES "/" + username[0..0] + "/" + username);
         if( Password != crypt(password, Password) ) {
-            log_file("remote", "Failed attempt to login as " + username
+            log_file("remote", "Failed attempt to login as " + username 
                     + "\n");
             eventWrite("50 Login failed.\n", 1);
-            map_delete(Connections, fd);
+            map_delete(Connections, fd);	     
             return;
         }
-        if( !(Connections[fd]["object"] =
+        if( !(Connections[fd]["object"] = 
                     load_object(user_path(username) + "adm/remote")) ) {
             eventWrite("50 Failed to load remote object.\n", 1);
             map_delete(Connections, fd);
@@ -120,7 +120,7 @@ nosave private void eventProcess(int fd, string str) {
     else if( cmd == "100" ) {
         int sz;
 
-        if( sscanf(arg, "%d %s", sz, Connections[fd]["file"]) != 2 )
+        if( sscanf(arg, "%d %s", sz, Connections[fd]["file"]) != 2 ) 
             eventWrite("50 Bad file send command.\n");
         else {
             if( !sz ) eventWrite("110 No changes sent orwritten.\n");

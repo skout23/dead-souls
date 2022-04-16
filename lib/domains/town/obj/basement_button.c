@@ -12,7 +12,7 @@ int openDoor(object who) {
 
 }
 
-protected void create() {
+static void create() {
     dummy::create();
     SetKeyName("button");
     SetId(({"button","button on the wall" }));

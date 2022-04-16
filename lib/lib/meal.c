@@ -21,7 +21,7 @@ private string EmptyItem, EmptyName, OtherMessage;
 private mixed EmptyShort, EmptyLong, MyMessage;
 function MealAction;
 
-protected void create(){
+static void create(){
     item::create();
     MealType = MEAL_ALCOHOL;
     EmptyItem = 0;
@@ -39,7 +39,7 @@ int SetMealAction(function f){
     MealAction = f;
 }
 
-mixed direct_drink_obj(){
+mixed direct_drink_obj(){ 
     if( environment() != this_player() ) return "#You don't have that!";
     if( MealType & MEAL_FOOD ) return "Wouldn't you rather eat it?";
     return this_player()->CanDrink(this_object());
@@ -57,7 +57,7 @@ mixed direct_eat_obj(){
     return this_player()->CanEat(this_object());
 }
 
-protected mixed AddSave(mixed *vars){ return item::AddSave(vars); }
+static mixed AddSave(mixed *vars){ return item::AddSave(vars); }
 
 string GetShort(){ return item::GetShort(); }
 
@@ -183,7 +183,7 @@ int SetStrength(int x){ return (MealStrength = x); }
 
 int GetStrength(){ return MealStrength; }
 
-varargs void SetMealMessages(mixed* val...){
+varargs void SetMealMessages(mixed array val...){
     if( !arrayp(val) ){
         error(sprintf("Bad argument 1 to SetMealMessages(): %O\n", val));
     }
@@ -196,7 +196,7 @@ varargs void SetMealMessages(mixed* val...){
     }
     if( !stringp(val[0]) )
         error(sprintf("Bad argument 1 to SetMealMessages(): %O\n", val[0]));
-    else if( !stringp(val[1]) )
+    else if( !stringp(val[1]) ) 
         error(sprintf("Bad argument 2 to SetMealMessages(): %O\n", val[1]));
     MyMessage = val[0];
     OtherMessage = val[1];

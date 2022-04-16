@@ -8,11 +8,11 @@ int eventReceiveObject();
 int eventReleaseObject();
 
 int GetAmbientLight();
-protected int SetAmbientLight(int x);
+static int SetAmbientLight(int x);
 string GetInternalLong();
-protected string SetInternalLong(string str);
+static string SetInternalLong(string str);
 string GetInternalShort();
-protected string SetInternalShort(string str);
+static string SetInternalShort(string str);
 int GetOpacity();
 int SetOpacity(int x);
 int GetRadiantLight(int ambient);

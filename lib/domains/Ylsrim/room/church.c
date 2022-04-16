@@ -23,7 +23,7 @@ int CheckPriest(string dir) {
     }
 }
 
-protected void create() {
+static void create() {
     room::create();
     SetNoClean(1);
     SetTown("Ylsrim");

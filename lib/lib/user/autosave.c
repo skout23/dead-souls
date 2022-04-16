@@ -10,8 +10,8 @@
 #include <dirs.h>
 #include <privs.h>
 
-private mixed* Inventory = 0;
-private nosave int  LastSave  = time();
+private mixed array Inventory = 0;
+private static int  LastSave  = time();
 
 // abstract methods
 string GetKeyName();
@@ -78,14 +78,14 @@ nomask void save_player(string nom){
     Inventory = 0;
 }
 
-protected void heart_beat(){
+static void heart_beat(){
     int x = time();
     if( x - LastSave < AUTOSAVE_TIME ){
         return;
     }
     LastSave = x;
     save_player(GetKeyName());
-    if( !builderp(this_object()) && !present("visitor pass",this_object())
+    if( !builderp(this_object()) && !present("visitor pass",this_object()) 
             && !testp(this_object()) ){
         eventPrint("Autosaving...", MSG_SYSTEM);
     }

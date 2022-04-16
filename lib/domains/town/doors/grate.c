@@ -2,7 +2,7 @@
 
 inherit LIB_DOOR;
 
-protected void create() {
+static void create() {
     door::create();
 
     SetSide("down", ([ "id" : ({"grate leading down", "grate", "down grate"}),

@@ -13,7 +13,7 @@ inherit LIB_ARMOR;
 
 varargs int eventWearShield(object who, mixed where);
 
-protected void create() {
+static void create() {
     armor::create();
     SetKeyName("wooden shield");
     SetId( ({ "shield", "wooden shield" }) );

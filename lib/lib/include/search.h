@@ -1,7 +1,7 @@
 #ifndef l_search_h
 #define l_search_h
 
-protected void create();
+static void create();
 mixed direct_search_obj();
 mixed direct_search_str_word_obj(string str);
 

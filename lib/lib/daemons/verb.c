@@ -15,7 +15,7 @@ inherit LIB_HELP;
 private string Verb, ErrorMessage;
 private string *Synonyms, *Rules;
 
-protected void create(){
+static void create(){
     daemon::create();
     SetNoClean(1);
     parse_init();
@@ -25,11 +25,11 @@ protected void create(){
     Synonyms = ({});
 }
 
-nosave string SetErrorMessage(string str){ return (ErrorMessage = str); }
+static string SetErrorMessage(string str){ return (ErrorMessage = str); }
 
 string GetErrorMessage(){ return ErrorMessage; }
 
-varargs protected string *SetRules(mixed *args...){
+varargs static string *SetRules(mixed *args...){
     if( sizeof(Rules) ) error("Cannot reset rules list.");
     foreach(mixed arg in args){
         if( stringp(arg) ) Rules += ({ arg });
@@ -45,7 +45,7 @@ varargs protected string *SetRules(mixed *args...){
 
 string *GetRules(){ return copy(Rules); }
 
-varargs protected string *SetSynonyms(mixed *args...){
+varargs static string *SetSynonyms(mixed *args...){
     if( sizeof(Synonyms) ) error("Cannot reset synonym list.\n");
     foreach(mixed arg in args){
         if( stringp(arg) ) Synonyms += ({ arg });
@@ -58,7 +58,7 @@ varargs protected string *SetSynonyms(mixed *args...){
 
 string *GetSynonyms(){ return copy(Synonyms); }
 
-protected string SetVerb(string str){
+static string SetVerb(string str){
     if( !stringp(str) ) error("Bad argument 1 to SetVerb().\n");
     Verb = str;
     if( sizeof(Rules) )

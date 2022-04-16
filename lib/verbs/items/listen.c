@@ -11,7 +11,7 @@
 
 inherit LIB_VERB;
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("listen");
     SetRules("", "OBJ", "to OBJ", "to STR on OBJ", "to STR of OBJ");

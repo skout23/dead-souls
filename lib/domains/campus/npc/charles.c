@@ -4,7 +4,7 @@
 
 inherit "/domains/campus/npc/monty";
 
-protected void create() {
+static void create() {
     SetSaveFile(save_file("/domains/campus/save/charles"));
     monty::create();
     smart = 1;

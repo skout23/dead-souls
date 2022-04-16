@@ -3,7 +3,7 @@
 
 inherit LIB_VERB;
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("install");
     SetRules("", "OBJ","OBJ on OBJ","OBJ into OBJ","OBJ in OBJ");

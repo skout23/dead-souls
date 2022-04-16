@@ -5,8 +5,8 @@
 #define Author     1
 #define Message    2
  
-protected void create();
-protected int eventSaveNotices();
+static void create();
+static int eventSaveNotices();
 int eventAddNotice(object who, string msg);
 int eventRemoveNotice(int x);
 int eventPrintNotices(object who, int start_time);

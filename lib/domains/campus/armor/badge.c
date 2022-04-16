@@ -3,7 +3,7 @@
 #include <damage_types.h>
 inherit LIB_ARMOR;
 
-protected void create(){
+static void create(){
     armor::create();
     SetKeyName("visitor's pass");
     SetId(({"testchar badge","badge","pass","visitor's pass"}));

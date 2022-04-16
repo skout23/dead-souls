@@ -9,23 +9,23 @@
 #include <lib.h>
 #include <daemons.h>
 
-private nosave string* Adjectives   = ({});
+private static string array Adjectives   = ({});
 private string              CapName      = 0;
-private nosave string* Id           = ({});
-private nosave string* CanonicalId  = ({});
-private nosave string* ExcludedIds  = ({});
-private nosave string       KeyName      = 0;
-private nosave int          Matching     = 1;
-private nosave object* NotifiedObjects = ({});
-private nosave mixed*  rfn          = ({});
+private static string array Id           = ({});
+private static string array CanonicalId  = ({});
+private static string array ExcludedIds  = ({});
+private static string       KeyName      = 0;
+private static int          Matching     = 1;
+private static object array NotifiedObjects = ({});
+private static mixed array  rfn          = ({});
 
 string GetKeyName();
 
-string* GetAdjectives(){
+string array GetAdjectives(){
     return Adjectives;
 }
 
-varargs string* SetAdjectives(mixed adjs...){
+varargs string array SetAdjectives(mixed adjs...){
     if( stringp(adjs) ){
         adjs = ({ adjs });
     }
@@ -56,14 +56,14 @@ string SetCapName(string str){
     return (CapName = str);
 }
 
-string* GetId(){
+string array GetId(){
     string tmp;
 
     if(Id && sizeof(Id)) return Id;
 
     tmp = GetKeyName();
     if( tmp ){
-        if(!OBJECT_MATCHING || !Matching)
+        if(!OBJECT_MATCHING || !Matching) 
             return distinct_array(({ CanonicalId..., tmp }));
         else return Id + atomize_string(tmp) - ExcludedIds;
     }
@@ -77,14 +77,14 @@ string GetUniqueId(){
     return fn;
 }
 
-string* GetCanonicalId(){
+string array GetCanonicalId(){
     string tmp;
     tmp = GetKeyName();
 
     return copy(CanonicalId);
 }
 
-varargs string* SetId(mixed val...){
+varargs string array SetId(mixed val...){
     string tmp, fn, gs;
     string *exclude = ({});
     if(!(MASTER_D->GetPerfOK())){
@@ -129,7 +129,7 @@ varargs string* SetId(mixed val...){
 
     if(OBJECT_MATCHING && Matching){
         if(!KeyName || !sizeof(KeyName)) KeyName = Id[0];
-        Id = distinct_array(atomize_array(Id - exclude) + Id);
+        Id = distinct_array(atomize_array(Id - exclude) + Id); 
     }
     return Id;
 }
@@ -164,19 +164,19 @@ int id(string str){
     return ret;
 }
 
-string* parse_command_id_list(){
-    string* ids = (this_object()->GetId() || ({}));
+string array parse_command_id_list(){
+    string array ids = (this_object()->GetId() || ({}));
     return filter(ids, (: stringp($1) && ($1 != "") :));
 }
 
-string* parse_command_plural_id_list(){
-    string* ids = (this_object()->GetId() || ({}));
+string array parse_command_plural_id_list(){
+    string array ids = (this_object()->GetId() || ({}));
 
     ids = filter(ids, (: stringp($1) && ($1 != "") :));
     return map(ids, (: pluralize :));
 }
 
-string* parse_command_adjectiv_id_list(){
+string array parse_command_adjectiv_id_list(){
     return filter(this_object()->GetAdjectives(), (: $1 && ($1 != "") :));
 }
 

@@ -3,7 +3,7 @@ inherit LIB_ROOM;
 
 int revealed;
 
-protected void create(){
+static void create(){
     room::create();
     SetClimate("indoors");
     SetAmbientLight(30);

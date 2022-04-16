@@ -1,24 +1,24 @@
-private nosave mapping Inventory = ([]);
-private nosave mapping InventoryCheck = ([]);
-private nosave string gkey = "";
-private nosave int counter = 0;
+private static mapping Inventory = ([]);
+private static mapping InventoryCheck = ([]);
+private static string gkey = "";
+private static int counter = 0;
 
-protected void eventLoadInventory();
+static void eventLoadInventory();
 
-protected void eventLoadItem(string file, mixed args, int count);
+static void eventLoadItem(string file, mixed args, int count);
 
 mapping GetInventory(){
     return Inventory;
 }
 
-protected void eventLoadItem(string file, mixed args, int count){
+static void eventLoadItem(string file, mixed args, int count){
     object ob;
     int u;
 
     if(functionp(args)) args = evaluate(args);
 
-    if( intp(args) ){
-        if(args < 0){
+    if( intp(args) ){ 
+        if(args < 0){ 
             args = 1;
             u = 1;
         }
@@ -40,9 +40,9 @@ protected void eventLoadItem(string file, mixed args, int count){
     }
 }
 
-protected void eventLoadInventory(){
+static void eventLoadInventory(){
     int filtersize, i;
-    object* stuff, *items, *tmp;
+    object array stuff,items,tmp;
 
     stuff=all_inventory(this_object());
     items = ({});
@@ -131,4 +131,4 @@ void heart_beat(){
             }
         }
     }
-}
+} 

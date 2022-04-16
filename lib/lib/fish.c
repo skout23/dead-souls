@@ -10,10 +10,10 @@
 
 inherit LIB_MEAL;
 
-nosave private int Fight;
-nosave private string Food;
+static private int Fight;
+static private string Food;
 
-protected void create(){
+static void create(){
     meal::create();
     Food = 0;
     Fight = 0;

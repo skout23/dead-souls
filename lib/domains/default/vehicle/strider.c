@@ -13,7 +13,7 @@ string ReadInstructions(){
     else return "You can read no such thing from here.";
 }
 
-protected void create() {
+static void create() {
     vehicle::create();
     SetKeyName("strider");
     SetId(({"landstrider","walker","scout","columbu","mech"}));

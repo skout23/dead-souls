@@ -13,7 +13,7 @@ string LongD(){
     return ret;
 }
 
-protected void create(){
+static void create(){
     ::create();
     if(!Directions) Directions = ([]);
     SetKeyName("rocket pack");

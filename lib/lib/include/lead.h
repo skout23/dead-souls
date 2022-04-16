@@ -1,7 +1,7 @@
 #ifndef l_lead_h
 #define l_lead_h
 
-protected void create();
+static void create();
 object *AddFollower(object follower);
 object *RemoveFollower(object follower);
 object *GetFollowers();

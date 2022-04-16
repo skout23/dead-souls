@@ -3,7 +3,7 @@
 
 inherit LIB_DAEMON;
 
-nosave int send_queued_mess(string tmp, object whom){
+static int send_queued_mess(string tmp, object whom){
     message("receive", tmp, whom);
     return 1;
 }

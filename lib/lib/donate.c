@@ -9,12 +9,12 @@
 private int TotalAssets;
 private string LocalCurrency, Owner;
 
-protected void create(){
+static void create(){
     this_object()->AddSave( ({ "TotalAssets" }) );
     TotalAssets = 0;
 }
 
-protected void init(){
+static void init(){
     if( this_player()->ClassMember(GetOwner()) ||
             this_player()->GetClan() == GetOwner() ){
         add_action( (: eventDonate :) , "donate" );

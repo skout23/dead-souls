@@ -14,7 +14,7 @@ inherit LIB_DAEMON;
 #define ANSI(p) sprintf("%c["+(p)+"m", 27)
 #define ESC(p) sprintf("%c"+(p), 27)
 
-nosave mapping term_info;
+static mapping term_info;
 
 void create() {
     mapping nohtml;

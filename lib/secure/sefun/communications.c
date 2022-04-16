@@ -33,7 +33,7 @@ void tell_player(mixed player, string msg){
     else tell_object(dude, msg);
 }
 
-protected string tc_color_logic(string col){
+static string tc_color_logic(string col){
     string ret;
     if(!col) col = "magenta";
     ret = "%^BOLD%^"+upper_case(col)+"%^";

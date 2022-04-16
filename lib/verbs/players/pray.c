@@ -10,7 +10,7 @@
 
 inherit LIB_VERB;
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("pray");
     SetRules("for STR", "for STR against STR", "for STR against STR for LIV",

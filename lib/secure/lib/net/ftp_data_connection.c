@@ -17,22 +17,22 @@ class data_conn {
     int PassiveDescriptor;
     int Blocking;
     int NoDestruct;
-    mixed* Buffer;
+    mixed array Buffer;
 }
 
-private nosave int DestructOnClose, SocketType = -1;
+private static int DestructOnClose, SocketType = -1;
 
-private nosave int PassiveMode = 0;
-private nosave string LogFile = "inet/ftp_data_conn_error";
-private nosave function Read;
-private nosave function Write;
-private nosave function Close;
-private nosave class data_conn Socket;
+private static int PassiveMode = 0;
+private static string LogFile = "inet/ftp_data_conn_error";
+private static function Read;
+private static function Write;
+private static function Close;
+private static class data_conn Socket;
 
-varargs nosave int eventClose(class data_conn sock, int aboted);
-protected void eventRead(mixed val);
-protected void eventSocketClose();
-protected void eventSocketError(string str, int x);
+varargs static int eventClose(class data_conn sock, int aboted);
+static void eventRead(mixed val);
+static void eventSocketClose();
+static void eventSocketError(string str, int x);
 int eventWriteDestruct();
 function SetRead(function f) { return (Read = f); }
 
@@ -89,7 +89,7 @@ int eventCreateSocket(string host, int port) {
     else
     {
 
-        x = socket_connect(Socket->Descriptor, host + " " + port,
+        x = socket_connect(Socket->Descriptor, host + " " + port, 
                 "eventReadCallback", "eventWriteCallback");
         if( x != EESUCCESS ) {
             eventClose(Socket);
@@ -99,7 +99,7 @@ int eventCreateSocket(string host, int port) {
     }
 }
 
-protected void eventAbortCallback(int fd) {
+static void eventAbortCallback(int fd) {
     if( !Socket ) return;
     if( !PassiveMode && fd != Socket->Descriptor ) return;
     if( PassiveMode && fd != Socket->PassiveDescriptor ) return;
@@ -107,7 +107,7 @@ protected void eventAbortCallback(int fd) {
 }
 
 /* Added by Zaxan@Haven */
-protected void eventListenCallback(int fd)
+static void eventListenCallback(int fd)
 {
     int x;
 
@@ -121,14 +121,14 @@ protected void eventListenCallback(int fd)
     }
 }
 
-protected void eventReadCallback(int fd, mixed val) {
+static void eventReadCallback(int fd, mixed val) {
     if( functionp(Read) ) evaluate(Read, val);
     else eventRead(val);
 }
 
-protected void eventRead(mixed val) { }
+static void eventRead(mixed val) { }
 
-protected void eventWriteCallback(int fd) {
+static void eventWriteCallback(int fd) {
     int x;
     if( !Socket ){
         eventDestruct();
@@ -176,7 +176,7 @@ protected void eventWriteCallback(int fd) {
         if( sizeof(Socket->Buffer) == 1 ) Socket->Buffer = 0;
         else Socket->Buffer = Socket->Buffer[1..];
 
-    }
+    } 
     eventWriteDestruct();
 }
 
@@ -196,7 +196,7 @@ void eventWrite(mixed val) {
             Socket->Descriptor);
 }
 
-varargs nosave int eventClose(class data_conn sock, int aborted) {
+varargs static int eventClose(class data_conn sock, int aborted) {
     if( !sock ) return 0;
     if( !aborted && socket_close(sock->Descriptor) != EESUCCESS ) {
         return 0;
@@ -209,7 +209,7 @@ varargs nosave int eventClose(class data_conn sock, int aborted) {
 }
 
 
-protected void eventSocketClose() { }
+static void eventSocketClose() { }
 
 int eventDestruct() {
     eventClose(Socket);
@@ -221,8 +221,8 @@ int eventWriteDestruct() {
     return eventDestruct();
 }
 
-protected void eventSocketError(string str, int x) {
-    if( LogFile )
+static void eventSocketError(string str, int x) { 
+    if( LogFile ) 
         log_file(LogFile, ctime(time()) + " - " + str + " (" + socket_error(x)
             + ")\n");
 }

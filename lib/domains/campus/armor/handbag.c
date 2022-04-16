@@ -5,7 +5,7 @@
 inherit LIB_WORN_STORAGE;
 
 
-protected void create() {
+static void create() {
     ::create();
     SetKeyName("backpack");
     SetId(({"bookbag","bag","pack"}));

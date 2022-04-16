@@ -17,7 +17,7 @@ int CheckOrc(mixed val){
     return 0;
 }
 
-protected void create() {
+static void create() {
     ::create();
     SetKeyName("orc");
     SetId(({"orc"}));

@@ -28,12 +28,12 @@ private string *Titles;
 string *Muffed = ({});
 private mapping *Deaths;
 private int TrainingPoints, TitleLength;
-private nosave int heartcount;
+private static int heartcount;
 private mixed telopt_ip;
 
 /* *****************  /lib/player.c driver applies  ***************** */
 
-protected void create(){
+static void create(){
     interactive::create();
     living::create();
 
@@ -41,7 +41,7 @@ protected void create(){
     TitleLength = 1;
 }
 
-protected void heart_beat(){
+static void heart_beat(){
     mixed heartping;
     int idle;
 
@@ -61,10 +61,10 @@ protected void heart_beat(){
     interactive::heart_beat();
     living::heart_beat();
 
-    if( IDLE_TIMEOUT && idle >= IDLE_TIMEOUT
-            && !builderp(this_object())
-            && !present("testchar badge",this_object())
-            && !present("idler_amulet",this_object())
+    if( IDLE_TIMEOUT && idle >= IDLE_TIMEOUT 
+            && !builderp(this_object()) 
+            && !present("testchar badge",this_object()) 
+            && !present("idler_amulet",this_object()) 
             && !testp(this_object()) ){
         cmdQuit();
         return;
@@ -76,12 +76,12 @@ protected void heart_beat(){
 #endif
 }
 
-protected void net_dead(){
+static void net_dead(){
     interactive::net_dead();
     set_heart_beat(0);
 }
 
-protected int Destruct(){
+static int Destruct(){
     CHARACTER_D->eventSaveTime();
     living::Destruct();
     return interactive::Destruct();
@@ -148,7 +148,7 @@ varargs mixed eventDisplayStatus(int simple){
     return str;
 }
 
-protected void eventDestroyUndead(object agent){
+static void eventDestroyUndead(object agent){
 }
 
 varargs int eventDie(mixed agent){
@@ -165,7 +165,7 @@ varargs int eventDie(mixed agent){
     if( (x = living::eventDie(agent)) != 1 ){
         return x;
     }
-    if(!Deaths || !sizeof(Deaths))
+    if(!Deaths || !sizeof(Deaths)) 
         Deaths = ({([ "date" : ctime(time()), "enemy" : agentname ])});
     else Deaths += ({ ([ "date" : ctime(time()), "enemy" : agentname ]) });
 
@@ -313,7 +313,7 @@ mixed CanUse(){ return 1; }
 
 int Setup(){
     string classes;
-    string *oldparties = PARTY_D->GetOldParties();
+    string oldparties = PARTY_D->GetOldParties();
     if( !interactive::Setup() ) return 0;
     if( !GetClass() ) SetClass("explorer");
     RemoveExtraChannels(oldparties);
@@ -362,7 +362,7 @@ int Setup(){
 
         if(jeans) jeans->eventMove(this_object());
         if(shirt) shirt->eventMove(this_object());
-        if(book && !present("handbook",this_object()))
+        if(book && !present("handbook",this_object()))  
             book->eventMove(this_object());
         else if(book) book->eventMove(ROOM_FURNACE);
 
@@ -398,7 +398,7 @@ int Setup(){
 
         home = "/realms/"+this_player()->GetKeyName()+"/workroom";
 
-        if(file_exists(home+".c"))
+        if(file_exists(home+".c")) 
             this_object()->eventMoveLiving(home);
 
         this_object()->AddChannel( ({"admin", "error", "cre", "newbie", "gossip", "ds", "ds_test", "lpuni", "death", "connections","intercre","dchat"}) );
@@ -575,7 +575,7 @@ int ResetLevel(){
         log_file(file, GetCapName() + " went from level " + x + " to "
                 "level " + y + " (" + ctime(time()) + ")\n");
         if( x < y ){
-            eventPrint("%^YELLOW%^You are now a more experienced " +
+            eventPrint("%^YELLOW%^You are now a more experienced " + 
                     GetClass() + ".");
             TrainingPoints += ( (y-x) * 4 );
         }
@@ -609,7 +609,7 @@ varargs mixed GetEffectiveVision(mixed location, int raw_score){
     else return living::GetEffectiveVision();
 }
 
-varargs protected int AddHealthPoints(int x, string limb, object agent){
+varargs static int AddHealthPoints(int x, string limb, object agent){
     int hp, ret, undead;
     hp = GetHealthPoints();
     undead = GetUndead();

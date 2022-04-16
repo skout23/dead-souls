@@ -3,7 +3,7 @@
 
 inherit LIB_POTION;
 
-protected void create() {
+static void create() {
     potion::create();
     SetKeyName("potion");
     SetId( ({ "potion","philtrum","megapotion","megapotion of uberness" }) );

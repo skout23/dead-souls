@@ -13,13 +13,13 @@ inherit LIB_FUEL;
 
 private int BurnRate = 5;
 
-protected void create(){
+static void create(){
     item::create();
     fuel::create();
     light::create();
 }
 
-protected void heart_beat(){
+static void heart_beat(){
     eventDecreaseFuel(1);
     if( GetFuelAmount() < 1){
         eventDarken();
@@ -49,7 +49,7 @@ int GetBurnRate(){
     return BurnRate;
 }
 
-protected int SetBurnRate(int x){
+static int SetBurnRate(int x){
     return (BurnRate = x);
 }
 

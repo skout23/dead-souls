@@ -4,7 +4,7 @@
 
 inherit LIB_ITEM;
 
-protected void create() {
+static void create() {
     item::create();
     SetKeyName("shot ball");
     SetAdjectives( ({"ball of", "palm sized", "shot"}) );

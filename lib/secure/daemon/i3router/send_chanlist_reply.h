@@ -1,6 +1,6 @@
 // This file written mostly by Tim Johnson (Tim@TimMUD)
 
-protected void send_chanlist_reply(string mudname, int old_chanid){
+static void send_chanlist_reply(string mudname, int old_chanid){
     string channame; // channel name
     //	string *output; // array of which channel names to tell them about
     mapping out=([ ]); // mapping to send

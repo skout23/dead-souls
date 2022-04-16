@@ -9,7 +9,7 @@
 inherit LIB_DOOR;
 //inherit "/lib/events/close";
 
-protected void create() {
+static void create() {
     door::create();
     SetSide("down", ([ "id" : ({"grate","metal grate","sewer","sewer grate","rainwater grate","water grate"}),
                 "short" : "a drainage grate",

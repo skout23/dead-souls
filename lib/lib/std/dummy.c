@@ -12,6 +12,6 @@ inherit LIB_BASE_DUMMY;;
 inherit LIB_SHADOW_HOOK;
 
 /* ******************* dummy.c driver applies ******************** */
-varargs protected void create(string* id, mixed long, string* adj){
+varargs static void create(string array id, mixed long, string array adj){
     base_dummy::create(id, long, adj);
 }

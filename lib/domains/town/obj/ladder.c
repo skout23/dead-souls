@@ -20,7 +20,7 @@ int LadderClimb(){
     return 0;
 }
 
-protected void create() {
+static void create() {
     ::create();
     SetKeyName("ladder");
     SetId("ladder");

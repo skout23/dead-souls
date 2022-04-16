@@ -3,7 +3,7 @@
 inherit LIB_NPC;
 
 
-protected void create() {
+static void create() {
     npc::create();
     SetKeyName("Edmund");
     SetId(({"edmund"}));

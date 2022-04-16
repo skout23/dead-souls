@@ -15,14 +15,14 @@ private mapping Prayers = ([]);
 
 void eventReloadSpells();
 
-protected void create() {
+static void create() {
     daemon::create();
     SetNoClean(1);
     eventReloadSpells();
 }
 
 void eventReloadSpells() {
-    string* spells, prayers;
+    string array spells, prayers;
 
     Spells = ([]);
     spells = get_dir(DIR_SPELLS "/*.c");

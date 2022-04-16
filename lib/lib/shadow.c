@@ -1,9 +1,9 @@
 #include <lib.h>
 #include <dirs.h>
 
-nosave object shadowed;
-nosave object shadow_thing = this_object();
-nosave int shadowing;
+static object shadowed;
+static object shadow_thing = this_object();
+static int shadowing;
 
 int eventShadow(object ob){
     if(!shadowing){

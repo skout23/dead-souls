@@ -7,9 +7,9 @@
 
 #include "include/editor.h"
 
-private nosave function EditCallback;
+private static function EditCallback;
 
-protected void create(){
+static void create(){
     EditCallback = 0;
 }
 
@@ -34,7 +34,7 @@ varargs void eventEdit(string file, function callback){
     if( !creatorp() || file_size(file) < 1 ) ed_cmd("$a");
 }
 
-protected string process_input(string str){
+static string process_input(string str){
     int x;
 
     if( (x = query_ed_mode()) == -1 ) return str;

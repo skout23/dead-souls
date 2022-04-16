@@ -10,7 +10,7 @@
 
 inherit LIB_VERB;
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("sell");
     SetRules("OBS to LIV", "LIV OBS");
@@ -46,20 +46,20 @@ mixed do_sell_liv_obj(object vendor, object item) {
     return do_sell_obj_to_liv(item, vendor);
 }
 
-mixed do_sell_obs_to_liv(object* items, object vendor) {
+mixed do_sell_obs_to_liv(object array items, object vendor) {
     object *obs, *eligible;
 
     obs = filter(items, (: objectp :));
     if( !sizeof(obs) ) {
-        mixed* ua;
+        mixed array ua;
 
         ua = unique_array(items, (: $1 :));
-        foreach(string* list in ua) {
+        foreach(string array list in ua) {
             this_player()->eventPrint(list[0]);
         }
         return 1;
     }
-    eligible=filter(obs, (: (!($1->GetWorn()) && environment($1) == this_player()) :));
+    eligible=filter(obs, (: (!($1->GetWorn()) && environment($1) == this_player()) :)); 
     if(!sizeof(eligible)){
         write("Remove or unwield items before trying to sell them.");
         eligible = ({});
@@ -69,6 +69,6 @@ mixed do_sell_obs_to_liv(object* items, object vendor) {
     return vendor->eventBuy(this_player(), eligible);
 }
 
-mixed do_sell_liv_obs(object vendor, object* items) {
+mixed do_sell_liv_obs(object vendor, object array items) {
     return do_sell_obs_to_liv(items, vendor);
 }

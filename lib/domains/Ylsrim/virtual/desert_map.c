@@ -4,8 +4,8 @@
 
 inherit LIB_VIRT_MAP;
 
-varargs string* BaseMap(){ //override with actual map
-    return
+varargs string array BaseMap(){ //override with actual map
+    return 
         ({
          //   0
          // 01234
@@ -20,7 +20,7 @@ varargs string* BaseMap(){ //override with actual map
 }
 
 
-varargs protected void create() {
+varargs static void create() {
     ::create();
     //SetNoClean(1);
     //SetVirtFile(base_name(this_object()));

@@ -24,7 +24,7 @@ int ProcessTalk(mixed args...){
     return 1;
 }
 
-protected void create(){
+static void create(){
     sentient::create();
     SetKeyName("gate guard");
     SetId(({"human","guard","mp","soldier","policeman","military policeman"}));

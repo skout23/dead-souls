@@ -9,7 +9,7 @@
 #define MAX_INVENTORY_SIZE 2048
 #endif
 
-private nosave object LastEnvironment = 0;
+private static object LastEnvironment = 0;
 int anchored;
 
 varargs int eventPrint(string str, mixed args...);

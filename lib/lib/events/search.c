@@ -9,8 +9,8 @@
 #include <lib.h>
 #include <function.h>
 
-nosave private mixed Search     = 0;
-nosave private mapping Searches = ([]);
+static private mixed Search     = 0;
+static private mapping Searches = ([]);
 
 // abstract methods
 string GetShort();
@@ -84,7 +84,7 @@ varargs string GetSearch(string str, object who){
     else return val;
 }
 
-string* GetSearches(){
+string array GetSearches(){
     return keys(Searches);
 }
 
@@ -99,7 +99,7 @@ mapping RemoveSearch(string item){
     return Searches;
 }
 
-varargs mixed SetSearch(mixed* args...){
+varargs mixed SetSearch(mixed array args...){
     if( sizeof(args) == 1 ){
         if( mapp(args[0]) ){
             if( args[0]["default"] ){

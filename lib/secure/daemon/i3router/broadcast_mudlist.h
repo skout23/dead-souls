@@ -2,9 +2,9 @@
 
 // broadcast the mudlist when a mud just now got changed...
 
-protected void validate();
+static void validate();
 
-nosave mapping BroadcastQueue = ([]);
+static mapping BroadcastQueue = ([]);
 
 varargs void broadcast_mudlist(string mudname, int remote, string single){
     //string targ_mudname;

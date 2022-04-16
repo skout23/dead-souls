@@ -6,9 +6,9 @@ class death {
     string Enemy;
 }
 
-protected void create();
-protected void heart_beat();
-protected void net_dead();
+static void create();
+static void heart_beat();
+static void net_dead();
 void eventReconnect();
 
 int cmdListen(string str);
@@ -53,7 +53,7 @@ string GetCapName();
 int ResetLevel();
 string SetClass(string str);
 string SetClan(string clan);
-varargs nosave int AddHealthPoints(int x, string limb, object agent);
+varargs static int AddHealthPoints(int x, string limb, object agent);
 int GetLanguageLevel(string lang);
 int is_living();
 mapping *GetDeaths();

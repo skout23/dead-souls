@@ -1,6 +1,6 @@
 #include <function.h>
 
-nosave private mapping Shake = ([]);
+static private mapping Shake = ([]);
 
 // abstract methods
 string GetDefiniteShort();
@@ -13,12 +13,12 @@ varargs mixed GetShake(string str){
     return Shake[str];
 }
 
-string* GetShakes(){
+string array GetShakes(){
     return keys(Shake);
 }
 
-mapping RemoveShake(string item){
-    map_delete(Shake, item);
+mapping RemoveShake(string item){ 
+    map_delete(Shake, item); 
     return Shake;
 }
 

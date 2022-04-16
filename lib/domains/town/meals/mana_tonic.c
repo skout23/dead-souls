@@ -4,7 +4,7 @@
 
 inherit LIB_POTION;
 
-protected void create() {
+static void create() {
     potion::create();
     SetKeyName("eve tonic");
     SetId( ({ "bottle", "liquid", "eve", "tonic"}) );
@@ -19,13 +19,14 @@ protected void create() {
     SetStrength(5);
     SetMealMessages("You drink a potion.",
             "$N drinks a potion.");
-    SetBaseCost("silver",500);
+    SetBaseCost("gold",50);
     SetPoints( ([ "MP" : 500 ]) );
+    SetStats( ([ "intelligence" : 5 ]) );
     SetVendorType(VT_MAGIC);
     SetItems(([
                 ({"label"}) : "A label affixed to the bottle.",
                 ]));
-    SetRead( ({"label"}),  "Invigorating EVE! Stay awake!" );
+    SetRead( ({"label"}),  "Invigorating EVE! Give in to your inner power!" );
 }
 void init(){
     ::init();

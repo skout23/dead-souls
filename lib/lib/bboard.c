@@ -10,10 +10,10 @@
 
 inherit LIB_ITEM;
 
-nosave private string tmpdir;
-nosave private string __BoardID;
-nosave private string *__EditOK;
-nosave string gstr, gfile, gdude;
+static private string tmpdir;
+static private string __BoardID;
+static private string *__EditOK;
+static string gstr, gfile, gdude;
 string Location;
 
 void create(){
@@ -31,7 +31,7 @@ void create(){
     __EditOK = ({});
     path = base_name(this_object());
     if(!strsrch(path, "/secure/")) tmpdir = DIR_SECURE_TMP;
-    else tmpdir = DIR_TMP;
+    else tmpdir = DIR_TMP; 
 }
 
 void RegisterLocation(){
@@ -51,7 +51,7 @@ void init(){
     RegisterLocation();
 }
 
-private int valid_edit(string author){
+static private int valid_edit(string author){
     string who = this_player()->GetKeyName();
     if(who == author) return 1;
     if(archp(this_player())) return 1;
@@ -71,13 +71,13 @@ int cmd_post(string str){
     else {
         write("When finished writing, enter a single period on a blank line, then ");
         write("at the colon prompt (:) type a lower-case x and return.\n");
-        write("Like this:\n.\nx\n");
+        write("Like this:\n.\nx\n"); 
         begin_post("n", str, file, (: continue_post :));
     }
     return 1;
 }
 
-protected void begin_post(string cmd, string subj, string file, function f){
+static void begin_post(string cmd, string subj, string file, function f){
     if(cmd == "" || !cmd) cmd = "n";
     else cmd = cmd[0..0];
     if(cmd != "n" && cmd != "e"){
@@ -191,7 +191,7 @@ void continue_mail(mapping post, string subj, string file){
     input_to("check_include_text", subj, file, post, 1);
 }
 
-protected void check_include_text(string ans, string subj, string file, mapping
+static void check_include_text(string ans, string subj, string file, mapping
         post, int mail){
 
     string msg;

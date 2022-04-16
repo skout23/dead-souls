@@ -13,7 +13,7 @@
 inherit DAEMON;
 
 private mapping __Estates;
-nosave string SaveFile;
+static string SaveFile;
 
 void create() {
     daemon::create();
@@ -24,7 +24,7 @@ void create() {
     preload_estates();
 }
 
-private void preload_estates() {
+static private void preload_estates() {
     object ob;
     string *who;
     string desc;

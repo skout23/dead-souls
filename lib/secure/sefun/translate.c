@@ -28,10 +28,10 @@
     "curiae", "aethelingas", "eorlas","carajo","oder",\
     "ae","aroha","awarua","atua","tenei", "dsfargeg",\
     "tangata","koa","kora","hupane","upane","krankor",\
-    "baardaap","droogkloot","reetketelsteenbeeldhouwer","asbak","haka",\
+    "baardaap","droogkloot","asbak","haka",\
     "zaadje","verkloten","teef","moffie","shele",\
     "anasi","atouche","ayir","boos","teezee","shawty",\
-    "durka","haista","vittu","kyrpï¿½","rï¿½kï¿½","shawtay",\
+    "durka","haista","vittu","kyrpä","räkä","shawtay",\
     "suoro","voi","debil","kunel","shinel","sampo",\
     "sasikumea","zakila","txakurra","soustat","irrumator",\
     "mentula","koproskilo","malakas","la'a'za'zel","zayin",\
@@ -75,7 +75,7 @@
     "gleepy","gloop","gloopy","neeby","nabba","nooby","la","la","la",\
     "lo","lo","sabba","sibby","sabba","nooby","abba","nabba",\
     "le","le","le","lo","lo","tooby","ooby","walla","dede","scozzafava",\
-    "AUSCANZUKUS",\
+    "AUSCANZUKUS","nagua","covfefe","finna",\
 })
 
 string translate(string str, int prof) {

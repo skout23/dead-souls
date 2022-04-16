@@ -8,9 +8,9 @@ inherit LIB_AIM;
 inherit LIB_SURFACE;
 inherit LIB_ACTIVATE;
 
-nosave int active = 0;
+static int active = 0;
 
-protected void create() {
+static void create() {
     ::create();
     SetKeyName("manipulator");
     SetId(({"gun","zpem"}));

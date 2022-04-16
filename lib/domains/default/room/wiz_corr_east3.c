@@ -17,7 +17,7 @@ int PreExit(mixed args...){
     return 1;
 }
 
-protected void create() {
+static void create() {
     object ob;
     room::create();
     SetClimate("indoors");

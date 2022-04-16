@@ -21,7 +21,7 @@ void create() {
                 ({ "wall" }) : "A rocky surface in this cave.",
                 ]) );
     SetRead(({ "writing", "writing on the wall" })  
-            , "Friend, dial campus lab" );
+            , "Friend, dial campus lab. Read the door, too." );
     SetDoor("north", "/domains/town/doors/stone.c");
 }
 

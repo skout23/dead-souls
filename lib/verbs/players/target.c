@@ -4,7 +4,7 @@
 
 inherit LIB_VERB;
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("target");
     SetRules("LVS", "only LVS","LVS only");

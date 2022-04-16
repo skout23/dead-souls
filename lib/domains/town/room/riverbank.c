@@ -1,7 +1,7 @@
 #include <lib.h>
 inherit LIB_FISHING;
 
-protected void create() {
+static void create() {
     ::create();
     SetTown("town");
     SetClimate("temperate");
@@ -31,6 +31,7 @@ protected void create() {
     SetChance(90);
     SetFish( ([
                 "/domains/town/meals/shark" : 10,
+                "/domains/town/meals/herring" : 20,
                 ]) );
 }
 void init() {

@@ -3,7 +3,7 @@
 inherit LIB_CHAIR;
 inherit LIB_ROCK;
 
-protected void create() {
+static void create() {
     chair::create();
     SetKeyName("chair");
     SetAdjectives( ({"simple", "wood", "wooden", "rocking", "classic"}) );

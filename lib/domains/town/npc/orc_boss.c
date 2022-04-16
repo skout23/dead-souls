@@ -17,7 +17,7 @@ int CheckOrc(mixed val){
     return 1;
 }
 
-protected void create() {
+static void create() {
     npc::create();
     SetKeyName("boss orc");
     SetId(({"orc","boss","boss"}));

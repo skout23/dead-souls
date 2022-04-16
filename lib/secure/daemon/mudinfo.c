@@ -14,7 +14,7 @@ object person, player;
 string preset;
 int age, probing;
 string *queue = ({});
-nosave string SaveFile;
+static string SaveFile;
 
 int SetQueue(string str){
     if(file_exists(str)){

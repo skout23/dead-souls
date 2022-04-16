@@ -50,7 +50,7 @@ string GetHelp(){
             "See also: defines");
 }
 
-protected void create() {
+static void create() {
     string *includes = ({});
     ::create();
     foreach(string str in get_dir("/secure/include/")){

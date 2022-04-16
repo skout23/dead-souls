@@ -9,7 +9,7 @@
 
 inherit LIB_GERM;
 
-protected void create() {
+static void create() {
     germ::create();
     SetId("cold");
     SetType("cold");

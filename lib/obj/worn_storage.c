@@ -3,7 +3,7 @@
 #include <damage_types.h>
 inherit LIB_WORN_STORAGE;
 
-protected void create(){
+static void create(){
     ::create();
     SetKeyName("generic worn storage");
     SetId(({"thing","worn_storage","storage","article"}));

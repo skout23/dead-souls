@@ -12,8 +12,8 @@ inherit LIB_SENTIENT;
 // the SetAction() function in create().  It checks to see if
 // someone is around from whom this guy can steal
 
-protected void Steal() {
-    object* obs;
+static void Steal() {
+    object array obs;
     object target;
     string cmd;
     int i;
@@ -37,7 +37,7 @@ protected void Steal() {
     }
     target = obs[i];
     // Find all items on the target that can be stolen
-    obs = filter(all_inventory(target),
+    obs = filter(all_inventory(target), 
             (: !($1->GetProperty("no steal")) :));
     i = sizeof(obs);
     if( i == 0 ) { // no goods, let's try to get some cash
@@ -57,7 +57,7 @@ protected void Steal() {
     // now do the steal or pick
     eventForce(cmd);
 }
-protected void create() {
+static void create() {
     sentient::create();
     SetKeyName("traveler");
     SetId( ({"traveller", "human", "npc"}) );

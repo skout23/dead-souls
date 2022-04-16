@@ -21,7 +21,7 @@ string speaker;
 string mc;
 int x;
 object ob;
-protected void create() {
+static void create() {
     storage::create();
     SetShort("a podium");
     SetLong("This is the speaker's podium. It is about four feet tall "+

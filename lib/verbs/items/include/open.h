@@ -1,7 +1,7 @@
 #ifndef l_open_h
 #define l_open_h
 
-protected void create();
+static void create();
 
 varargs mixed can_open_obj(object ob, mixed *args...);
 varargs mixed can_open_obj_with_obj(object ob, object with, mixed *args...);

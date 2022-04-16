@@ -1,9 +1,9 @@
 #include <function.h>
 #include <message_class.h>
 
-nosave private string Language;
-nosave private mixed Read    = 0;
-nosave private mapping Reads = ([]);
+static private string Language;
+static private mixed Read    = 0;
+static private mapping Reads = ([]);
 
 private string tmpfile;
 
@@ -21,7 +21,7 @@ string GetRead(string str){
     }
 }
 
-string* GetReads(){
+string array GetReads(){
     return keys(Reads);
 }
 
@@ -132,7 +132,7 @@ varargs mixed eventRead(object who, mixed str){
     if(!val){
         write("You can't read that.");
         return 0;
-    }
+    } 
 
     if(Language && (this_player()->GetLanguageLevel(Language) < 100 &&
                 !(this_player()->GetPolyglot()))){

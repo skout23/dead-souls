@@ -2,8 +2,8 @@
  *    from the Dead Souls Mud Library
  *    handles objects and NPCs telling stories
  *    created by Corvar
- *    Version:
- *    Last Modified:
+ *    Version: 
+ *    Last Modified: 
  */
 
 private int AlreadyTellingTale;
@@ -17,12 +17,12 @@ string SetTalesDir(string dir);
 string GetTalesDir();
 mapping SetTale(mapping tale);
 mapping GetTale();
-mixed *GetTaleKeys();
+array GetTaleKeys();
 string SetNoTaleMessage(string notalemessage);
 string GetNoTaleMessage();
 int GetTellingTale();
 
-protected void create(){
+static void create(){
     AlreadyTellingTale = 0;
     TalesDir = "";
     Tales = ([ ]);
@@ -62,12 +62,12 @@ string SetNoTaleMessage(string notalemessage){
 
 string GetTalesDir(){ return TalesDir; }
 mapping GetTale(){ return Tales; }
-mixed *GetTaleKeys(){ return keys( Tales ); }
+array GetTaleKeys(){ return keys( Tales ); }
 string GetNoTaleMessage(){ return NoTaleMessage; }
 int GetTellingTale(){ return AlreadyTellingTale; }
 
 void PickTale( string taletotell ){
-    mixed* msg;
+    array msg;
     string file, *files;
     int y;
 
@@ -84,7 +84,7 @@ void PickTale( string taletotell ){
                     return;
                 }
             }
-            else
+            else 
                 file = files[random(sizeof(files))];
             AlreadyTellingTale = 1;
             Tales = ([]);
@@ -93,7 +93,7 @@ void PickTale( string taletotell ){
                 Tales[x++] = explode( str, "#" );
             }
         }
-        if( !Tales ) return;
+        if( !Tales ) return; 
         call_out( (: TellTale :), 1, 0 );
     }
 

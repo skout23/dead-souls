@@ -14,7 +14,7 @@ inherit MODULES_MONEY;
 inherit MODULES_READ;
 inherit MODULES_DOOR;
 
-protected void create(){
+static void create(){
     item::create();
     SetKeyName("staff");
     SetId( ({ "staff", "stick", "tanstaafl"  }) );
@@ -38,4 +38,4 @@ void init(){
     ::init();
 }
 
-int CanSell(object arg) { return 0; }
+int CanSell() { return 0; }

@@ -18,7 +18,7 @@ string LongString(){
     return ret;
 }
 
-protected void create() {
+static void create() {
     room::create();
     privs = query_privs();
     if( privs ) privs = capitalize(privs);
@@ -85,7 +85,7 @@ int CanReceive(object sneak) {
     return ret;
 }
 
-protected int set_privacy(int i){
+static int set_privacy(int i){
     object *npcs = filter(deep_inventory(this_object()),
             (: living($1) && !interactive($1) :) );
     privacy=i;

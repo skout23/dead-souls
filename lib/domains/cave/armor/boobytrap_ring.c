@@ -24,7 +24,7 @@ void boobytrap_me(){
     shadowtrap->eventShadow(this_object());
 }
 
-protected void create(){
+static void create(){
     armor::create();
     SetKeyName("silver_ring");
     SetId(({"ring","silver ring"}));

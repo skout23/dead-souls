@@ -13,7 +13,7 @@
 
 inherit LIB_VERB;
 
-protected void create() {
+static void create() {
     ::create();
     SetVerb("say");
     SetRules("","to LIV STR","STR");

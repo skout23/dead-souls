@@ -2,7 +2,7 @@
 #include <daemons.h>
 inherit LIB_ROOM;
 
-protected void create() {
+static void create() {
     object ob;
     room::create();
     SetClimate("indoors");

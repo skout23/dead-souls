@@ -20,7 +20,7 @@ void create(){
             ]);
 }
 
-protected varargs void ModSecret(string secret, mixed val){
+static varargs void ModSecret(string secret, mixed val){
     string type;
     string *secarr, *ret = ({});
 

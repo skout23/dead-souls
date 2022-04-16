@@ -15,7 +15,7 @@ private int CanClose = 0;
 private int CanLock  = 0;
 private int MaxRecurseDepth  = 3;
 private int RecurseDepth  = 1;
-private nosave mixed my_save = ({});
+private static mixed my_save = ({});
 
 int GetMaxRecurseDepth(){
     return MaxRecurseDepth;
@@ -56,9 +56,9 @@ int SetCanLock(int x){
     return SetCanClose(CanLock = x);
 }
 
-void SetKey(string key){
+void SetKey(string key){ 
     SetKeys(key);
-}
+} 
 
 int GetOpacity(){
     return holder::GetOpacity();
@@ -72,7 +72,7 @@ int GetRadiantLight(int ambient){
     return holder::GetRadiantLight(ambient);
 }
 
-//string* GetSave(){
+//string array GetSave(){
 //    string *i_save, *s_save;
 //    i_save = item::GetSave();
 //    s_save = seal::GetSave();
@@ -82,7 +82,7 @@ int GetRadiantLight(int ambient){
 //    return my_save;
 //}
 
-//protected mixed* AddSave(mixed* vars){
+//static mixed array AddSave(mixed array vars){
 //    my_save = distinct_array(my_save + vars);
 //    return item::AddSave(my_save);
 //}

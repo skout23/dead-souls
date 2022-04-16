@@ -18,7 +18,7 @@ class domain_stats {
 
 private mapping Stats = ([]);
 
-protected void create() {
+static void create() {
     daemon::create();
     SetNoClean(1);
 }

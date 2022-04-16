@@ -24,7 +24,7 @@ int SetValue(int x);
 
 int GetBurning();
 
-protected void create(){
+static void create(){
     fuel::create();
     light::create();
     this_object()->AddSave(({ "Heat" }));
@@ -41,7 +41,7 @@ int GetBurnRate(){
     return BurnRate;
 }
 
-protected int SetBurnRate(int x){
+static int SetBurnRate(int x){
     return (BurnRate = x);
 }
 
@@ -49,7 +49,7 @@ int GetBurntValue(){
     return BurntValue;
 }
 
-protected int SetBurntValue(int x){
+static int SetBurntValue(int x){
     return (BurntValue = x);
 }
 
@@ -57,7 +57,7 @@ int GetFuelRequired(){
     return FuelRequired;
 }
 
-protected int SetFuelRequired(int x){
+static int SetFuelRequired(int x){
     return (FuelRequired = x);
 }
 
@@ -65,7 +65,7 @@ int GetHeat(){
     return Heat;
 }
 
-protected int SetHeat(int x){
+static int SetHeat(int x){
     return (Heat = x);
 }
 
@@ -73,7 +73,7 @@ int GetMinHeat(){
     return MinHeat;
 }
 
-protected int SetMinHeat(int x){
+static int SetMinHeat(int x){
     return (MinHeat = x);
 }
 
@@ -194,7 +194,7 @@ mixed eventLight(object who, object what){
     return eventBurn(who, what);
 }
 
-protected void heart_beat(){
+static void heart_beat(){
     object env = room_environment();
     if( FuelRequired ){
         eventDecreaseFuel(1);

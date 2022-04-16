@@ -22,7 +22,7 @@ string RateScore(int i){
     return ret;
 }
 
-protected void eventRun() {
+static void eventRun() {
     string ret = "";
     mapping before, after;
     string *noobnames = ({ "Dead_Souls_"+DEBUGGER, "DeadSoulsNew",
@@ -86,7 +86,7 @@ void perfreport(){
     debug_message(ret);
 }
 
-protected void create() {
+static void create() {
     daemon::create();
     PerformanceScore = MASTER_D->GetPerformanceScore();
     if(hasrun){

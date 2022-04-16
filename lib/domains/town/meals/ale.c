@@ -4,7 +4,7 @@
 inherit LIB_MEAL;
 
 
-protected void create() {
+static void create() {
     meal::create();
     SetKeyName("ale");
     SetId( ({ "bottle", "ale", "first class ale", "first-class ale" }) );

@@ -11,9 +11,9 @@
 inherit LIB_DAEMON;
 
 private mixed * Notes;
-nosave string SaveFile;
+static string SaveFile;
 
-protected void create() {
+static void create() {
     int x;
     daemon::create();
     SaveFile = save_file(SAVE_NOTIFY);
@@ -29,7 +29,7 @@ protected void create() {
     SaveObject(SaveFile);
 }
 
-protected int eventSaveNotices() {
+static int eventSaveNotices() {
     if( !archp(this_player()) ) return 0;
     else return SaveObject(SaveFile);
 }

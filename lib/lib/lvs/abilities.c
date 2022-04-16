@@ -12,18 +12,18 @@ inherit LIB_LEVEL;
 
 private int            Level       = 1;
 private mapping        Skills      = ([]);
-private nosave mapping SkillsBonus = ([]);
+private static mapping SkillsBonus = ([]);
 
 // abstract methods
 varargs void eventPrint(string str, mixed args...);
 // end abstract methods
 
-string* GetPrimarySkills();
+string array GetPrimarySkills();
 varargs void SetSkill(string skill, int level, mixed cls);
 
 /* ***************** abilities.c attributes ***************** */
 /* GetBaseSkillLevel() returns the unmodified skill level */
-int GetBaseSkillLevel(string skill){
+int GetBaseSkillLevel(string skill){ 
     if( !Skills[skill] ){
         return 0;
     }
@@ -36,7 +36,7 @@ int GetLevel(){
     return Level;
 }
 
-/* protected int ResetLevel()
+/* static int ResetLevel()
  *
  * description
  * takes the average skill level of the primary skills and divided by 4
@@ -49,7 +49,7 @@ int GetLevel(){
  */
 
 int ResetLevel(){
-    string* skills = GetPrimarySkills();
+    string array skills = GetPrimarySkills();
     int num = sizeof(skills);
     int points = 0;
 
@@ -67,7 +67,7 @@ int ResetLevel(){
 }
 
 int SetLevel(int x){
-    string* skills = GetPrimarySkills();
+    string array skills = GetPrimarySkills();
 
     if(!Level){
         foreach(string skill in skills){
@@ -118,7 +118,7 @@ int GetMaxSkillPoints(string skill, int level){
     }
 }
 
-string* GetPrimarySkills(){
+string array GetPrimarySkills(){ 
     return filter(keys(Skills), (: Skills[$1]["class"] == 1 :));
 }
 
@@ -207,7 +207,7 @@ varargs void SetSkill(string skill, int level, int cls){
     Skills[skill] = ([ "points" : 0, "level" : level, "class" : cls ]);
 }
 
-string* GetSkills(){
+string array GetSkills(){
     return keys(Skills);
 }
 
@@ -254,7 +254,7 @@ int GetSkillBonus(string skill){
     return x;
 }
 
-int GetSkillClass(string skill){
+int GetSkillClass(string skill){ 
     if( !Skills[skill] ){
         return 0;
     }
@@ -264,7 +264,7 @@ int GetSkillClass(string skill){
 }
 
 /* GetSkillLevel() returns the base skill level + any bonuses */
-int GetSkillLevel(string skill){
+int GetSkillLevel(string skill){ 
     return (GetBaseSkillLevel(skill) + GetSkillBonus(skill));
 }
 
@@ -334,7 +334,7 @@ int AddSkillPoints(string name, int x){
  * you get nothing.
  * Adjustments are made for your level and any multiplier bonuses.
  */
-varargs void  eventTrainSkill(string skill, int pro, int con, int* a...){
+varargs void  eventTrainSkill(string skill, int pro, int con, int array a...){
     int level = (GetLevel()/8 + 1);
     int val, success, bonus;
 
@@ -368,6 +368,6 @@ varargs void  eventTrainSkill(string skill, int pro, int con, int* a...){
 }
 
 /* ****************** abilities.c driver applies **************** */
-protected void create(){
+static void create(){
 }
 

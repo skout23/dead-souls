@@ -1,7 +1,7 @@
 #ifndef l_sell_h
 #define l_sell_h
 
-protected void create();
+static void create();
 mixed can_sell();
 mixed can_sell_obj_to_liv(object ob, object vendor);
 mixed do_sell();

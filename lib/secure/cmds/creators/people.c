@@ -10,9 +10,9 @@
 
 inherit LIB_DAEMON;
 
-nosave private int *__SortFlags;
+static private int *__SortFlags;
 
-private string query_people_time();
+static private string query_people_time();
 private string calculateFormatString(int screenSize);
 object *whom, *who, *display;
 string *args;
@@ -85,7 +85,7 @@ int cmd(string str) {
         if(uflag) display += filter(who, "filter_undead", this_object());
         display = distinct_array(display);
     }
-    if(!eflag && !gflag && !lflag && !rflag && !sflag)
+    if(!eflag && !gflag && !lflag && !rflag && !sflag) 
         maxi = sizeof(display=sort_array(display,"general_sort",this_object()));
     else {
         __SortFlags = ({ eflag, gflag, lflag, rflag, sflag });
@@ -113,7 +113,7 @@ int cmd(string str) {
     return 1;
 }
 
-protected int filter_invis(object ob) {
+static int filter_invis(object ob) {
     if(!ob || !sizeof(base_name(ob))) return 0;
     if(!(ob->GetKeyName())) return 0;
     if(!(ob->GetInvis(this_player()))) return 1;
@@ -122,33 +122,33 @@ protected int filter_invis(object ob) {
     return 1;
 }
 
-protected int filter_arches(object ob) { return archp(ob); }
+static int filter_arches(object ob) { return archp(ob); }
 
-protected int filter_ambass(object ob) { return ambassadorp(ob); }
+static int filter_ambass(object ob) { return ambassadorp(ob); }
 
-protected int filter_cres(object ob) { return (creatorp(ob) && !archp(ob)); }
+static int filter_cres(object ob) { return (creatorp(ob) && !archp(ob)); }
 
-protected int filter_hms(object ob) { return high_mortalp(ob); }
+static int filter_hms(object ob) { return high_mortalp(ob); }
 
-protected int filter_newbie(object ob) {
+static int filter_newbie(object ob) {
     return (!creatorp(ob) && !ambassadorp(ob) && (MAX_NEWBIE_LEVEL >=
                 ob->GetLevel()));
 }
 
-protected int filter_mortal(object ob) {
+static int filter_mortal(object ob) {
     if(creatorp(ob) || high_mortalp(ob) || ambassadorp(ob)) return 0;
     if(ob->GetLevel() <= MAX_NEWBIE_LEVEL) return 0;
     return 1;
 }
 
-protected int filter_undead(object ob) { return ob->query_ghost(); }
+static int filter_undead(object ob) { return ob->query_ghost(); }
 
-nosave int general_sort(object alpha, object beta) {
+static int general_sort(object alpha, object beta) {
     int x, y;
 
     if(archp(alpha)) {
         if(!archp(beta)) return -1;
-        else return strcmp(GetBaseName(alpha),
+        else return strcmp(GetBaseName(alpha), 
                 GetBaseName(beta));
     }
     else if(archp(beta)) return 1;
@@ -171,7 +171,7 @@ nosave int general_sort(object alpha, object beta) {
             GetBaseName(beta));
 }
 
-nosave int special_sort(object alpha, object beta) {
+static int special_sort(object alpha, object beta) {
     string a, b;
     int x, y;
 
@@ -190,7 +190,7 @@ nosave int special_sort(object alpha, object beta) {
         }
     }
     if(__SortFlags[3]) {
-        if((a = file_name(room_env(alpha))) !=
+        if((a = file_name(room_env(alpha))) != 
                 (b = file_name(room_env(beta)))) return strcmp(a, b);
     }
     if(__SortFlags[2]) {
@@ -221,7 +221,7 @@ private string calculateFormatString(int screenSize) {
         + "s %:-5s %:-3s %:-" + envSize + "s";
 }
 
-nosave string map_info(object ob, string formatString) {
+static string map_info(object ob, string formatString) {
     string age, nom, blk, lev, ip, env, idle;
     int x;
 
@@ -258,14 +258,14 @@ nosave string map_info(object ob, string formatString) {
     if(ip == "0.0.0.0" || ip == "w.x.y.z") ip = "";
     if(!room_env(ob)) env = "no environment";
     else env = file_name(room_env(ob));
-    if(!strsrch(env, REALMS_DIRS))
+    if(!strsrch(env, REALMS_DIRS)) 
         env = "~" + env[strlen(REALMS_DIRS)+1..];
     else if(!strsrch(env, DOMAINS_DIRS))
         env = "^"+env[strlen(DOMAINS_DIRS)+1..strlen(env)-1];
     return sprintf(formatString, age, lev, nom, ip, idle, blk, env);
 }
 
-private string query_people_time() {
+static private string query_people_time() {
     string tzone;
     if(this_player()) tzone = this_player()->GetProperty("timezone");
     if(!tzone || !valid_timezone(tzone)) tzone = query_tz();

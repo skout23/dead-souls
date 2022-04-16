@@ -12,7 +12,7 @@ inherit LIB_HELP;
 
 varargs mixed eventScore();
 
-protected void create() {
+static void create() {
     daemon::create();
     SetNoClean(1);
     SetHelp("Syntax: score\n\n"
@@ -20,16 +20,16 @@ protected void create() {
             "See also: stat, status, env");
 }
 
-nosave string *FoodDegree =
+static string *FoodDegree =
 ({ "starving!", "very hungry.",
  "hungry.", " partially hungry.",
  "feeling full.", "quite full." });
 
-nosave string *DrunkDegree =
+static string *DrunkDegree =
 ({ "sober", "tipsy", "drunk", "blitzed",
  "three sheets to the wind", "FUBAR" });
 
-nosave string *DrinkDegree =
+static string *DrinkDegree =
 ({ "parched", "extremely thirsty", "very thirsty", "thirsty",
  "somewhat thirsty", "unthirsty" });
 

@@ -13,7 +13,7 @@
 
 inherit LIB_VERB;
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("drink");
     SetRules("OBJ", "from OBJ");

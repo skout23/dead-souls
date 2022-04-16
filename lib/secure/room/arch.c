@@ -4,7 +4,7 @@
 
 #ifndef DISABLE_IMC2
 #define DISABLE_IMC2 0
-#endif
+#endif 
 
 inherit LIB_ROOM;
 
@@ -78,7 +78,7 @@ string ReadScreen(){
         }
     }
     return ret;
-}
+} 
 
 string eventReadScreen(){
     validate();
@@ -146,13 +146,13 @@ string LongDesc(){
     return desc;
 }
 
-protected void create() {
+static void create() {
     object ob;
     room::create();
     SetClimate("indoors");
     SetAmbientLight(30);
     SetShort("Arch Room");
-    SetLong( LongDesc() );
+    SetLong( (: LongDesc :) );
     SetItems( ([ ({"wall","walls"}) : "The walls seem composed "
                 "of some advanced polymer. They are extremely clean and highly "
                 "polished.",

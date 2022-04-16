@@ -20,7 +20,7 @@ int WieldStaff(){
     return 1;
 }
 
-protected void create() {
+static void create() {
     leader::create();
     SetKeyName("herkimer");
     SetId(({"archwizard","wizard","herkermer","herkirmer"}));

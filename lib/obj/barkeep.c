@@ -2,7 +2,7 @@
 
 inherit LIB_BARKEEP;
 
-protected void create() {
+static void create() {
     barkeep::create();
     SetKeyName("barkeep");
     SetId( ({ "barman" }) );

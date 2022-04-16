@@ -4,9 +4,9 @@
 
 inherit LIB_SENTIENT;
 
-nosave int NoBotCondition = 0;
+static int NoBotCondition = 0;
 
-protected void create(){
+static void create(){
     sentient::create();
 }
 

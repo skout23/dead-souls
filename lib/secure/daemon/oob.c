@@ -6,7 +6,7 @@ inherit LIB_DAEMON;
 inherit LIB_CLIENT;
 
 string globalmud;
-string* allfiles;
+string array allfiles;
 string mcolor = "magenta";
 
 mapping RequestedFiles = ([]);
@@ -17,15 +17,15 @@ mapping ReceivedMudTokens = ([]);
 mapping OutgoingSessions = ([]);
 mapping IncomingSessions = ([]);
 
-string* waiting_auth = ({});
-object* Clients = ({});
+string array waiting_auth = ({});
+object array Clients = ({});
 
 mixed globalvar, g1, g2;
 
 void StartServer();
 void StopServer();
 
-private void validate() {
+static private void validate() {
     if( !(master()->valid_apply(({ "SECURE" }))) )
         error("Illegal attempt to access OOB_D: "+get_stack()+" "+identify(previous_object(-1)));
 }
@@ -142,7 +142,7 @@ varargs mixed RequestBegin(string target, mixed *data){
         return 0;
     }
     else if( ReceivedMudTokens[target] && ReceivedMudTokens[target]["token"] ){
-        if(data && sizeof(data))
+        if(data && sizeof(data)) 
             ret = eventBeginOOB(target, ReceivedMudTokens[target]["token"], data);
         else ret = eventBeginOOB(target, ReceivedMudTokens[target]["token"]);
     }

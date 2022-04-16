@@ -7,8 +7,8 @@
  */
 
 // abstract methods
-string* GetRestrictLimbs();
-mixed CanEquip(object who, string* limbs);
+string array GetRestrictLimbs();
+mixed CanEquip(object who, string array limbs);
 mixed CanUnequip(object who);
 // end abstract methods
 

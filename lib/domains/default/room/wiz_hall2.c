@@ -4,7 +4,7 @@
 inherit LIB_ROOM;
 int ds;
 
-protected void create() {
+static void create() {
     object ob;
     room::create();
     if(mud_name() == "Dead Souls"){

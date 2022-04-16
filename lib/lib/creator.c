@@ -20,12 +20,12 @@ inherit LIB_ISQL;
 #endif /* __PACKAGE_DATABASE_DB__ */
 
 private int showgrid, wizvision, CreatorAge, CreatorBirth;
-private nosave int LastCreatorAge;
+private static int LastCreatorAge;
 private string LivingShort;
 
 /* *****************  /lib/creator.c driver applies  ***************** */
 
-protected void create(){
+static void create(){
     player::create();
     CreatorAge = 0;
     LastCreatorAge = time();
@@ -74,7 +74,7 @@ mixed indirect_marry_liv_to_liv(){
     return 1;
 }
 
-protected void net_dead(){
+static void net_dead(){
     player::net_dead();
     CreatorAge += time() - LastCreatorAge;
     LastCreatorAge = time();}
@@ -116,7 +116,7 @@ void eventDescribeEnvironment(int verbose){
     player::eventDescribeEnvironment(verbose);
 }
 
-protected int Destruct(){
+static int Destruct(){
     int x;
 
     if( !(x = player::Destruct()) ) return 0;

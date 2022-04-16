@@ -21,7 +21,7 @@
 
 inherit LIB_VERB;
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("jump");
     SetRules("in OBJ", "into OBJ", "off OBJ", "off of OBJ", "from OBJ",

@@ -7,7 +7,7 @@
 
 inherit LIB_DOOR;
 
-protected void create() {
+static void create() {
     door::create();
     SetId("north", "door");
     SetShort("north", "a door made from fine oak");

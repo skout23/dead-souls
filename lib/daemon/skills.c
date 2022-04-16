@@ -4,11 +4,11 @@
 #include <privs.h>
 
 inherit LIB_DAEMON;
-nosave string SaveFile;
+static string SaveFile;
 mapping Skills = ([]);
 mapping RacialSkills = ([]);
 
-protected void create() {
+static void create() {
     daemon::create();
     SaveFile = save_file(SAVE_STATS);
     SetSaveFile(SaveFile);
@@ -53,7 +53,7 @@ varargs int SetSkill(string what, string cls, int statcl, int racial){
     return 1;
 }
 
-protected void SetSkills(){
+static void SetSkills(){
     foreach(string cls in CLASSES_D->GetClasses()){
         mapping skills = CLASSES_D->GetClass(cls)["Skills"];
         foreach(mixed key, mixed val in skills){

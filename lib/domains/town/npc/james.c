@@ -3,7 +3,7 @@
 
 inherit LIB_VENDOR;
 
-protected void create() {
+static void create() {
     ::create();
     SetKeyName("james");
     SetId( ({ "vendor","secretary","assistant","manager" }) );

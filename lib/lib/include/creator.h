@@ -1,8 +1,8 @@
 #ifndef __CREATOR_H__
 #define __CREATOR_H__
 
-protected void create();
-protected void net_dead();
+static void create();
+static void net_dead();
 void restart_heart();
 mixed direct_can_give_liv_obj();
 mixed indirect_give_obj_to_liv(object item);

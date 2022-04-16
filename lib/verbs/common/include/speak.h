@@ -1,7 +1,7 @@
 #ifndef l_speak_h
 #define l_speak_h
 
-protected void create();
+static void create();
 mixed can_speak();
 mixed can_speak_in_wrd(string str);
 mixed can_speak_str(string str);

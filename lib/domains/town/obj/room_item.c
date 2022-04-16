@@ -8,7 +8,7 @@ int ShowRoomDesc(){
     return 1;
 }
 
-protected void create() {
+static void create() {
     dummy::create();
     SetKeyName("room");
     SetId(({"here","around","place","area" }));

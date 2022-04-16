@@ -1,7 +1,7 @@
 #ifndef l_abilities_h
 #define l_abilities_h
 
-protected void create();
+static void create();
 varargs void SetSkill(string skill, int level, mixed classes);
 varargs int AddSkill(string skill, int classes);
 mapping GetSkill(string skill);                               

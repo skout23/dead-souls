@@ -1,7 +1,7 @@
 #ifndef l_strike_h
 #define l_strike_h
 
-protected void create();
+static void create();
 mixed can_strike_obj();
 mixed do_strike_obj(object ob);
 

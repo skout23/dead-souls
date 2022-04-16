@@ -65,7 +65,7 @@ string describeRoom() {
     }
 }
 
-protected void create() {
+static void create() {
     room::create();
     SetClimate("arid");
     SetAmbientLight(30);

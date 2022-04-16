@@ -1,12 +1,12 @@
 #include <daemons.h>
 #include <position.h>
 
-private nosave mixed GuardAction;
-private nosave mixed globalwhat;
-private nosave mixed* PendingGuard = ({});
-private nosave mixed gwhat;
-private nosave object Principal;
-private nosave mapping GuardMap = ([]);
+private static mixed GuardAction;
+private static mixed globalwhat;
+private static array PendingGuard = ({});
+private static mixed gwhat;
+private static object Principal;
+private static mapping GuardMap = ([]);
 
 int AllowPass(object who, object what){
     string race = this_object()->GetRace();
@@ -15,7 +15,7 @@ int AllowPass(object who, object what){
     if(this_object()->GetSleeping()) return 1;
     if(this_object()->GetParalyzed()) return 1;
     if(this_object()->GetPosition() == POSITION_LYING &&
-            !(RACES_D->GetLimblessCombatRace(race)) ) return 1;
+            !(RACES_D->GetLimblessCombatRace(race)) ) return 1; 
     return 0;
 }
 
@@ -66,9 +66,9 @@ varargs mixed SetGuard(mixed what, mixed action, int howlong){
 
     else if(gwhat && !inherits(LIB_ROOM,gwhat)){
         mixed inv = deep_inventory(env);
-        inv = filter(inv, (: base_name($1) == base_name(gwhat) :));
-        inv = filter(inv, (: $1 && !interactive(environment($1)) :));
-        if(!sizeof(inv)){
+        inv = filter(inv, (: base_name($1) == base_name(gwhat) :)); 
+        inv = filter(inv, (: $1 && !interactive(environment($1)) :)); 
+        if(!sizeof(inv)){ 
             if(objectp(gwhat)) what = base_name(gwhat);
             GuardMap[random(20)] = ([ "base" : what, "action" : action ]);
         }
@@ -91,7 +91,7 @@ void CheckPending(){
         mixed tmp_pending = ({});
         int ret;
         foreach(mixed guardmount in PendingGuard){
-            ret = SetGuard(guardmount["what"], guardmount["action"],
+            ret = SetGuard(guardmount["what"], guardmount["action"], 
                     guardmount["howlong"]);
             if(!ret) tmp_pending += ({ guardmount });
         }

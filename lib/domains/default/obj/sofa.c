@@ -2,7 +2,7 @@
 
 inherit LIB_BED;
 
-protected void create() {
+static void create() {
     ::create();
     SetKeyName("sofa");
     SetId("sofa");

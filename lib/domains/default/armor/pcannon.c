@@ -25,7 +25,7 @@ string LongDesc(){
     return ret;
 }
 
-protected void create() {
+static void create() {
     ::create();
     SetKeyName("plasma cannon");
     SetId(({"cannon"}));

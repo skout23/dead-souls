@@ -29,7 +29,7 @@ int SetDesc(){
     return 1;
 }
 
-protected void create()  {
+static void create()  {
     meal::create();
     SetDesc();
     SetKeyName("milk");

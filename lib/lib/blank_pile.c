@@ -2,13 +2,13 @@
 
 inherit LIB_PILE;
 
-protected void create(){
+static void create(){
     pile::create();
     SetKeyName("money");
 }
 
-string* GetId(){
-    string* id;
+string array GetId(){
+    string array id;
 
     id = pile::GetId();
     if( PileType ){

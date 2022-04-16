@@ -35,6 +35,6 @@ int GetStrikeChance(){
     return StrikeChance;
 }
 
-protected int SetStrikeChance(int x){
+static int SetStrikeChance(int x){
     return (StrikeChance = x);
 }

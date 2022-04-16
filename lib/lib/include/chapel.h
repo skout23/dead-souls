@@ -1,7 +1,7 @@
 #ifndef l_chapel_h
 #define l_chapel_h
 
-protected void create();
+static void create();
 
 mixed CanMarry(object who, object spouse1, object spouse2);
 mixed CanSacrifice(object who, object what, string deus);

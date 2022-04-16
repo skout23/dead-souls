@@ -2,7 +2,7 @@
 
 inherit LIB_VERB;
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("rock");
     SetRules("","OBJ", "WRD OBJ", "STR on OBJ");

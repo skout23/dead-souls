@@ -10,7 +10,7 @@
 #include <armor_types.h>
 
 private int          ArmorType  = A_WEAPON;
-private string* Worn        = 0;
+private string array Worn        = 0;
 
 // abstract methods
 string GetDefiniteShort();
@@ -28,20 +28,20 @@ int SetArmorType(int x){
     return (ArmorType = x);
 }
 
-string* GetSave(){
+string array GetSave(){
     return ({ "Worn" });
 }
 
-string* GetWorn(){
+string array GetWorn(){
     return Worn;
 }
 
-protected string* SetWorn(string* limbs){
+static string array SetWorn(string array limbs){
     Worn = limbs;
     return Worn;
 }
 
-mixed CanEquip(object who, string* limbs){
+mixed CanEquip(object who, string array limbs){
     if( GetWorn() ){
         return "#You are already using " + GetDefiniteShort() + ".";
     }
@@ -55,7 +55,7 @@ mixed CanUnequip(object who){
     return who->CanRemoveItem(who, this_object());
 }
 
-mixed eventEquip(object who, string* limbs){
+mixed eventEquip(object who, string array limbs){
     mixed tmp = who->eventWear(this_object(), limbs);
     mixed adjs = this_object()->GetAdjectives();
     if( tmp != 1 ){
@@ -71,7 +71,7 @@ mixed eventEquip(object who, string* limbs){
     return 1;
 }
 
-protected void eventRestoreEquip(string* limbs){
+static void eventRestoreEquip(string array limbs){
     mixed tmp;
 
     if( !limbs || !environment() ){

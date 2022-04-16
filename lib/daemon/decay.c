@@ -4,13 +4,13 @@ inherit LIB_DAEMON;
 
 void eventDecay();
 
-protected void create() {
+static void create() {
     daemon::create();
     SetNoClean(1);
     call_out("eventDecay", 30);
 }
 
-protected void eventDecay() {
+static void eventDecay() {
     object *limbs;
     object *corpses;
 

@@ -8,7 +8,7 @@ inherit LIB_ARMOR;
 
 int eventReadWatch();
 
-protected void create(){
+static void create(){
     armor::create();
     SetKeyName("pocket watch");
     SetId(({"watch","pocketwatch","pocket watch","timepiece"}));

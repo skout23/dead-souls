@@ -10,7 +10,7 @@
 #include <message_class.h>
 #include "include/pager.h"
 
-nosave private int InPager = 0;
+static private int InPager = 0;
 
 mixed more(mixed val, string cl, function f, mixed args){
     log_file("more", sprintf("%O", previous_object()) + "\n");
@@ -18,7 +18,7 @@ mixed more(mixed val, string cl, function f, mixed args){
 }
 
 varargs mixed eventPage(mixed val, mixed msg_class, function f,mixed args...){
-    mixed* files;
+    mixed array files;
     int maxi;
 
     if( InPager ) return "You are already in the pager.";
@@ -78,7 +78,7 @@ varargs mixed eventPage(mixed val, mixed msg_class, function f,mixed args...){
                 files[i]["Args"] = 0;
             }
         }
-        if(files[<1]["Args"] && files[<1]["Callback"])
+        if(files[<1]["Args"] && files[<1]["Callback"]) 
             files[<1]["Args"] = ({ files[<1]["Callback"] }) + files[<1]["Args"];
         else if(files[<1]["Callback"]) files[<1]["Args"] = ({ files[<1]["Callback"] });
         files[<1]["Callback"] = (: RazzleDazzle :);
@@ -86,7 +86,7 @@ varargs mixed eventPage(mixed val, mixed msg_class, function f,mixed args...){
     return Page(files[0]+([]));
 }
 
-protected int Page(mixed tmpfile){
+static int Page(mixed tmpfile){
     string page, prompt, key;
     int endline, tmpcurrline, err;
     mixed tmparr, tmparr2;
@@ -127,11 +127,11 @@ protected int Page(mixed tmpfile){
         else {
             evaluate(file["Callback"]);
         }
-    }
+    }    
     return 1;
 }
 
-protected void cmdPage(string str, mapping file){
+static void cmdPage(string str, mapping file){
     string *tmp;
     string cmd, args;
     int fp, x, scrlen;
@@ -223,7 +223,7 @@ protected void cmdPage(string str, mapping file){
             Page(file);
             return;
 
-        case "b":
+        case "b": 
             scrlen = GetScreen()[1];
             if( (file["CurrentLine"] - (2*(scrlen-3))) < 1 ){
                 eventPrint("\a" + GetPagerPrompt(file), MSG_PROMPT);
@@ -324,7 +324,7 @@ protected void cmdPage(string str, mapping file){
     }
 }
 
-varargs private void RazzleDazzle(mixed args...){
+varargs static private void RazzleDazzle(mixed args...){
     function f;
     InPager = 0;
     if(args && sizeof(args)){
@@ -338,7 +338,7 @@ varargs private void RazzleDazzle(mixed args...){
     this_object()->CheckCharmode();
 }
 
-private string GetPagerPrompt(mapping file){
+static private string GetPagerPrompt(mapping file){
     int x;
 
     if( creatorp() && file["Name"] != "" )

@@ -11,7 +11,7 @@
 
 inherit LIB_VERB;
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("wear");
     SetRules("OBS", "OBJ on STR");
@@ -47,8 +47,8 @@ mixed do_wear_obj_on_str(object ob, string str) {
             ({ remove_article(lower_case(str)) }));
 }
 
-mixed do_wear_obs(object* armors) {
-    object* obs;
+mixed do_wear_obs(object array armors) {
+    object array obs;
 
     if( !sizeof(armors) ) {
         this_player()->eventPrint("There is no such thing to be worn.");
@@ -56,10 +56,10 @@ mixed do_wear_obs(object* armors) {
     }
     obs = filter(armors, (: objectp :));
     if( !sizeof(obs) ) {
-        mixed* ua;
+        mixed array ua;
 
         ua = unique_array(armors, (: $1 :));
-        foreach(string* list in ua) {
+        foreach(string array list in ua) {
             this_player()->eventPrint(list[0]);
         }
         return 1;

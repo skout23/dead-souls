@@ -1,7 +1,7 @@
 #ifndef l_bank_h
 #define l_bank_h
 
-protected void create();
+static void create();
 
 mixed CanBank(object who, string currency);
 

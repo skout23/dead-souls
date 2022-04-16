@@ -1,7 +1,7 @@
 #ifndef l_fish_h
 #define l_fish_h
 
-protected void create();
+static void create();
 
 int eventCatch(object who);
 

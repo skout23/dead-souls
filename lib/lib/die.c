@@ -15,13 +15,13 @@ int SetDenominator(int denom){
     else return Denominator = denom;
 }
 
-mixed SetLong(mixed str){
+string SetLong(string str){
     item::SetLong(str);
     if(!BaseLong) BaseLong = str;
     return BaseLong;
 }
 
-protected void create(){
+static void create(){
     item::create();
     SetKeyName("die");
     SetId(({"dado","bone", "alea"}));

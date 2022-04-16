@@ -9,17 +9,17 @@
 #include <position.h>
 
 private int          MaxSitters = 1;
-private object* Sitters    = ({});
+private object array Sitters    = ({});
 
 int GetMaxSitters(){
     return MaxSitters;
 }
 
-protected int SetMaxSitters(int x){
+static int SetMaxSitters(int x){
     return (MaxSitters = x);
 }
 
-object* GetSitters(){
+object array GetSitters(){
     return copy(Sitters);
 }
 

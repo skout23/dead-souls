@@ -4,7 +4,7 @@
 
 inherit LIB_VERB;
 
-protected void create(){
+static void create(){
     verb::create();
     SetVerb("teach");
     SetRules("","STR to LIV","LIV to STR");

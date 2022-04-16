@@ -4,7 +4,7 @@
 #include <damage_types.h>
 inherit LIB_ARMOR;
 
-protected void create(){
+static void create(){
     armor::create();
     SetKeyName("visitor pass");
     SetId(({"testchar badge","badge","pass","visitor's pass"}));

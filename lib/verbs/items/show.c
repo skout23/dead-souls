@@ -3,7 +3,7 @@
 
 inherit LIB_VERB;
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("show");
     SetRules("OBJ LIV", "LIV OBJ", "OBJ to LIV" );

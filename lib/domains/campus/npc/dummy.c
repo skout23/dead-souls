@@ -3,7 +3,7 @@
 #include <damage_types.h>
 inherit LIB_NPC;
 
-protected void create(){
+static void create(){
     npc::create();
     SetKeyName("dummy");
     SetId( ({"dummy","mokujin"}) );

@@ -11,18 +11,18 @@
 inherit LIB_DAEMON;
 
 void PreMenu(string str);
-protected varargs void MainMenu(string str);
-protected void Assign(string *args);
-protected void EndAssign(string *args);
-protected void Complete(string *args);
+static varargs void MainMenu(string str);
+static void Assign(string *args);
+static void EndAssign(string *args);
+static void Complete(string *args);
 void EndComplete(int x);
-protected void Delete(string *args);
-protected void Report(string *args);
-protected void EndReport(string type, string data, string file);
-varargs protected void View(string *args, int print);
-nosave string GetBugString(int id, mapping bugs);
+static void Delete(string *args);
+static void Report(string *args);
+static void EndReport(string type, string data, string file);
+varargs static void View(string *args, int print);
+static string GetBugString(int id, mapping bugs);
 
-protected void create() {
+static void create() {
     daemon::create();
     SetNoClean(1);
 }
@@ -53,15 +53,15 @@ mixed cmd(string str) {
     return 1;
 }
 
-void PreMenu(string str) {
+void PreMenu(string str) { 
     if( str == "q" ) {
         message("system", "Exiting the bug tracking system.", this_player());
         return;
     }
-    MainMenu();
+    MainMenu(); 
 }
 
-varargs protected void MainMenu(string str) {
+varargs static void MainMenu(string str) {
     string tmp;
     int cols;
 
@@ -73,8 +73,8 @@ varargs protected void MainMenu(string str) {
             case "r": Report(({})); return;
             case "p": View(({}), 1); return;
             case "v": View(({})); return;
-            case "q":
-                      message("system", "Exiting the bug tracking system.",
+            case "q": 
+                      message("system", "Exiting the bug tracking system.", 
                               this_player());
                       return;
         }
@@ -94,7 +94,7 @@ varargs protected void MainMenu(string str) {
     input_to( (: MainMenu :) );
 }
 
-protected void Assign(string *args) {
+static void Assign(string *args) {
     int i;
 
     if( !creatorp(this_player()) ) {
@@ -111,14 +111,14 @@ protected void Assign(string *args) {
         int x;
 
         if( (x = to_int(args[0])) > 0 ) { /* assume a bug id for now */
-            if( !archp(this_player()) )
+            if( !archp(this_player()) ) 
                 Assign( ({ args[0], this_player()->GetCapName() }) );
             else {
                 message("prompt", "Enter the creator to assign it to [" +
                         this_player()->GetCapName() + "]: ",
                         this_player());
                 input_to(function(string str, string id) {
-                        if( !str || str == "" )
+                        if( !str || str == "" ) 
                         str = this_player()->GetCapName();
                         Assign( ({ str, id }) );
                         }, args[0]);
@@ -128,7 +128,7 @@ protected void Assign(string *args) {
         else {
             message("prompt", "Enter in the bug ID to assign to " +
                     capitalize(args[0]) + ": ", this_player());
-            input_to(function(string id, string str) {
+            input_to(function(string id, string str) { 
                     Assign( ({ id, str }) );
                     }, args[0]);
             return;
@@ -142,7 +142,7 @@ protected void Assign(string *args) {
                 if( str == "y" ) {
                 string file;
 
-                message("system", "Enter comments on the bug...",
+                message("system", "Enter comments on the bug...", 
                     this_player());
                 file = DIR_TMP "/" + this_player()->GetKeyName();
                 rm(file);
@@ -192,7 +192,7 @@ protected void Assign(string *args) {
     }
 }
 
-protected void EndAssign(string *args) {
+static void EndAssign(string *args) {
     string file, contents;
 
     file = DIR_TMP "/" + this_player()->GetKeyName();
@@ -201,7 +201,7 @@ protected void EndAssign(string *args) {
     Assign(args + ({ contents }));
 }
 
-protected void Complete(string *args) {
+static void Complete(string *args) {
     string file;
     int x;
 
@@ -215,7 +215,7 @@ protected void Complete(string *args) {
         message("prompt", "Hit return: ", this_player());
         input_to( (: PreMenu :) );
         return;
-    }
+    }	
     else if( (x = to_int(args[0])) < 1 ) {
         message("system", "Invalid bug ID.", this_player());
         message("prompt", "Hit return: ", this_player());
@@ -246,7 +246,7 @@ void EndComplete(int x) {
     message("system", "Bug marked completed!", this_player());
 }
 
-protected void Delete(string *args) {
+static void Delete(string *args) {
     if( !archp(this_player()) ) {
         message("system","You must be an arch to delete bugs.", this_player());
         return;
@@ -259,16 +259,16 @@ protected void Delete(string *args) {
     else {
         int x;
 
-        if( (x = to_int(args[0])) < 1 )
+        if( (x = to_int(args[0])) < 1 ) 
             message("system", "Invalid bug ID.", this_player());
-        else if( !(BUGS_D->eventDelete(x)) )
+        else if( !(BUGS_D->eventDelete(x)) ) 
             message("system", "Delete failed.", this_player());
         else message("system", "Deletion succeeded.", this_player());
         return;
     }
 }
 
-protected void Report(string *args) {
+static void Report(string *args) {
     if( archp(this_player()) && sizeof(args) ) {
         string data;
         string bug;
@@ -276,7 +276,7 @@ protected void Report(string *args) {
 
         data = "Room: " + file_name(environment(this_player()));
         bug = implode(args, " ");
-        if( x = BUGS_D->eventReport(this_player()->GetCapName(),
+        if( x = BUGS_D->eventReport(this_player()->GetCapName(), 
                     "approval", bug, data) ) {
             BUGS_D->eventAssign(x, query_privs(environment(this_player())));
             message("system", "Bug reported.", this_player());
@@ -290,7 +290,7 @@ protected void Report(string *args) {
     else EndReport(0, "Room: " + file_name(environment(this_player())), 0);
 }
 
-protected void EndReport(string type, string data, string file) {
+static void EndReport(string type, string data, string file) {
     string tmp;
     int x;
 
@@ -339,11 +339,11 @@ protected void EndReport(string type, string data, string file) {
             x + ".", this_player());
 }
 
-varargs protected void View(string *args, int print) {
+varargs static void View(string *args, int print) {
     mapping bugs;
     function f;
 
-    f = function() {
+    f = function() { 
         message("prompt", "\nHit return: ", this_player());
         input_to( (: PreMenu :) );
     };
@@ -385,7 +385,7 @@ varargs protected void View(string *args, int print) {
                 tmp += GetBugString(bug_id, bugs) + "\n*****\n\n";
         }
         if( tmp == "" ) {
-            message("system", "No bugs meet your query criteria.",
+            message("system", "No bugs meet your query criteria.", 
                     this_player());
             message("prompt", "Hit return: ", this_player());
             input_to( (: PreMenu :) );
@@ -427,11 +427,11 @@ varargs protected void View(string *args, int print) {
 
             opt1 = args[0];
             opt2 = args[1];
-            if( opt1 == "1" && opt2 == "1" )
+            if( opt1 == "1" && opt2 == "1" ) 
                 tmp += GetBugString(bug_id, bugs) + "\n*****\n\n";
             else {
-                if( opt2 == "2" && (!bug["assigned"] ||
-                            convert_name(bug["assigned"]) != nom) )
+                if( opt2 == "2" && (!bug["assigned"] || 
+                            convert_name(bug["assigned"]) != nom) ) 
                     continue;
                 else if(opt2 == "3" && convert_name(bug["who"]) != nom )
                     continue;
@@ -460,15 +460,15 @@ varargs protected void View(string *args, int print) {
     }
 }
 
-nosave string GetBugString(int id, mapping bugs) {
+static string GetBugString(int id, mapping bugs) {
     string tmp;
 
     tmp = "%^YELLOW%^Bug ID:%^RESET%^ " + id + "\n";
-    tmp += "%^YELLOW%^Reported by:%^RESET%^ " +
+    tmp += "%^YELLOW%^Reported by:%^RESET%^ " + 
         bugs[id]["who"] + "\n";
     if( bugs[id]["assigned"] ) {
         tmp += "%^YELLOW%^Status: %^RESET%^";
-        if( !bugs[id]["date fixed"] )
+        if( !bugs[id]["date fixed"] ) 
             tmp += "assigned to " + bugs[id]["assigned"] + "\n";
         else tmp += "completed " + ctime(bugs[id]["date fixed"]) + "\n";
     }
@@ -476,7 +476,7 @@ nosave string GetBugString(int id, mapping bugs) {
     tmp += "%^YELLOW%^Type:%^RESET%^ " + bugs[id]["type"] + "\n";
     if( bugs[id]["date fixed"] )
         tmp += "%^YELLOW%^Notes:%^RESET%^\n" + bugs[id]["resolution"] + "\n";
-    if( creatorp(this_player()) )
+    if( creatorp(this_player()) ) 
         tmp += "\n%^YELLOW%^Creator info:%^RESET%^\n" + bugs[id]["data"] + "\n";
     tmp += "\n%^YELLOW%^Bug info:%^RESET%^\n" + bugs[id]["bug"] + "\n";
     return tmp;

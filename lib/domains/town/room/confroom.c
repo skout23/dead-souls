@@ -5,7 +5,7 @@ inherit LIB_ROOM;
 
 int privacy, timer;
 string ExtraDesc();
-protected void create() {
+static void create() {
     string privs;
     privs = query_privs();
     if( privs ) privs = capitalize(privs);

@@ -23,7 +23,7 @@ int PreExit(){
     return 1;
 }	
 
-protected void create() {
+static void create() {
     room::create();
     SetClimate("outdoors");
     SetAmbientLight(30);

@@ -10,7 +10,7 @@
 
 inherit LIB_TORCH;
 
-protected void create() {
+static void create() {
     torch::create();
     SetKeyName("burning orb");
     SetVendorType(VT_MAGIC);

@@ -26,7 +26,7 @@ void init() {
 
 void set_exit(string str) { __Exit = str; }
 
-protected int cmd_enter(string str) {
+static int cmd_enter(string str) {
     if(present(str, environment(this_object())) != this_object()) return 0;
     this_player()->move_player(__Exit, "into the estate");
     return 1;

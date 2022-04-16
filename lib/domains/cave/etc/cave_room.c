@@ -3,7 +3,7 @@
 
 inherit LIB_ROOM;
 
-protected void create(){
+static void create(){
     ::create();
 }
 

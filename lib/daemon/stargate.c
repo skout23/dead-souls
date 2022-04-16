@@ -17,9 +17,9 @@
 inherit LIB_DAEMON;
 
 private mapping Stargates = ([]);
-nosave string SaveFile;
+static string SaveFile;
 
-protected void create(){
+static void create(){
     daemon::create();
     SaveFile = save_file(SAVE_STARGATE);
     SetNoClean(1);

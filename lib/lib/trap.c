@@ -14,14 +14,14 @@ inherit LIB_STORAGE;
 int EscapeChance = 0;
 int MaxCapture = 0;
 
-protected void create(){
+static void create(){
     storage::create();
     if( sizeof(GetCaptives()) ){
         set_heart_beat(2);
     }
 }
 
-protected void heart_beat(){
+static void heart_beat(){
     if( !sizeof(GetCaptives()) ){
         set_heart_beat(0);
         return;
@@ -93,7 +93,7 @@ mixed eventCapture(object who, object target){
 }
 
 mixed eventEscape(){
-    object* captives;
+    object array captives;
     object captive, env;
 
     if( GetClosed() ){
@@ -132,7 +132,7 @@ mixed eventFree(object who, string target){
     return 1;
 }
 
-object* GetCaptives(){
+object array GetCaptives(){
     return filter(all_inventory(), (: living :));
 }
 

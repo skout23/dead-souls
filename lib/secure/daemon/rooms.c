@@ -12,15 +12,15 @@ mapping Workrooms = ([]);
 
 mapping WorldMap = ([]);
 mapping WorldGrid = ([]);
-nosave mapping DroneCache = ([]);
-nosave string last_exit;
-nosave int global_manual, cache_timer = time();
+static mapping DroneCache = ([]);
+static string last_exit;
+static int global_manual, cache_timer = time();
 int debugging;
-nosave string *cards = ({ "north", "south", "east", "west",
+static string *cards = ({ "north", "south", "east", "west",
         "northeast", "northwest", "southeast", "southwest",
         "up", "down" });
-nosave string void_room, SaveFile;
-nosave string *unsafes = ({ "/realms/", "/open/", "/estates/" });
+static string void_room, SaveFile;
+static string *unsafes = ({ "/realms/", "/open/", "/estates/" });
 
 void create(){
     int err;
@@ -44,7 +44,7 @@ void create(){
     if(undefinedp(void_room)) void_room = ROOM_VOID;
 }
 
-protected void heart_beat(){
+static void heart_beat(){
     SaveObject(SaveFile, 1);
 }
 

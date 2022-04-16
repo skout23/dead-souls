@@ -7,12 +7,12 @@ inherit LIB_BURN;
 private int BurnRate = 5;
 int lastpuff;
 
-protected void create(){
+static void create(){
     item::create();
     burn::create();
 }
 
-protected void heart_beat(){
+static void heart_beat(){
     eventDecreaseFuel(1);
     if( GetFuelAmount() < 1){
         eventBurnOut();
@@ -48,7 +48,7 @@ int GetBurnRate(){
     return BurnRate;
 }
 
-protected int SetBurnRate(int x){
+static int SetBurnRate(int x){
     return (BurnRate = x);
 }
 

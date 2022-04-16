@@ -3,7 +3,7 @@
 #include <damage_types.h>
 inherit LIB_ARMOR;
 
-protected void create(){
+static void create(){
     armor::create();
     SetKeyName("leather boot");
     SetAdjectives( ({"leather", "simple", "orc", "orcish", "protective","leg","left","full leg"}) );

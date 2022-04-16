@@ -18,7 +18,7 @@ void AddStuff(){
     ob->eventMove(this_object());
     ob->SetNoClean(0);
 }
-protected void create() {
+static void create() {
     room::create();
     SetClimate("indoors");
     SetAmbientLight(40);

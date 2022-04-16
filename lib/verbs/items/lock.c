@@ -11,7 +11,7 @@
 
 inherit LIB_VERB;
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("lock");
     SetRules("OBJ with OBJ","OBJ with STR");
@@ -39,13 +39,9 @@ varargs mixed can_lock_obj_with_str(mixed ob1, mixed ob2, mixed words...) {
 }
 
 varargs mixed do_lock_obj_with_obj(object target, object key, mixed words...) {
-    if (sizeof(words))
-    {
-        string id;
-        id = remove_article(lower_case(words[0]));
-        return target->eventLock(this_player(), id, key);
-    }
-    return target->eventLock(this_player(), key);
+    string id;
+    id = remove_article(lower_case(words[0]));
+    return target->eventLock(this_player(), id, key);
 }
 
 varargs mixed do_lock_obj_with_str(mixed ob1, mixed ob2, mixed words...) {

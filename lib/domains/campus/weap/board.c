@@ -10,7 +10,7 @@
 
 inherit LIB_ITEM;
 
-protected void create() {
+static void create() {
     item::create();
     SetKeyName("board of ed");
     SetId(({"board","board of ed","board of education"}));

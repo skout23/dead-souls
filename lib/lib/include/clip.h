@@ -1,7 +1,7 @@
 #ifndef l_clip_h
 #define l_clip_h
 
-protected void create();
+static void create();
 
 int PlusAmmo(int i);
 int MinusAmmo(int i);

@@ -3,9 +3,9 @@
 
 inherit LIB_DAEMON;
 
-protected void eventUpdate(){}
+static void eventUpdate(){}
 
-protected void create(){
+static void create(){
     object *prevs = previous_object(-1);
     object lu = find_object("/secure/cmds/admins/liveupgrade");
     daemon::create();

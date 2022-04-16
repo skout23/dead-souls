@@ -8,10 +8,10 @@
 #include <position.h>
 #include "include/lead.h"
 
-private nosave mapping Followers;
-private nosave int numberOfFollowers;
+private static mapping Followers;
+private static int numberOfFollowers;
 
-protected void create(){
+static void create(){
     Followers = ([]);
     numberOfFollowers = 0;
 }

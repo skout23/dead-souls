@@ -2,7 +2,7 @@
 
 inherit LIB_CHAIR;
 
-protected void create() {
+static void create() {
     chair::create();
     SetKeyName("mansion commode");
     SetId( ({ "toilet","commode","bowl","can" }) );

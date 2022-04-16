@@ -2,10 +2,10 @@
 #include <dirs.h>
 #include <privs.h>
 
-private mixed* PersistentInventory = 0;
-private nosave int  LastSave  = time();
+private mixed array PersistentInventory = 0;
+private static int  LastSave  = time();
 private int PersistentInventoryEnabled = 0;
-private nosave string wut, savename, nom = "";
+private static string wut, savename, nom = "";
 
 string GetSaveName(){
     mixed tmp = directory_exists(domain(this_object(),1)+"/save");
@@ -25,7 +25,7 @@ int GetLastSave(){
     return LastSave;
 }
 
-protected varargs int SaveObject(mixed str, int i){
+static varargs int SaveObject(mixed str, int i){
     int ret;
     savename = GetSaveName();
     if(!undefinedp(str) && intp(str)) i = str;
@@ -54,10 +54,11 @@ mixed GetPersistentInventory(){
     return copy(PersistentInventory);
 }
 
-protected varargs int RestoreObject(mixed str, int i){
+static varargs int RestoreObject(mixed str, int i){
     object env;
     int ret;
-    if(!interactive() && env && env->GetPersistent()) return 0;
+    if(!undefinedp(str) && intp(str)) i == str;
+    if(!interactive() && env && env->GetPersistent()) return;
     if(!str) savename = GetSaveName();
     else savename = str;
     if(!sizeof(savename)) return 0;
@@ -81,7 +82,7 @@ protected varargs int RestoreObject(mixed str, int i){
                                 environment($1) :)));
                 mclones = wut->GetMaxClones();
                 if(wut->GetUnique() && howmany) continue;
-                if(mclones && mclones <= howmany ) continue;
+                if(mclones && mclones <= howmany ) continue; 
                 ob = new(wut);
                 if( ob ) ob->eventConvertObject(tmp, 1);
             }

@@ -28,7 +28,7 @@ mixed findit(string str){
     return 0;
 }
 
-protected mixed ResetGrid(){
+static mixed ResetGrid(){
     object drone;
     object *drones = ({});
     string *starts = ({});

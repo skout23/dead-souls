@@ -1,7 +1,7 @@
 #ifndef l_poison_h
 #define l_poison_h
 
-protected void create();
+static void create();
 mixed indirect_poison_obj_with_obj();
 
 mixed eventSpreadPoison(object who, object target);

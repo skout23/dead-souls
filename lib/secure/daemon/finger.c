@@ -19,15 +19,15 @@ private string CurrentUser, Short, CapName, RealName, Email;
 private string Town, Race, Gender, HostSite;
 private string Class, Clan, Long;
 private string Rank, WebPage, tmpfile;
-private string* Titles, Religion;
-private class marriage* Marriages;
+private string array Titles, Religion;
+private class marriage array Marriages;
 
-protected void create() {
+static void create() {
     daemon::create();
     SetNoClean(1);
 }
 
-protected int LoadPlayer(string path){
+static int LoadPlayer(string path){
     return unguarded( (: RestoreObject($(path)) :) );
 }
 
@@ -40,11 +40,11 @@ varargs string GetFinger(string who, int html) {
     tmpfile = 0;
 
     if( !who ) {
-        object* people;
-        string* lines = ({});
+        object array people;
+        string array lines = ({});
         object person;
         int i;
-        int* screen;
+        int array screen;
 
         screen = this_player()->GetScreen();
         if( screen && sizeof(screen) ) i = screen[0]; else i = 80;
@@ -153,8 +153,8 @@ varargs string GetFinger(string who, int html) {
     return ret;
 }
 
-mixed* GetRemoteFinger(string who) {
-    mixed* tmp;
+mixed array GetRemoteFinger(string who) {
+    mixed array tmp;
     string plan;
     int creator;
     object ob;

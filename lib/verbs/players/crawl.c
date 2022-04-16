@@ -3,7 +3,7 @@
 
 inherit LIB_VERB;
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("crawl");
     SetRules("STR", "into STR");

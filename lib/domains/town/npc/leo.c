@@ -14,7 +14,7 @@ int WieldStaff(){
     return 1;
 }
 
-protected void create() {
+static void create() {
     sentient::create();
     SetKeyName("leo");
     SetId(({"archwizard","wizard"}));

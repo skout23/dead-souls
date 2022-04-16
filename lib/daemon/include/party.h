@@ -7,7 +7,7 @@ class party {
     object *Invited;
 }
 
-protected void create();
+static void create();
 mixed CanChangeLeader(object who, object targ);
 mixed CanCreateParty(object who, string name);
 mixed CanInviteMember(object who, object member);
@@ -22,6 +22,6 @@ mixed eventRemoveMember(object who, object targ);
 mixed eventRemoveParty(object who);
 object GetPartyLeader(string name);
 object *GetPartyMembers(string name);
-protected void RemoveInvitiation(string name, object who);
+static void RemoveInvitiation(string name, object who);
 
 #endif /* l_party_h */

@@ -3,7 +3,7 @@
 #include <damage_types.h>
 inherit LIB_ARMOR;
 
-protected void create(){
+static void create(){
     armor::create();
     SetKeyName("goggles");
     SetId(({"goggles"}));
@@ -20,12 +20,12 @@ void init(){
     ::init();
 }
 
-int eventReceiveDamage(mixed agent, int type, int amt, int i, mixed* l){
+int eventReceiveDamage(mixed agent, int type, int amt, int i, mixed array l){
     if(GetWorn()){
         tell_object(environment(this_object()), "The goggles! They "+
                 "do nothing!");
     }
-    return ::eventReceiveDamage(agent, type, amt, i, l);
+    return ::eventReceiveDamage(agent, type, amt, i, l);          
 }
 
 

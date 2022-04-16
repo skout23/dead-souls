@@ -8,15 +8,15 @@
 
 #include <daemons.h>
 
-private nosave int* Rarity = 0;
-private nosave int       Unique = 0;
-private nosave int       MaxClones = 0;
+private static int array Rarity = 0;
+private static int       Unique = 0;
+private static int       MaxClones = 0;
 
-int* GetRarity(){
+int array GetRarity(){
     return Rarity;
 }
 
-int* SetRarity(int count, int days){
+int array SetRarity(int count, int days){
     return (Rarity = ({ count, days }));
 }
 

@@ -12,7 +12,7 @@ inherit LIB_GERM;
 int cureMe(object who, int amount, string type);
 int infectMe(object who);
 
-protected void create() {
+static void create() {
     germ::create();
     SetId("flu", "influenza");
     SetType("flu");

@@ -29,13 +29,13 @@ string *PendingUnpauses = ({});
 string *players = ({});
 string *creators = ({});
 string *user_list = ({});
-nosave object ob;
-nosave string gplayer, SaveFile;
-nosave int maxlevel, override;
-nosave string home_dir, LevelList = "";
+static object ob;
+static string gplayer, SaveFile;
+static int maxlevel, override;
+static string home_dir, LevelList = "";
 
 string player_save_file;
-nosave string namestr = "";
+static string namestr = "";
 
 //Player vars
 string InternalDesc, Short, CapName, ExternalDesc, CurrentWorkingDirectory, PreviousWorkingDirectory, Terminal;
@@ -49,15 +49,15 @@ int Blind, CustomStats, Wimpy, Polyglot, Level, Morality, Dead, isPK, Deaths, Tr
 int TitleLength, CreatorAge, CreatorBirth;
 object Agent;
 float StaminaPoints;
-mixed* Inventory, CommandHist, Screen,  Marriages, Saved, ExtraChannels, LightSensitivity;
-mixed* Religion, Titles, Muffed, Quests;
+mixed array Inventory, CommandHist, Screen,  Marriages, Saved, ExtraChannels, LightSensitivity;
+mixed array Religion, Titles, Muffed, Quests; 
 mapping Items, Properties, Messages, RestrictedChannels, Nicknames, Aliases, Xverbs, Blocked;
 mapping News, Fingers, Limbs, MissingLimbs, Resistance, Stats, Languages, Skills, SkillModifiers;
-mapping Currency, Bank, SpellBook;
+mapping Currency, Bank, SpellBook; 
 //end player vars
 
 mapping Levels = ([]);
-nosave mapping LevelTitles = ([
+static mapping LevelTitles = ([
         1:"the utter novice",
         2:"the simple novice",
         3:"the beginner",
@@ -80,7 +80,7 @@ nosave mapping LevelTitles = ([
         20:({"the Caesar","the Caesara"}),
         ]);
 
-nosave mapping QuestLevels = ([
+static mapping QuestLevels = ([
         10:5,
         12:12,
         14:21,
@@ -132,7 +132,7 @@ mapping CompileLevelList(){
         if(mod < 1) mod = 0.5;
         if(i > 100) mod = 0.1;
         mod *= 0.1;
-        seed = seed * (1+mod);
+        seed = seed * (1+mod); 
         seed = ((seed/100) * 100);
         LevelList += "level: "+i+", ";
         if(seed > 0){
@@ -160,7 +160,7 @@ mapping CompileLevelList(){
     return copy(Levels);
 }
 
-protected void ScheduledPlayerAdd(string *plays){
+static void ScheduledPlayerAdd(string *plays){
     foreach(string play in plays){
         this_object()->AddPlayerInfo(play);
     }
@@ -174,7 +174,7 @@ string *CompileCreList(){
     creators = ({});
     if(!user_list) user_list = ({});
     foreach(string subdir in cre_dirs){
-        cres += unguarded( (: get_dir(DIR_CRES+"/"+$(subdir)+"/") :) )||({});
+        cres += unguarded( (: get_dir(DIR_CRES+"/"+$(subdir)+"/") :) );
     }
 #if ENABLE_INSTANCES
     cres = filter(cres, (: grepp($1, ""+__PORT__) :) );
@@ -189,7 +189,7 @@ string *CompileCreList(){
 #else
         sub = replace_string(cre, ".o","");
 #endif
-        if(sub && !grepp(sub, ".") &&
+        if(sub && !grepp(sub, ".") && 
                 (member_array(sub, user_list) == -1 ||
                  member_array(sub, creators) == -1)){
             cache += ({ sub });
@@ -230,7 +230,7 @@ string *CompilePlayerList(){
 #else
         sub = replace_string(play, ".o","");
 #endif
-        if(sub && !grepp(sub, ".") &&
+        if(sub && !grepp(sub, ".") && 
                 (member_array(sub, user_list) == -1 ||
                  member_array(sub, players) == -1)){
             cache += ({ sub });
@@ -287,7 +287,7 @@ string *eventDecre(string str){
     return players + ({});
 }
 
-int AutoAdvance(object ob, int level){
+static int AutoAdvance(object ob, int level){
     int ret;
     ob->ChangeLevel(level);
     ret = ob->GetLevel();
@@ -369,18 +369,18 @@ void AddPlayerInfo(mixed arg){
     namestr = replace_string(last_string_element(player_save_file,"/"),".o","");
 #endif
     namestr = cleaned_name(namestr);
-    if(grepp(player_save_file, DIR_CRES) &&
-            member_array(namestr,creators) == -1){
-        creators += ({ namestr }) ;
+    if(grepp(player_save_file, DIR_CRES) && 
+            member_array(namestr,creators) == -1){ 
+        creators += ({ namestr }) ; 
     }
-    else if(member_array(namestr,players) == -1){
-        players += ({ namestr }) ;
+    else if(member_array(namestr,players) == -1){ 
+        players += ({ namestr }) ; 
     }
     if(!unguarded( (: file_exists, player_save_file :) )){
         return;
     }
     if(member_array(namestr,user_list) == -1){
-        user_list += ({ namestr }) ;
+        user_list += ({ namestr }) ; 
     }
     SaveObject(SaveFile);
 }
@@ -389,7 +389,7 @@ string *GetPlayerList(){
     return players + ({});
 }
 
-string *GetCreatorList(){
+string *GetCreatorList(){    
     return copy(creators);
 }
 
@@ -451,7 +451,7 @@ int RemoveUser(string str){
     if(directory_exists(sfile)) rename(sfile, targetdir+"/"+str+"/realm");
     sfile = ESTATES_DIRS + "/" + str[0..0] + "/" + str;
     if(directory_exists(sfile)) rename(sfile, targetdir+"/"+str+"/estate");
-    log_file("rid", "\n" + str +
+    log_file("rid", "\n" + str + 
             " by PLAYERS_D as a trivial/unused account.\n");
     return 1;
 }
@@ -556,7 +556,7 @@ string *GetPendingDecres(){
     return copy(PendingDecres);
 }
 
-protected int LoadPlayer(string str){
+static int LoadPlayer(string str){
     string arg = "", initial = "";
     arg = last_string_element(lower_case(replace_string("/"+str,".o","")),"/");
 #if ENABLE_INSTANCES
@@ -593,7 +593,7 @@ int eventDestruct(){
     return ::eventDestruct();
 }
 
-protected mixed GetVariable(string val){
+static mixed GetVariable(string val){
     if(!val){
         return variables(this_object());
     }
@@ -613,7 +613,7 @@ mixed GetPlayerVariables(){
     return vars;
 }
 
-protected mixed GetPlayerVariable(string val){
+static mixed GetPlayerVariable(string val){
     string vars = GetPlayerVariables();
     mixed ret;
     if(!val) return vars;
@@ -644,8 +644,8 @@ mixed GetPlayerData(string player, string val){
     return ret;
 }
 
-string* GetAdminIPs(){
-    string* ret_array, *name_array, *line_array;
+string array GetAdminIPs(){
+    string array ret_array, name_array, line_array;
     string config_file;
     config_file = read_file(CFG_GROUPS);
     line_array = explode(config_file, "\n");
@@ -673,7 +673,7 @@ int CheckBuilder(object who){
         }
         return 1;
     }
-    return 0;
+    return 0; 
 }
 
 varargs string GetUserPath(mixed name, int legacy){
@@ -725,7 +725,7 @@ string GetHomeRoom(string name){
     return ret;
 }
 
-void UserUpdate(string name, int status){
+static void UserUpdate(string name, int status){
     object ob = find_player(name);
     if(member_array(name, local_users()) != -1) status = 1;
     else if(ob && !interactive(ob)) status = -1;
@@ -737,11 +737,11 @@ void PlayerUpdate(string name, int status){
     call_out("UserUpdate", 1, name, status);
 }
 
-protected mapping GatherUserData(){
+static mapping GatherUserData(){
     mapping cands = ([]);
-    foreach(string user in user_list){
+    foreach(string user in user_list){         
         reset_eval_cost();
-        gplayer = user;
+        gplayer = user;         
         if(ob = find_player(gplayer)){
             unguarded( (: ob->save_player(gplayer) :));
         }
@@ -783,7 +783,7 @@ int SelektUsers(int gather){
         if(!(count % 5)) interval++;
 
         //bot always get purged, and snoop logs tagged
-        if((cands[user]["RealName"] == "John Smith" &&
+        if((cands[user]["RealName"] == "John Smith" && 
                     cands[user]["Email"] == "me@here") ||
                 cands[user]["Email"] == "bot@delete.me"){
             reset_eval_cost();
@@ -804,11 +804,11 @@ int SelektUsers(int gather){
 
         //They last logged in over 6 months ago, and their in-game
         //time is less than two minutes.
-        else if(cands[user]["Age"] < 121 &&
-                (last = (time() - cands[user]["LoginTime"])) > 15552000){
+        else if(cands[user]["Age"] < 121 && 
+                (last = (time() - cands[user]["LoginTime"])) > 15552000){ 
             debug("Purging: "+user+", age: "+time_elapsed(cands[user]["Age"])+
                     " last logged in "+ctime(cands[user]["LoginTime"])+", "+
-                    time_elapsed(last)+" ago.", "red");
+                    time_elapsed(last)+" ago.", "red"); 
             purge = 1;
         }
 
@@ -817,7 +817,7 @@ int SelektUsers(int gather){
         else if(cands[user]["Age"] < 3600 &&
                 (cands[user]["LoginTime"] - cands[user]["BirthTime"] < 100) &&
                 (last = (time() - cands[user]["LoginTime"])) > 31104000){
-            debug("Purging: "+user+", age: "+time_elapsed(cands[user]["Age"])+
+            debug("Purging: "+user+", age: "+time_elapsed(cands[user]["Age"])+ 
                     " last logged in "+ctime(cands[user]["LoginTime"])+", "+
                     time_elapsed(last)+" ago.", "black");
             purge = 1;

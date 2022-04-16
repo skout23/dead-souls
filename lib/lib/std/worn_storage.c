@@ -5,7 +5,7 @@ inherit LIB_BASE_ARMOR;
 inherit LIB_SHADOW_HOOK;
 inherit LIB_MONEY;
 
-private nosave mixed *my_save = ({});
+private static mixed *my_save = ({});
 
 void create(){
     mixed a_save, s_save;
@@ -30,7 +30,7 @@ mixed direct_wear_obj(){
     return base_armor::direct_wear_obj();
 }
 
-mixed eventEquip(object who, string* limbs){
+mixed eventEquip(object who, string array limbs){
     return base_armor::eventEquip(who, limbs);
 }
 
@@ -50,11 +50,11 @@ string GetEquippedShort(){
     return base_armor::GetEquippedShort();
 }
 
-string* GetSave(){
+string array GetSave(){
     return base_armor::GetSave();
 }
 
-varargs string* AddSave(string *args){
+varargs string array AddSave(string *args){
     my_save += args;
     return base_armor::AddSave(my_save);
 }

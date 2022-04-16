@@ -16,9 +16,9 @@ inherit LIB_KNOCK;
 inherit LIB_SCRATCH;
 
 private mapping Sides;
-private nosave int Hidden = 1;
-private nosave int Opacity = 100;
-private nosave int Perforated = 0;
+private static int Hidden = 1;
+private static int Opacity = 100;
+private static int Perforated = 0;
 
 int GetOpacity(){
     return Opacity;
@@ -59,7 +59,7 @@ string *GetSides(){
 
 /*  ***************  /lib/door.c driver applies  ***************  */
 
-protected void create(){
+static void create(){
     daemon::create();
     parse_init();
     SetNoClean(0);
@@ -172,7 +172,7 @@ varargs mixed eventLock(object who, mixed key, mixed foo){
             if( !(sizeof(key->GetId() & GetKeys(side))) ){
                 who->eventPrint("You fail to lock " + tmp +
                         " with " + key->GetShort()+".");
-                room->eventPrint(who->GetName() + " attempts to "
+                room->eventPrint(who->GetName() + " attempts to " 
                         "lock " + tmp + " with " +
                         key->GetShort() + ", but fails.",who);
                 return 1;
@@ -236,8 +236,8 @@ varargs int eventOpen(object who, object tool){
  */
 
 int eventRegisterSide(string side){
-    string* id = GetId(side);
-    Sides[side]["Rooms"] =
+    string array id = GetId(side);
+    Sides[side]["Rooms"] = 
         distinct_array(Sides[side]["Rooms"] +
                 ({ previous_object() }));
     previous_object()->AddItem(id, (: GetLong($(side)) :));
@@ -319,14 +319,14 @@ mapping GetSide(string side){
 int SetLockable(string side, int x){
     if( !Sides[side] )
         Sides[side] = ([ "Rooms" : ({}) ]);
-    return Sides[side]["Lockable"] = x;
+    return Sides[side]["Lockable"] = x; 
 }
 
 int GetLockable(string side){
     return Sides[side]["Lockable"];
 }
 
-varargs string *SetId(string side, mixed *args...){
+varargs string *SetId(string side, mixed *args...){ 
     if( !Sides[side] ) Sides[side] = ([ "Rooms" : ({}) ]);
     Sides[side]["Ids"] = ({});
     foreach(mixed val in args){
@@ -336,7 +336,7 @@ varargs string *SetId(string side, mixed *args...){
     return Sides[side]["Ids"];
 }
 
-string *GetId(string side){
+string *GetId(string side){ 
     if(!Sides[side]) return ({});
     return Sides[side]["Ids"];
 }

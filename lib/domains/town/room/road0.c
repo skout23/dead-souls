@@ -1,7 +1,7 @@
 #include <terrain_types.h>
 #include <lib.h>
 inherit LIB_ROOM;
-protected void create() {
+static void create() {
     room::create();
     SetClimate("outdoors");
     SetAmbientLight(30);

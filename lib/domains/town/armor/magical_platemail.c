@@ -3,7 +3,7 @@
 #include <damage_types.h>
 inherit LIB_ARMOR;
 
-protected void create(){
+static void create(){
     armor::create();
     SetKeyName("suit of armor");
     SetId(({"armor","plate mail","platemail","suit","armor","suit of armor"}));

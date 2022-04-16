@@ -8,19 +8,19 @@
 
 #define WEB_SOURCE_PORT 80
 
-string* allnames = ({});
-string* tmpnames;
+string array allnames = ({});
+string array tmpnames;
 string reverts_dir, revert_name;
-nosave string upgrade_prefix = "/code/upgrades/"+mudlib_version();
-nosave string reverts_prefix = "/secure/upgrades/reverts/"+mudlib_version();
-nosave string upgrades_txt = "/secure/upgrades/txt";
-nosave string upgrades_files = "/secure/upgrades/files";
-nosave int i = 0;
-nosave int oob = 0;
-nosave object player = 0;
+static string upgrade_prefix = "/code/upgrades/"+mudlib_version();
+static string reverts_prefix = "/secure/upgrades/reverts/"+mudlib_version();
+static string upgrades_txt = "/secure/upgrades/txt";
+static string upgrades_files = "/secure/upgrades/files";
+static int i = 0;
+static int oob = 0;
+static object player = 0;
 int patched, transver = 0;
-nosave mapping NewFiles = ([]);
-nosave string SaveFile;
+static mapping NewFiles = ([]);
+static string SaveFile;
 
 void create(){
 #ifdef ENABLE_INSTANCES
@@ -55,7 +55,7 @@ int eventBackup(string file){
     string tmp, time_str,short_name,filename;
     if(!file) return 0;
     if(!file_exists(file)) return -1;
-    if( !(tmp = read_file(file)) ) return -2;
+    if( !(tmp = read_file(file)) ) return -2;  
     time_str = time()+"."+random_numbers(5);
     short_name = last_string_element(file,"/");
     if(!revert_name){
@@ -129,7 +129,7 @@ int eventCopy(string element){
 }
 
 mixed cmd(string str) {
-    string mud = "Dead Souls";
+    string mud = "Dead Souls"; 
     string file;
     string orig_str = str;
     int foo, tmpint = 0;
@@ -180,7 +180,7 @@ mixed cmd(string str) {
         rmdir(path_prefix(subver));
         write("Reversion complete.");
         return 1;
-    }
+    } 
 
     foreach(mixed element in socks){
         if(element[1] == "DATA_XFER" && element[4] == WEB_SOURCE_IP+"."+WEB_SOURCE_PORT &&
@@ -223,7 +223,7 @@ mixed cmd(string str) {
         string nlu, secs = upgrades_files+"/0^0secure0^0include0^0secrets.h";
         object nlob;
         if(file_exists(SECRETS_H)){
-            catch( cp(SECRETS_H, "/secure/save/backup/secrets_" +
+            catch( cp(SECRETS_H, "/secure/save/backup/secrets_" + 
                         imc2_mud_name() + "." + time() + ".bak") );
         }
         if(file_exists(secs)) catch( rm(secs) );
@@ -424,7 +424,7 @@ int GetDeferment(){
     string *defers = ({ "secrets.h", "network.h", "mssp.h" });
     string secs = upgrades_files+"/0^0secure0^0include0^0";
     foreach(string deferment in defers){
-        if(file_exists(secs+deferment) &&
+        if(file_exists(secs+deferment) && 
                 file_exists("/secure/include/"+deferment)){
             rm(secs+deferment);
         }

@@ -7,7 +7,7 @@ inherit LIB_ARMOR;
 string eventReadBill(){
     return "The front of the cap reads: \"Kiss me, I'm a newbie!\"";
 }
-protected void create(){
+static void create(){
     armor::create();
     SetKeyName("baseball cap");
     SetId(({"cap","hat"}));

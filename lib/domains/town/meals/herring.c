@@ -4,7 +4,7 @@
 
 inherit LIB_FISH;
 
-protected void create() {
+static void create() {
     fish::create();
     SetKeyName("herring");
     SetId( ({ "fish" }) );
@@ -14,7 +14,7 @@ protected void create() {
     SetMealType(MEAL_FOOD);
     SetMass(10); 
     SetStrength(10); 
-    SetBaseCost("silver", 2);
+    SetBaseCost("silver", 1);
     SetFight(4);
     SetFood("/domains/town/meals/herring");
 }

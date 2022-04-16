@@ -2,7 +2,7 @@
 
 inherit LIB_SENTIENT;
 
-protected void create() {
+static void create() {
     sentient::create();
     SetKeyName("satyr");
     SetAdjectives( ({"wild", "ferocious", "looking", "male", "humanoid", "creature"}) );

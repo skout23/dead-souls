@@ -9,7 +9,7 @@
 
 inherit LIB_VERB;
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("ring");
     SetRules("OBJ", "STR on OBJ", "OBJ with OBJ", "STR on OBJ with OBJ");

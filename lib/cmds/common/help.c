@@ -15,7 +15,7 @@ varargs void HelpMenu(string index);
 
 mixed cmd(string arg) {
     object who = previous_object();
-    int* screen = (who->GetScreen() || ({ 80, 24 }));
+    int array screen = (who->GetScreen() || ({ 80, 24 }));
     string help = "";
     string tmp = "";
 
@@ -55,15 +55,15 @@ mixed cmd(string arg) {
     return 1;
 }
 
-protected int CanAccess(object who, string index) {
+static int CanAccess(object who, string index) {
     return HELP_D->CanAccess(who, index);
 }
 
 varargs void HelpMenu(string index) {
     function f;
     string tmp;
-    string* indices;
-    int* scr;
+    string array indices;
+    int array scr;
     int y = 0;
 
     scr = this_player()->GetScreen() || ({ 80, 25 });
@@ -79,7 +79,7 @@ varargs void HelpMenu(string index) {
                 y = z;
             }
         }
-        tmp += format_page(map(indices, function(string str, string* ind) {
+        tmp += format_page(map(indices, function(string str, string array ind) {
                     int num = member_array(str, ind) + 1;
                     return ("[%^CYAN%^"+(num)+"%^RESET%^] " + str);
                     }, indices), scr[0]/(y+2), 4);
@@ -91,8 +91,8 @@ varargs void HelpMenu(string index) {
         return;
     }
     else {
-        string* topics = HELP_D->GetTopics(index);
-        string* bing = allocate(sizeof(topics));
+        string array topics = HELP_D->GetTopics(index);
+        string array bing = allocate(sizeof(topics));
         int i = 0;
 
         tmp += "Index: %^GREEN%^" + index + "%^RESET%^\n\n";
@@ -128,10 +128,10 @@ varargs void HelpMenu(string index) {
                 }
                 scr = (int *)this_player()->GetScreen() || ({ 80 });
                 if( ind_num = to_int(str) ) {
-                string* tmp2;
+                string array tmp2;
                 if( !ind ) tmp2 = filter(HELP_D->GetIndices(),
                     (: CanAccess(this_player(), $1) :));
-                else tmp2 = HELP_D->GetTopics(ind);
+                else tmp2 = HELP_D->GetTopics(ind);    
                 if( ind_num < 1 || ind_num > sizeof(tmp2) ) {
                 str = 0;
                 HELP_D->SetError("Index number out of range.");

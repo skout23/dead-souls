@@ -16,8 +16,8 @@ void create() {
     SetClimate("indoors");
     SetAmbientLight(30);
     SetShort("The start room");
-    SetLong( DoDesc() );
-    SetExits( ([
+    SetLong( (: DoDesc :));
+    SetExits( ([ 
                 "south" : "/domains/default/room/wiz_hall",
                 ]) );
     SetNoModify(1);
@@ -29,6 +29,9 @@ void create() {
     SetEnters( ([
                 //"tutorial" : "/domains/tutorial/room/start",
                 "town" : "/domains/town/room/start",
+                ]) );
+    SetInventory(([
+                "/domains/default/obj/cheatbook" : 1
                 ]) );
     if(tutorial){
         AddEnter("tutorial", "/domains/tutorial/room/start");

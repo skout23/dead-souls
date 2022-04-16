@@ -18,7 +18,7 @@ string Owner, Race;
 mapping Stats, Skills;
 string BaseFile, Class, Gender, LivingShort, LivingLong;
 int Player, Level, slowdecay, nodecay;
-string* MissingLimbs;
+string array MissingLimbs;
 object Playerob;
 mapping Equipped = ([]);
 
@@ -68,7 +68,7 @@ int eventDecay(){
     return Count;
 }
 
-protected int Destruct(){
+static int Destruct(){
     return ::Destruct();
 }
 
@@ -108,12 +108,12 @@ void SetCorpse(object who){
         if(!Equipped) Equipped = ([]);
         if(!thing || !objectp(thing)) continue;
         if(Equipped[file_name(thing)]) continue;
-        Equipped[file_name(thing)] =
-            ([ "object" : thing, "where" : thing->GetWorn() ]);
+        Equipped[file_name(thing)] = 
+            ([ "object" : thing, "where" : thing->GetWorn() ]); 
     }
     if(Player){
         SetNoClean(1);
-        slowdecay = 50;
+        slowdecay = 50; 
     }
 }
 
@@ -142,7 +142,7 @@ string GetSaveString(){ return 0; }
 int CanReceive(object ob){ return 1; }
 
 
-protected void create(){
+static void create(){
     ::create();
     SetId( ({ "corpse", "flesh", "remains" }) );
     SetAdjectives( ({"pile of", "rotting", "stinky"}) );
@@ -205,11 +205,11 @@ string GetClass(){
     return Class;
 }
 
-string* SetMissingLimbs(string *limbs){
+string array SetMissingLimbs(string *limbs){
     return MissingLimbs = limbs;
 }
 
-string* GetMissingLimbs(){
+string array GetMissingLimbs(){
     return MissingLimbs;
 }
 

@@ -7,7 +7,7 @@ varargs mixed eventWear(object who) {
     return 1;
 }
 
-protected void create() {
+static void create() {
     dummy::create();
     SetKeyName("hood");
     SetId("cloak hood","cloak's hood");

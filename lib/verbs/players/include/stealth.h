@@ -1,5 +1,5 @@
  
-protected void create();
+static void create();
 mixed can_stealth();
 mixed can_stealth_wrd();
 mixed do_stealth_wrd(string args);

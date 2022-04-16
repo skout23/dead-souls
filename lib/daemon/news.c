@@ -42,7 +42,7 @@ void GeneralNews() {
     else ClassNews("");
 }
 
-protected void NewbieNews() {
+static void NewbieNews() {
     object player = ThisPlayer();
     if( file_exists(NEWS_NEWBIE) ) {
         string news;
@@ -111,7 +111,7 @@ void ClassNews(string cl) {
     ClassNews(cl);
 }
 
-protected void HighMortalNews() {
+static void HighMortalNews() {
     object player = ThisPlayer();
     if( high_mortalp(player ) && file_exists(NEWS_HM) ) {
         int s;
@@ -132,7 +132,7 @@ protected void HighMortalNews() {
     AvatarNews();
 }
 
-protected void AvatarNews() {
+static void AvatarNews() {
     object player = ThisPlayer();
     if( avatarp(player ) && file_exists(NEWS_AVATAR) ) {
         int s;
@@ -153,7 +153,7 @@ protected void AvatarNews() {
     CreatorNews();
 }
 
-protected void CreatorNews() {
+static void CreatorNews() {
     object player = ThisPlayer();
     if( creatorp(player ) && file_exists(NEWS_CREATOR) ) {
         int s;
@@ -174,7 +174,7 @@ protected void CreatorNews() {
     AdminNews();
 }
 
-protected void AdminNews() {
+static void AdminNews() {
     object player = ThisPlayer();
     if(archp(player ) && file_exists(NEWS_ADMIN) ) {
         int s;
@@ -195,7 +195,7 @@ protected void AdminNews() {
     EndNews();
 }
 
-protected void EndNews() {
+static void EndNews() {
     object player = ThisPlayer();
     if(player) player->eventDescribeEnvironment();
 }

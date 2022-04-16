@@ -7,9 +7,9 @@
 #include <lib.h>
 #include "include/follow.h"
 
-private nosave object Leader;
+private static object Leader;
 
-protected void create(){ Leader = 0; }
+static void create(){ Leader = 0; }
 
 mixed direct_follow_liv(){
     if( this_object() == this_player() )
@@ -47,7 +47,7 @@ int IsFollowing(object ob){
     return 0;
 }
 
-/*
+/* 
  * eventFollow() needs to be overriden by child classes to provide the
  * actual move support.
  */

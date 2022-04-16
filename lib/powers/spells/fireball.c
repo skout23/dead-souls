@@ -11,7 +11,7 @@
 
 inherit LIB_SPELL;
 
-protected void create() {
+static void create() {
     spell::create();
     SetSpell("fireball");
     SetRules("", "LIV");

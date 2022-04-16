@@ -1,7 +1,7 @@
 #ifndef l_interactive_h
 #define l_interactive_h
 
-protected void create();
+static void create();
 int inventory_accessible();
 int inventory_visible();
 
@@ -10,7 +10,7 @@ mixed CanGet();
 mixed CanMarry();
 
 int Setup();
-protected void net_dead();
+static void net_dead();
 void eventReconnect();
 void eventDescribeEnvironment(int brief);
 int eventDestruct();
@@ -50,7 +50,7 @@ mapping GetLastError();
 void SetCapName(string str);
 void move_or_destruct();
 string SetShort(string str);
-mixed SetLong(mixed str);
+string SetLong(string str);
 string GetName();
 varargs int GetInvis(object ob);
 mixed *GetCommands();

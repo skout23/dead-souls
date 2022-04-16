@@ -10,8 +10,8 @@
 
 inherit LIB_DAEMON;
 
-private nosave mapping Commands;
-private nosave string *Paths;
+private static mapping Commands;
+private static string *Paths;
 
 void create() {
     daemon::create();

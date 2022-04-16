@@ -5,7 +5,7 @@
 
 inherit LIB_SPELL;
 
-protected void create() {
+static void create() {
     spell::create();
     SetSpell("meditate");
     SetRules("", "LIV");
@@ -18,6 +18,16 @@ protected void create() {
     SetHelp("Syntax: <cast meditate>\n"
             "A spell that allows the caster to "
             "restore their stamina more quickly.\n\n");
+}
+
+varargs int CanCast(object who, int level, string limb, object array targets){
+    object *mojo = filter(all_inventory(this_player()),
+            (: base_name($1) == "/secure/obj/meditate_mojo" :) );
+    if(sizeof(mojo)){
+        write("You already have a meditative aura around you, restoring your stamina.");
+        return 0;
+    }
+    return ::CanCast(who, level, limb, targets);
 }
 
 int eventCast(object who, int level) {

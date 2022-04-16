@@ -14,6 +14,7 @@ void create(){
     SetBaseCost("silver",10);
     SetVendorType(VT_TREASURE);
     SetRadiantLight(25);
+    SetFuelAmount(200);
 }
 
 void init(){

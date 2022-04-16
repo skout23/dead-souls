@@ -17,7 +17,7 @@ inherit MODULES_MONEY;
 inherit MODULES_READ;
 inherit MODULES_DOOR;
 
-protected void create(){
+static void create(){
     armor::create();
     SetKeyName("glasses");
     //the tanstaafl id enables this object to function like a

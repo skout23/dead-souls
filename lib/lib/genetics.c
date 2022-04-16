@@ -19,18 +19,18 @@ class blindness {
 
 private class blindness Blind            = 0;
 private mapping         Custom           = ([]);
-private int*       LightSensitivity = ({ 25, 75 });
+private int array       LightSensitivity = ({ 25, 75 });
 private mapping         Resistance       = ([]);
 private mapping         Stats            = ([]);
-private nosave mapping  StatsBonus       = ([]);
-private nosave int      VisionBonus      = 0;
+private static mapping  StatsBonus       = ([]);
+private static int      VisionBonus      = 0;
 
 // abstract methods
 string GetName();
 varargs void eventPrint(string message, mixed args...);
 // end abstract methods
 
-protected void create(){
+static void create(){
     Custom = ([
             "stats" : 15,
             "deviations" : 4,
@@ -49,7 +49,7 @@ int GetBlind(){
     }
 }
 
-protected void RemoveBlindness(){
+static void RemoveBlindness(){
     mixed val = Blind->end;
 
     Blind = 0;
@@ -232,7 +232,7 @@ int GetStatBonus(string stat){
     return x;
 }
 
-/* string SetResistance(int type, string level)
+/* string SetResistance(int type, string level) 
  * int type - the type being set (you can do a bitwise | on them)
  * string level "none", "low", "medium", "high", and "immune"
  *
@@ -272,7 +272,7 @@ int GetDeviating(){ return Custom["deviating"]; }
 int SetDeviating(int x){ return (Custom["deviating"] = (x ? 1 : 0)); }
 
 varargs mixed GetEffectiveVision(mixed location, int raw_score){
-    int* l;
+    int array l;
     object env, rider, where;
     int bonus = GetVisionBonus();
     int a, y, x = 0;
@@ -285,7 +285,7 @@ varargs mixed GetEffectiveVision(mixed location, int raw_score){
     }
 
     //fixme
-    if(!location && sizeof(get_livings(this_object())) &&
+    if(!location && sizeof(get_livings(this_object())) && 
             rider = get_random_living(this_object())){
         if(rider->GetProperty("mount") == this_object() && env){
             return rider->GetEffectiveVision(env);
@@ -320,7 +320,7 @@ varargs mixed GetEffectiveVision(mixed location, int raw_score){
 
     if(raw_score && !location){
         return "Low: "+l[0]+", High: "+l[1];
-    }
+    } 
     if( x >= l[0] && x <= l[1] ) return VISION_CLEAR;
     y = l[0]/3;
     if( x < y ) return VISION_TOO_DARK;
@@ -332,12 +332,12 @@ varargs mixed GetEffectiveVision(mixed location, int raw_score){
     return VISION_TOO_BRIGHT;
 }
 
-int* GetLightSensitivity(){
+int array GetLightSensitivity(){
     if( !LightSensitivity ) return ({ 25, 75 });
     else return LightSensitivity;
 }
 
-varargs protected int* SetLightSensitivity(mixed* val...){
+varargs static int array SetLightSensitivity(mixed array val...){
     if( !val ) error("Null argument to SetLightSensitivity().\n");
     if( sizeof(val) == 1 ) val = val[0];
     if( sizeof(val) != 2 )
@@ -354,7 +354,7 @@ int GetVisionBonus(){
     return VisionBonus;
 }
 
-protected void heart_beat(){
+static void heart_beat(){
     if( Blind ){
         Blind->count--;
         if( Blind->count < 1 ){

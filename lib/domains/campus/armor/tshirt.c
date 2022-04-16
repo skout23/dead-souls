@@ -2,7 +2,7 @@
 #include <armor_types.h>
 #include <damage_types.h>
 inherit LIB_ARMOR;
-protected void create(){
+static void create(){
     armor::create();
     SetKeyName("a Def Leppard shirt");
     SetId(({"shirt"}));

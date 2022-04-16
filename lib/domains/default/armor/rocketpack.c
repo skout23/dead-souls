@@ -21,7 +21,7 @@ string LongD(){
     return ret;
 }
 
-protected void create(){
+static void create(){
     armor::create();
     if(!Directions) Directions = ([]);
     SetKeyName("rocket pack");
@@ -196,7 +196,7 @@ int GetRunning(){
     return activated;
 }
 
-mixed eventEquip(object who, string* limbs){
+mixed eventEquip(object who, string array limbs){
     mixed success = armor::eventEquip(who, limbs);
     rocketshadow = new("/shadows/rocketpack");
     owner = who;
@@ -236,7 +236,7 @@ int eventDecrementCharge(){
     }
 
     return charge;
-}
+}   
 
 int GetRemainingCharge(){
     return charge;

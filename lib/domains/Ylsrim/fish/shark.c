@@ -11,7 +11,7 @@ inherit LIB_FISH;
 
 void BiteMe(object who);
 
-protected void create() {
+static void create() {
     fish::create();
     SetKeyName("blue shark");
     SetId( ({ "shark", "blue shark" }) );

@@ -11,7 +11,7 @@ string LongDesc(){
     return desc;
 }
 
-protected void create() {
+static void create() {
     room::create();
     SetClimate("indoors");
     SetAmbientLight(30);

@@ -5,7 +5,7 @@ inherit LIB_NPC;
 object *slips;
 int busy;
 
-protected void create() {
+static void create() {
     npc::create();
     SetKeyName("clepius");
     SetId(({"clepius","doctor","healer"}));

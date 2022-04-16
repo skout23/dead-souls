@@ -7,13 +7,13 @@
 #include "include/persist.h"
 
 private int SaveRecurse;
-private nosave int Retain = RETAIN_ON_QUIT;
+private static int Retain = RETAIN_ON_QUIT;
 
 private mixed *Saved = ({ "Properties" });
 
 string GetShort();
 
-private int eventConvertObject(mixed val, int recurse){
+static int eventConvertObject(mixed val, int recurse){
     string *flat = ({});
     mixed *tmp, *saved = this_object()->GetSave();
 
@@ -96,18 +96,18 @@ int eventLoadObject(mixed val, int recurse){
 }
 
 mixed *GetSave(){
-    return copy(Saved);
+    return copy(Saved); 
 }
 mixed *cGetSave(){ return copy(Saved); }
 mixed *dGetSave(){ return Saved; }
 
-protected mixed *AddSave(mixed *vars){
+static mixed *AddSave(mixed *vars){
     mixed *tmp = Saved + vars;
     Saved = tmp;
     return copy(Saved);
 }
 
-protected int SetSaveRecurse(int flag){ return (SaveRecurse = flag); }
+static int SetSaveRecurse(int flag){ return (SaveRecurse = flag); }
 
 string GetSaveString(){
     mixed *tmp, *saved = this_object()->GetSave();
@@ -125,8 +125,7 @@ string GetSaveString(){
         foreach(mixed var in flat){
             if(stringp(var)){
                 if(member_array(var, vv) == -1) continue;
-                // FIXME: why?
-                catch(mp[var] = fetch_variable(var));
+                mp[var] = fetch_variable(var);
             }
         }
     }

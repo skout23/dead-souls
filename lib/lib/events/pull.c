@@ -1,6 +1,6 @@
 #include <function.h>
 
-nosave private mapping Pull = ([]);
+static private mapping Pull = ([]);
 
 // abstract methods
 string GetDefiniteShort();
@@ -13,12 +13,12 @@ varargs mixed GetPull(string str){
     return Pull[str];
 }
 
-string* GetPulls(){
+string array GetPulls(){
     return keys(Pull);
 }
 
-mapping RemovePull(string item){
-    map_delete(Pull, item);
+mapping RemovePull(string item){ 
+    map_delete(Pull, item); 
     return Pull;
 }
 

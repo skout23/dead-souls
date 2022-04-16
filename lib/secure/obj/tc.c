@@ -7,7 +7,7 @@ object person, player;
 string preset;
 string DS_IP = "66.197.134.110 8000";
 
-protected void create()
+static void create()
 {
     string myname = mud_name();
     item::create();

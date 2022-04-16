@@ -4,7 +4,7 @@
 
 inherit LIB_POTION;
 
-protected void create() {
+static void create() {
     potion::create();
     SetKeyName("antidote");
     SetId( ({ "vial","bottle", "antidote","philtrum","antidote to poison","vial of antidote" }) );
@@ -17,7 +17,7 @@ protected void create() {
     SetMealMessages("You drink from the vial.",
             "$N drinks from a vial.");
     SetBaseCost("silver",200);
-    SetPoints( ([ "poison" : -10 ]) );
+    SetPoints( ([ "poison" : -20 ]) );
     SetEmptyName("vial");
     SetEmptyShort("an empty vial");
     SetEmptyLong("This empty vial once contained some liquid.");

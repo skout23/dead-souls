@@ -6,9 +6,9 @@
 
 #include "include/steal.h"
 
-nosave private mixed PreventSteal;
+static private mixed PreventSteal;
 
-protected void create(){
+static void create(){
     PreventSteal = 0;
 }
 

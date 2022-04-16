@@ -32,7 +32,7 @@ string *wild_card(string str){
     return tmp;
 }
 
-nomask protected int remove_dots(string str){ return !(str[0] == '.'); }
+nomask static int remove_dots(string str){ return !(str[0] == '.'); }
 #endif
 
 string query_cwd(){ return DIR_TMP; }

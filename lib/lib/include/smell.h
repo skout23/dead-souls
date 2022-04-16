@@ -1,7 +1,7 @@
 #ifndef l_smell_h
 #define l_smell_h
 
-protected void create();
+static void create();
 mixed direct_smell_obj();
 mixed direct_smell_str_word_obj(string str);
 

@@ -11,7 +11,7 @@
 
 inherit LIB_VERB;
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("sit");
     SetRules("", "up","down", "down in OBJ", "down on OBJ", "in OBJ", "on OBJ");

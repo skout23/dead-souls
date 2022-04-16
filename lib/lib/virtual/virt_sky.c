@@ -16,12 +16,12 @@ inherit LIB_VIRT_LAND;
 
 private mixed PreventLand;
 
-varargs protected void create(int x, int y,int z){
+varargs static void create(int x, int y,int z){
     virt_land::create( x,  y, z);
     SetMedium(MEDIUM_AIR);
 }
 
-varargs protected void Setup(int x, int y,int z){
+varargs static void Setup(int x, int y,int z){
     virt_land::create( x,  y, z);
     SetMedium(MEDIUM_AIR);
 }

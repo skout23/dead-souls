@@ -34,7 +34,7 @@ mixed CanOpen() {
     return 0; // people should not be opening this manually
 }
 
-protected void create() {
+static void create() {
     door::create();
     SetId("down", "hole");
     SetShort("down", "sand"); // this is what is seen when bumped into

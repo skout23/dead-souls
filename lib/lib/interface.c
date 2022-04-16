@@ -21,23 +21,23 @@ inherit LIB_CEDIT;
 private string Terminal;
 private mapping Blocked;
 private int *Screen;
-private nosave int LogHarass, Client;
-private nosave mapping TermInfo;
+private static int LogHarass, Client;
+private static mapping TermInfo;
 string MessageQueue;
 int PauseMessages, annoyblock;
 int MessageExceptions, BlockAnnoying;
 
-protected void create(){
+static void create(){
     chat::create();
     command::create();
     editor::create();
     nmsh::create();
     Terminal = "ansi";
-    Screen = ({ 80, 30 });
+    Screen = ({ 80, 20 });
     Blocked = ([]);
 }
 
-protected string process_input(string str){
+static string process_input(string str){
     command::SetCommandFail(0);
     str = command::process_input(str);
     if( Client ){
@@ -58,15 +58,15 @@ protected string process_input(string str){
     }
 }
 
-protected void terminal_type(string str){
+static void terminal_type(string str){
     if( !stringp(str) ) return;
     else SetTerminal(lower_case(str));
 }
 
-protected void window_size(int width, int height){
-    if(query_verb() == "screen" ||
+static void window_size(int width, int height){ 
+    if(query_verb() == "screen" || 
             !this_object()->GetProperty("screenlock")){
-        SetScreen(width, height);
+        SetScreen(width, height); 
     }
 }
 
@@ -130,7 +130,7 @@ void receive_message(mixed msg_class, string msg){
     else if( msg_class == "prompt" && msg_class == "editor" ) cl |= MSG_NOWRAP;
 
     switch(msg_class){
-        case "smell": case "sound": case "touch":
+        case "smell": case "sound": case "touch": 
             cl |= MSG_ENV;
             break;
 
@@ -183,7 +183,7 @@ void receive_message(mixed msg_class, string msg){
     eventPrint(msg, cl);
 }
 
-protected void receive_snoop(string str){ receive_message("snoop", "%"+str); }
+static void receive_snoop(string str){ receive_message("snoop", "%"+str); } 
 
 int Setup(){
     command::Setup();
@@ -210,7 +210,7 @@ varargs int eventPauseMessages(int x, int exceptions){
     return PauseMessages;
 }
 
-nosave varargs int PassengerPrint(string msg, mixed arg2,
+static varargs int PassengerPrint(string msg, mixed arg2, 
         mixed arg3, object *riders){
     object *targs = ({});
     if(riders && sizeof(riders)){
@@ -241,15 +241,15 @@ nosave varargs int PassengerPrint(string msg, mixed arg2,
             if(sizeof(previous_object(-1)) &&
                     (member_array(previous_object(),riders) != -1 ||
                      member_array(previous_object(-1)[i1],riders) != -1) &&
-                    (!intp(arg2) || (!(arg2 & MSG_CONV) && !(arg2 & MSG_ENV))) &&
-                    member_array(this_object(),previous_object(-1)) == -1){
+                    (!intp(arg2) || (!(arg2 & MSG_CONV) && !(arg2 & MSG_ENV))) && 
+                    member_array(this_object(),previous_object(-1)) == -1){ 
                 if(objectp(arg2)) targs = riders - ({ arg2 });
                 else if(arrayp(arg2)) targs = riders - arg2;
                 else targs = riders;
                 environment()->eventPrint(msg, arg2, arg3);
             }
         }
-    }
+    }  
     return 1;
 }
 
@@ -262,7 +262,7 @@ varargs int eventPrint(string msg, mixed arg2, mixed arg3){
         prompt = this_object()->GetPrompt(1);
         //I don't want to talk about this.
         //if(this_object()->GetProperty("gmud")) msg = "\n" + msg;
-    }
+    } 
     if( !arg2 && !arg3 ) msg_class = MSG_ENV;
     else if( !arg2 ){
         if( !intp(arg3) ) msg_class = MSG_ENV;
@@ -271,7 +271,7 @@ varargs int eventPrint(string msg, mixed arg2, mixed arg3){
     else if( !intp(arg2) ) msg_class = MSG_ENV;
     else msg_class = arg2;
     if(sizeof(passengers) && (msg_class & MSG_ENV || msg_class & MSG_CONV)){
-    }
+    } 
     if( !(msg_class & MSG_NOBLOCK) && GetBlocked("all") ) return 0;
 
     if((msg_class & MSG_ANNOYING) && annoyblock) return 0;
@@ -363,7 +363,7 @@ int SetLogHarass(int x){
 
 int GetLogHarass(){ return LogHarass; }
 
-int *SetScreen(int width, int height){
+int *SetScreen(int width, int height){ 
     if(!width) width = (__LARGEST_PRINTABLE_STRING__-1)/50;
     if(!height) height = __LARGEST_PRINTABLE_STRING__/width;
 
@@ -376,19 +376,19 @@ int *SetScreen(int width, int height){
             height = 50;
         }
     }
-    return (Screen = ({ width, height }));
+    return (Screen = ({ width, height })); 
 }
 
 int *GetScreen(){ return Screen; }
 
-string SetTerminal(string terminal){
+string SetTerminal(string terminal){ 
     switch( terminal ){
         case "iris-ansi-net": case "vt100": case "vt220": case "vt102":
         case "vt300": case "dec-vt100":
             terminal = "ansi";
             break;
         case "unknown": case "ansi": case "freedom": case "ansi-status":
-        case "xterm":
+        case "xterm": 
             break;
         case "console": case "ibm-3278-2":
             terminal = "unknown";
@@ -399,7 +399,7 @@ string SetTerminal(string terminal){
                       terminal = Terminal;
                       break;
     }
-    if( terminal != Terminal )
+    if( terminal != Terminal ) 
         TermInfo = TERMINAL_D->query_term_info(terminal);
     return Terminal = terminal;
 }
@@ -421,7 +421,7 @@ int GetAnnoyblock(){
     return annoyblock;
 }
 
-protected int rArrow(string str){
+static int rArrow(string str){
     int ret, cedmode = this_object()->GetCedmode();
     switch(cedmode){
         case 0 : ret = nmsh::rArrow(str); break;
@@ -430,7 +430,7 @@ protected int rArrow(string str){
     return ret;
 }
 
-protected int rCtrl(string str){
+static int rCtrl(string str){
     int ret, cedmode = this_object()->GetCedmode();
     switch(cedmode){
         case 0 : ret = nmsh::rCtrl(str); break;
@@ -439,7 +439,7 @@ protected int rCtrl(string str){
     return ret;
 }
 
-protected int rBackspace(){
+static int rBackspace(){
     int ret, cedmode = this_object()->GetCedmode();
     switch(cedmode){
         case 0 : ret = nmsh::rBackspace(); break;
@@ -448,7 +448,7 @@ protected int rBackspace(){
     return ret;
 }
 
-protected int rEnter(){
+static int rEnter(){
     int ret, cedmode = this_object()->GetCedmode();
     switch(cedmode){
         case 0 : ret = nmsh::rEnter(); break;
@@ -457,7 +457,7 @@ protected int rEnter(){
     return ret;
 }
 
-protected int rAscii(string str){
+static int rAscii(string str){
     int ret, cedmode = this_object()->GetCedmode();
     switch(cedmode){
         case 0 : ret = nmsh::rAscii(str); break;
@@ -466,7 +466,7 @@ protected int rAscii(string str){
     return ret;
 }
 
-protected int rDel(){
+static int rDel(){
     int ret, cedmode = this_object()->GetCedmode();
     switch(cedmode){
         case 0 : ret = nmsh::rDel(); break;
@@ -475,7 +475,7 @@ protected int rDel(){
     return ret;
 }
 
-protected int rAnsi(string str){
+static int rAnsi(string str){
     int ret, cedmode = this_object()->GetCedmode();
     switch(cedmode){
         case 0 : ret = nmsh::rAnsi(str); break;

@@ -4,7 +4,7 @@
 #include <size_types.h>
 inherit LIB_ARMOR;
 
-protected void create(){
+static void create(){
     ::create();
     SetKeyName("pajamas");
     SetId(({"pj","pjs", "peejays"}));

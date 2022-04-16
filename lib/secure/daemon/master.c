@@ -43,18 +43,18 @@
 inherit LIB_DAEMON;
 #include <mssp.h>
 
-private nosave int incept_date, ResetNumber, heart_count, in_reset;
-private nosave int eval_threshold, reset_handle = -1;
+private static int incept_date, ResetNumber, heart_count, in_reset;
+private static int eval_threshold, reset_handle = -1;
 private int BootScore, PerformanceScore, globalpmsg;
-private nosave object Unguarded, gguy;
-private nosave string PlayerName, rlog, gcmd, bname, gstr;
-private nosave object NewPlayer;
-private nosave mapping Groups, ReadAccess, WriteAccess, CostErr;
-private nosave string *ParserDirs = ({ "secure", "verbs", "daemon", "lib", "powers" });
-private nosave string* efuns_arr = ({});
-private nosave string MudName, mconfig;
+private static object Unguarded, gguy;
+private static string PlayerName, rlog, gcmd, bname, gstr;
+private static object NewPlayer;
+private static mapping Groups, ReadAccess, WriteAccess, CostErr;
+private static string *ParserDirs = ({ "secure", "verbs", "daemon", "lib", "powers" });
+private static string array efuns_arr = ({});
+private static string MudName, mconfig;
 
-protected void Setup(){
+static void Setup(){
     if(uptime() < 30) MudName = 0;
 }
 
@@ -66,7 +66,7 @@ void create() {
     opcprof(opfile);
     if(file_exists(opfile+".efun")){
         opstr = read_file(opfile+".efun");
-        if(opstr){
+        if(opstr){ 
             oparr = explode(opstr, "\n");
         }
         if(sizeof(oparr)){
@@ -88,7 +88,7 @@ void create() {
     PlayerName = 0;
     ResetNumber = 1;
     if(!(file_exists("/secure/sefun/native_version.c"))){
-        cp("/secure/scripts/native_version.proto",
+        cp("/secure/scripts/native_version.proto", 
                 "/secure/sefun/native_version.c");
     }
     new_read();
@@ -100,7 +100,7 @@ void create() {
     ReadName();
 }
 
-protected void heart_beat(){
+static void heart_beat(){
     heart_count++;
     if(!(heart_count % 60)){
         CostErr = ([]);
@@ -133,7 +133,7 @@ void new_groups() {
     Groups = tmp;
 }
 
-private void load_access(string cfg, mapping resource) {
+private static void load_access(string cfg, mapping resource) {
     string *lines;
     string file;
 
@@ -230,7 +230,7 @@ string privs_file(string file) {
                 if( member_array(nom, Groups[grp]) != -1) str = str + ":" + grp;
             ret = str;
         }
-        else if( !strsrch(file, DIR_PLAYERS + "/" + nom[0..0] +
+        else if( !strsrch(file, DIR_PLAYERS + "/" + nom[0..0] + 
                     "/" + nom + "."))
             ret = nom;
         else ret = 0;
@@ -259,7 +259,7 @@ void preload(string str) {
             t = after["utime"] - before["utime"];
             BootScore += t;
             write("("+t+"ms)\n");
-        }
+        }            
         return;
 #endif
         write("(done)\n");
@@ -270,7 +270,6 @@ int valid_write(string file, object ob, string fun) {
     string *ok;
     int ret;
     if( ob == master() ) ret = 1;
-    if (fun == "save_object") ret = 1;
     ok = match_path(WriteAccess, file);
     if(!ret) ret = check_access(ob, fun, file, ok, "write");
     return ret;
@@ -354,7 +353,7 @@ int check_access(object ob, string fun, mixed file, string *ok, string oper) {
         if(!(priv = query_privs(stack[i]))) {
             if(false()){
                 debug_message("\nSPLAT 1: "+identify(stack[i]));
-            }
+            }    
             return 0;
         }
         if(!ok && oper == "read") {
@@ -386,7 +385,7 @@ int check_access(object ob, string fun, mixed file, string *ok, string oper) {
     return 1;
 }
 
-nomask protected int check_user(object ob, string fun, string file, string oper){
+nomask static int check_user(object ob, string fun, string file, string oper){
     string nom, tmp;
     int x;
     if(interactive(ob) && !creatorp(ob)){
@@ -401,7 +400,7 @@ nomask protected int check_user(object ob, string fun, string file, string oper)
     return x;
 }
 
-nomask protected int check_domain(object ob, string fun, string file, string o) {
+nomask static int check_domain(object ob, string fun, string file, string o) {
     string nom;
     int x;
     if( !sscanf(file, DOMAINS_DIRS+"/%s/%*s", nom) ) return 0;
@@ -422,8 +421,6 @@ object connect(int port) {
         write(err);
         destruct(ob);
     }
-
-    this_player()->SetScreen(120, 99);
     return ob;
 }
 
@@ -449,7 +446,7 @@ object compile_object(string str) {
         if(NewPlayer->GetKeyName() != nom) return 0;
         PlayerName = nom;
         ob = new(LIB_PLAYER);
-        if(file_exists(sfile) || file_exists(new_savename(sfile))){
+        if(file_exists(sfile) || file_exists(new_savename(sfile))){ 
             ob->restore_player(nom);
         }
         else {
@@ -489,10 +486,10 @@ object compile_object(string str) {
         if(file_size(tmp+".c") < 0) return 0;
         else return call_other(tmp, "compile_object", where);
     }
-    return call_other(tmp, "compile_object", str);
+    return call_other(tmp, "compile_object", str);               
 }
 
-protected void crash(mixed args...) {
+static void crash(mixed args...) {
     string err;
     string guilty_stack = get_stack();
     string guilty_obs = identify(previous_object(-1));
@@ -511,7 +508,7 @@ int valid_bind(object binder, object old_owner, object new_owner) {
     if(!binder) ret = 0;
     else if( binder == this_object() ) ret = 1;
     else if( base_name(binder) == SEFUN ) ret = 1;
-    else if( member_array(PRIV_SECURE,
+    else if( member_array(PRIV_SECURE, 
                 explode((privs = query_privs(binder)), ":")) != -1 ) ret = 1;
     return ret;
 }
@@ -524,7 +521,7 @@ int valid_hide(object who) {
     else return (member_array(PRIV_SECURE, explode(priv, ":")) != -1);
 }
 
-int valid_override(string file, string nom){
+int valid_override(string file, string nom){ 
     return (file == SEFUN);
 }
 
@@ -540,7 +537,7 @@ int valid_object(object ob) {
     file = file_name(ob);
     contents = read_file(base_name(ob)+".c");
     if(!contents) contents = "";
-    if(strsrch(contents,"parse_add_rule") != -1
+    if(strsrch(contents,"parse_add_rule") != -1 
             || strsrch(contents, "SetRules") != -1) {
         string prefix;
         if(!sscanf(file,"/%s/%*s",prefix)) return 0;
@@ -609,7 +606,7 @@ mixed apply_unguarded(function f) {
     err = catch(val = evaluate(f) );
     Unguarded = previous_unguarded;
     if(err) error(err);
-    return val;
+    return val; 
 }
 
 string error_handler(mapping mp, int caught) {
@@ -636,7 +633,7 @@ string error_handler(mapping mp, int caught) {
             shutdown(-9);
         }
         if(grepp(mp["error"], "Too long evaluation.")){
-            CostErr[now]++;
+            CostErr[now]++; 
         }
         if(grepp(mp["error"], "Can't catch eval cost too big error.")){
             CostErr[now]++;
@@ -665,11 +662,9 @@ string error_handler(mapping mp, int caught) {
                 return "/log/login\n"+standard_trace(mp)+"\n--\n";
             }
             this_player()->eventPrint("A runtime error occurred.");
-            if (find_object(CHAT_D)) {
-              CHAT_D->eventSendChannel("System", "error", "A runtime error "
-                                                          "occurred to " +
-                  this_player(1)->GetCapName()+".");
-            }
+            CHAT_D->eventSendChannel("System", "error", "A runtime error "
+                    "occurred to " + 
+                    this_player(1)->GetCapName()+".");
             rlog = "-----\n" +timestamp()+ ": "+this_player(1)->GetCapName()+"\n";
             rlog += load_object("/secure/cmds/creators/dbxwhere")->cmd(this_player(1)->GetKeyName());
             rlog += flat_map(this_player()->GetLastError())+"\n-----\n";
@@ -687,14 +682,14 @@ void log_error(string file, string msg) {
     }
     if(!this_player()){
         object *object_stack = call_stack(1);
-        object web_sessions = find_object(WEB_SESSIONS_D);
+        object web_sessions = load_object(WEB_SESSIONS_D);
         if(web_sessions && member_array(web_sessions, object_stack) != -1){
             web_sessions->ReceiveErrorReport(msg);
         }
     }
-    if( sscanf(file, REALMS_DIRS+"/%s/%s", nom, tmp) != 2 &&
-            sscanf(file, DOMAINS_DIRS+"/%s/%s", nom, tmp) != 2 &&
-            sscanf(file, ESTATES_DIRS+"/%s/%s/%s", tmp, nom, tmp2) != 3 )
+    if( sscanf(file, REALMS_DIRS+"/%s/%s", nom, tmp) != 2 && 
+            sscanf(file, DOMAINS_DIRS+"/%s/%s", nom, tmp) != 2 && 
+            sscanf(file, ESTATES_DIRS+"/%s/%s/%s", tmp, nom, tmp2) != 3 ) 
         sscanf(file, "/%s/%s", nom, tmp);
     if( !nom ) nom = "log";
     catch(write_file(DIR_ERROR_LOGS "/" + nom, timestamp()+" "+msg));
@@ -708,15 +703,15 @@ varargs string standard_trace(mapping mp, int flag) {
     mapping *trace;
     int i,n;
 
-    ret = mp["error"] + "Object: " +
+    ret = mp["error"] + "Object: " + 
         trace_line(mp["object"], mp["program"], mp["file"], mp["line"]);
     ret += "\n";
     trace = mp["trace"];
     n = sizeof(trace);
     for (i=0; i<n; i++) {
         if( flag ) ret += sprintf("#%d: ", i);
-        ret += sprintf("'%s' at %s", trace[i]["function"],
-                trace_line(trace[i]["object"], trace[i]["program"],
+        ret += sprintf("'%s' at %s", trace[i]["function"], 
+                trace_line(trace[i]["object"], trace[i]["program"], 
                     trace[i]["file"], trace[i]["line"]));
     }
     return ret;
@@ -775,7 +770,7 @@ int player_exists(string nom) {
 string domain_file(string str) {
     string nom, tmp;
     if(sscanf(str, DOMAINS_DIRS+"/%s/%s", nom, tmp) == 2) return nom;
-    return "BACKBONE";
+    return 0;
 }
 
 string author_file(string str) {
@@ -783,11 +778,11 @@ string author_file(string str) {
 
     if(sscanf(str, REALMS_DIRS+"/%s/%s", nom, tmp) == 2) return nom;
     else if(sscanf(str, ESTATES_DIRS+"/%s/%s/%s", tmp, nom, tmp2) == 3) return nom;
-    return "NONAME";
+    return 0;
 }
 
-protected int slow_shutdown() {
-    write_file(DIR_LOGS "/audit",
+static int slow_shutdown() {
+    write_file(DIR_LOGS "/audit", 
             "Armageddon loaded by master: "+ctime(time())+".\n");
     EVENTS_D->eventRebootMud(2);
     return 1;
@@ -963,7 +958,7 @@ varargs object player_object(string nom, object stub) {
     string sfilec = DIR_CRES+ "/" + nom[0..0]+ "/" +nom+__SAVE_EXTENSION__;
     string sfilep = DIR_PLAYERS+ "/" + nom[0..0]+ "/" +nom+__SAVE_EXTENSION__;
     tmp = base_name(ob = previous_object());
-    if( tmp != CMD_ENCRE && tmp != CMD_DECRE && tmp != LIB_CONNECT
+    if( tmp != CMD_ENCRE && tmp != CMD_DECRE && tmp != LIB_CONNECT 
             && tmp != RELOAD_D ){
         return 0;
     }
@@ -998,13 +993,13 @@ varargs object player_object(string nom, object stub) {
     return ob;
 }
 
-string player_save_file(string nom) {
+string player_save_file(string nom) { 
     string sfilec, sfilep;
     sfilec = DIR_CRES + "/" + nom[0..0] + "/" + nom + ".o";
     sfilep = DIR_PLAYERS + "/" + nom[0..0] + "/" + nom + ".o";
 #if ENABLE_INSTANCES
     gstr = new_savename(sfilec);
-    if(unguarded( (: file_exists, gstr :) )){
+    if(unguarded( (: file_exists, gstr :) )){ 
         return gstr;
     }
     return new_savename(sfilep);
@@ -1019,14 +1014,14 @@ string *query_group(string grp) { return copy(Groups[grp]); }
 
 mapping query_groups() { return copy(Groups); }
 
-protected void eventReset(){
+static void eventReset(){
     object *obs;
     object ob;
     int x, y, z = 0;
     in_reset = 1;
 
     ResetNumber++;
-    if(find_call_out("eventReset") == -1 && find_call_out(reset_handle) == -1){
+    if(find_call_out("eventReset") == -1 && find_call_out(reset_handle) == -1){ 
         reset_handle = call_out( (: eventReset :), TIME_TO_RESET );
     }
     x = reclaim_objects();
@@ -1063,7 +1058,7 @@ protected void eventReset(){
 }
 
 int RequestReset(){
-    if(previous_object() && (base_name(previous_object()) == SEFUN
+    if(previous_object() && (base_name(previous_object()) == SEFUN 
                 || base_name(previous_object()) == REAPER_D)){
         unguarded( (: eventReset :) );
         return 1;
@@ -1131,7 +1126,7 @@ mixed eventPromise(){
 }
 
 int ReadName(){
-    string line_string, tmp;
+    string line_string, nameline, tmp;
     string *line_array;
     int port = query_host_port();
     MudName = "DeadSoulsNew";
@@ -1159,19 +1154,4 @@ int ReadName(){
         }
     }
     return 0;
-}
-
-// Compat with PACKAGE_UID
-string get_root_uid()
-{
-    return "ROOT";
-}
-string get_bb_uid()
-{
-    return "BACKBONE";
-}
-
-string creator_file(string filename)
-{
-    return filename;
 }

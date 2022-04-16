@@ -6,7 +6,7 @@ inherit LIB_BANE;
 inherit LIB_WORN_STORAGE;
 object scoutshadow;
 int active = 1;
-int charge = 0;
+int charge = 1500;
 int maxcharge = 3000;
 int disguised = 0;
 string owner;
@@ -14,7 +14,7 @@ string owner;
 varargs mixed GetSuitHelp(mixed who, string where);
 
 string LongDesc(){
-    string ret = "A highly advanced armored suit of Poleepkwa design, "+
+    string ret = "A highly advanced armored suit of Poleepkwa design, "+ 
         "used by elements of the Host whose role requires them to have "+
         "some protection from environmental hazards.";
     if(!active) return ret;
@@ -25,7 +25,7 @@ string LongDesc(){
     return ret;
 }
 
-protected void create(){
+static void create(){
     ::create();
     SetKeyName("scout suit");
     SetId(({"suit", "armor"}));
@@ -36,7 +36,7 @@ protected void create(){
     SetMatching(0);
     SetBaseCost("silver",5000);
     SetArmorType(A_EXO);
-    SetRestrictLimbs( ({
+    SetRestrictLimbs( ({ 
                 "torso", "head", "neck",
                 "right arm", "left arm",
                 "right leg", "left leg",
@@ -47,8 +47,14 @@ protected void create(){
     SetMaxCarry(500);
     SetSize(S_SOMEWHAT_LARGE);
     SetProtection(BLUNT,20);
+    SetProtection(PIERCE,20);
     SetProtection(BLADE,20);
     SetProtection(KNIFE,20);
+    SetProtection(SHOCK,20);
+    SetProtection(COLD,20);
+    SetProtection(HEAT,20);
+    SetProtection(GAS,20);
+    SetProtection(OVERPRESSURE,20);
     SetDamagePoints(100);
     SetWear((: GetSuitHelp :));
     AddItem( ({"light","status light"}), "A status light.");
@@ -102,7 +108,7 @@ varargs mixed GetSuitHelp(mixed who, string where){
     return 0;
 }
 
-mixed eventEquip(object who, string* limbs){
+mixed eventEquip(object who, string array limbs){
     mixed success = ::eventEquip(who, limbs);
     scoutshadow = new("/shadows/pscout");
     if(scoutshadow) scoutshadow->SetDisguised(disguised);
@@ -142,7 +148,7 @@ int eventDecrementCharge(int i){
     if(!GetWorn()) return 0;
     if(previous_object() != scoutshadow) return 0;
     if(charge < 1) charge = 0;
-    else {
+    else { 
         if(!i) charge--;
         else charge -= i;
         if(charge < 0) charge = 0;
@@ -196,19 +202,19 @@ int SetMaxCharge(int i){
     return maxcharge;
 }
 
-string* GetBane(){
+string array GetBane(){
     if(GetActive()) return ({ "all" });
     else return ({});
 }
 
-string* QueryBane(){
+string array QueryBane(){
     if(GetActive()) return ({ "all" });
     else return ({});
 }
 
 void heart_beat(){
     int notify;
-    string str, envname;
+    string str, envname;     
     object env = environment();
     object room = room_environment();
     if(!env || !room) return;
@@ -237,8 +243,12 @@ void heart_beat(){
             }
         }
         else {
+            int dmg = GetDamagePoints();
             env->AddMagicPoints(-5);
             charge += 5;
+            if(dmg < 100){
+                SetDamagePoints(dmg+1);
+            }
             //env->eventPrint("adding 5. charge: "+charge+". "+
             //  (active ? "active" : "inactive"));
             if(!owner) owner = env->GetKeyName();
@@ -268,7 +278,7 @@ void eventDeteriorate(int type){
     ::eventDeteriorate(type);
 }
 
-int eventReceiveDamage(mixed agent, int type, int amt, int i, mixed* l){
+int eventReceiveDamage(mixed agent, int type, int amt, int i, mixed array l){
     if(!active || charge < 20){
         return ::eventReceiveDamage(agent, type, amt, i, l);
     }

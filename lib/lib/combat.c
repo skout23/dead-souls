@@ -30,17 +30,17 @@ inherit LIB_COMBATMSG;
 
 private int Wimpy, Dead;
 private string WimpyCommand;
-private nosave int cParalyzed, tNextRound, AttacksPerHB;
-private nosave string TargetLimb, Party;
-private nosave object CurrentEnemy, genv;
-private nosave function fParalyzed, fNextRound;
-private nosave object *Hostiles, *Enemies, *SpecialTargets, *NonTargets;
-private nosave object *PriorEnemies;
+private static int cParalyzed, tNextRound, AttacksPerHB;
+private static string TargetLimb, Party;
+private static object CurrentEnemy, genv;
+private static function fParalyzed, fNextRound;
+private static object *Hostiles, *Enemies, *SpecialTargets, *NonTargets;
+private static object *PriorEnemies;
 
 string GetName();
 mixed GetProperty(string key);
-string* AddChannel(mixed val);
-string* RemoveChannel(mixed val);
+string array AddChannel(mixed val);
+string array RemoveChannel(mixed val);
 int eventForce(mixed args);
 int eventExecuteAttack(mixed target);
 int eventWeaponRound(mixed target, mixed val);
@@ -50,7 +50,7 @@ void eventMeleeAttack(object target, string limb);
 int eventMagicRound(mixed target, function f);
 int eventWimpy(int i);
 
-protected void create(){
+static void create(){
     race::create();
     classes::create();
     Hostiles = ({});
@@ -85,7 +85,7 @@ int SetDead(int i){
     return Dead;
 }
 
-object* GetEnemies(){
+object array GetEnemies(){
     return Enemies;
 }
 
@@ -121,11 +121,11 @@ object SetCurrentEnemy(object ob){
     return (CurrentEnemy = ob);
 }
 
-protected object ResetCurrentEnemy(){
-    object* obs;
+static object ResetCurrentEnemy(){
+    object array obs;
     mixed ret;
 
-    obs = filter(GetEnemies(), (: $1 && ( environment() == environment($1)
+    obs = filter(GetEnemies(), (: $1 && ( environment() == environment($1) 
                     || environment() == $1 || environment($1) == this_object()):));
     if( !sizeof(obs) ){
         ret = 0;
@@ -138,7 +138,7 @@ object GetCurrentEnemy(){
     return CurrentEnemy;
 }
 
-private void SortEnemies(){
+private static void SortEnemies(){
     if( !sizeof(Enemies = filter(Enemies, (: ($1 && living($1)) :))) ){
         Hostiles = ({});
         CurrentEnemy = 0;
@@ -196,15 +196,15 @@ int RemoveHostile(object ob){
     return 1;
 }
 
-object* GetHostiles(){
+object array GetHostiles(){
     return Hostiles;
 }
 
-object* GetSpecialTarget(){
+object array GetSpecialTarget(){
     return SpecialTargets;
 }
 
-object* SetSpecialTarget(object *cibles){
+object array SetSpecialTarget(object *cibles){
     if(cibles) SpecialTargets = cibles;
     return SpecialTargets;
 }
@@ -314,7 +314,7 @@ int GetLevel(){
 
 int GetInCombat(){
     return sizeof(filter(GetEnemies(),
-                (: $1 && ( (environment($1) == environment())
+                (: $1 && ( (environment($1) == environment()) 
                            || environment() == $1 || environment($1) ==
                            this_object()) :)));
 }
@@ -356,7 +356,7 @@ int GetMagicResistance(){
 varargs int GetPenalty(object other){
     int other_penalty, ret = 0;
     if(other) other_penalty = other->GetPenalty();
-    //Only players get a blindness penalty.
+    //Only players get a blindness penalty. 
     if(interactive() && (GetBlind() || GetVisibility() < 1)) ret += 10;
     if(GetParalyzed()) ret += 10;
     switch(GetPosition()){
@@ -405,7 +405,7 @@ int GetCombatBonus(int level){
     }
 }
 
-nosave int GetDamage(int power, string skill){
+static int GetDamage(int power, string skill){
     int x = GetSkillLevel(skill);
 
     if( power < 1 ){
@@ -430,14 +430,14 @@ nosave int GetDamage(int power, string skill){
 
 int CanWeapon(object target, string type, int hands, int num){
     string limb = target->GetRandomLimb(TargetLimb);
-    int chance = (7*GetSkillLevel(type+" attack") +
+    int chance = (7*GetSkillLevel(type+" attack") + 
             3*GetStatLevel("coordination"))/10;
     int div = 2;
     int x, y;
 
-    if(hands > 1){
+    if(hands > 1){  
         if(GetSkillLevel("multi-hand")){
-            chance = (chance/2) +
+            chance = (chance/2) + 
                 (GetSkillLevel("multi-hand")/25)*(chance/2);
         }
         else { /* If you are really strong you can use multihand a bit */
@@ -447,9 +447,9 @@ int CanWeapon(object target, string type, int hands, int num){
     }
     if(num > 1){
         if(GetSkillLevel("multi-weapon")){
-            chance = (chance/2) +
+            chance = (chance/2) + 
                 (GetSkillLevel("multi-weapon")/25)*(chance/2);
-        }
+        }    
         else { /* If you are really coordinated you can use multiweap a bit */
             chance *= GetStatLevel("coordination")/100;
             div += (num-1);
@@ -459,10 +459,10 @@ int CanWeapon(object target, string type, int hands, int num){
     x = random(chance);
     y = random(10);
     if( x <= y ){
-        if( x > y/2 ){
+        if( x > y/2 ){ 
             TargetLimb = target->GetRandomLimb(0);
         }
-        else {
+        else { 
             TargetLimb = 0;
         }
     }
@@ -476,7 +476,7 @@ int CanWeapon(object target, string type, int hands, int num){
 int CanMelee(object target){
     //if(environment(target) == this_object() ||
     //environment(this_object()) == target) return 100;
-    if(!this_object()->GetMelee() &&
+    if(!this_object()->GetMelee() && 
             this_object()->GetClass() != "fighter"){
         string limb = target->GetRandomLimb(TargetLimb);
         int chance = ( 6*this_object()->GetSkillLevel("melee attack") +
@@ -523,7 +523,7 @@ int CanMelee(object target){
     }
 }
 
-protected int Destruct(){
+static int Destruct(){
     if( GetParty() ) PARTY_D->eventLeaveParty(this_object());
     return 1;
 }
@@ -553,7 +553,7 @@ varargs int eventDie(mixed agent){
 }
 
 int eventExecuteAttack(mixed target){
-    object* weapons;
+    object array weapons;
     function f = fNextRound;
     int type = tNextRound;
     int position = GetPosition();
@@ -611,7 +611,7 @@ int eventExecuteAttack(mixed target){
     }
     if(this_object()->GetClass() != "fighter"){
         this_object()->AddStaminaPoints(-1);
-    }
+    }  
     switch(type){
         case ROUND_UNDEFINED: case ROUND_EXTERNAL:
             if( functionp(f) && !(functionp(f) & FP_OWNER_DESTED) ){
@@ -650,7 +650,7 @@ int eventExecuteAttack(mixed target){
 }
 
 int eventWeaponRound(mixed target, mixed val){
-    object* weapons = 0;
+    object array weapons = 0;
     function f = 0;
 
     if(AttacksPerHB > MAX_ATTACKS_PER_HB) return 0;
@@ -756,7 +756,7 @@ void eventWeaponAttack(object target, object weapon, int num){
 }
 
 int eventMeleeRound(mixed target, function f){
-    string* limbs = GetLimbs() - ({ GetTorso() });
+    string array limbs = GetLimbs() - ({ GetTorso() });
     int count = sizeof(limbs);
     int attacks;
 
@@ -820,7 +820,7 @@ void eventMeleeAttack(object target, string limb){
         if(!estatep(target)) eventTrainSkill("melee attack", pro, 0, 0,
                 GetCombatBonus(target->GetLevel()));
     }
-    else if( fail || (!autohit &&
+    else if( fail || (!autohit && 
                 !target->eventReceiveAttack(chance, "melee", this_object())) ){
         // Enemy dodged my attack
         SendMeleeMessages(target, -1);
@@ -872,7 +872,7 @@ mixed eventBite(object target){
         return 1;
     }
     if( !fail && TargetLimb ){
-        if( target->eventReceiveAttack(x, "melee", this_object()) ){
+        if( target->eventReceiveAttack(x, "melee", this_object()) ){ 
             x = GetDamage(pro*2, "melee attack");
             x = target->eventReceiveDamage(this_object(), BITE, x, 0,
                     TargetLimb);
@@ -929,7 +929,7 @@ int eventPreAttack(object agent){
     if( GetDying() ){
         return 0;
     }
-    if( playerp(this_object()) && playerp(agent) && !PLAYER_KILL){
+    if( playerp(this_object()) && playerp(agent) && !PLAYER_KILL){ 
         if( !env->CanAttack( agent, this_object() ) ){
             return 0;
         }
@@ -962,7 +962,7 @@ varargs int eventReceiveAttack(int speed, string def, object agent){
     if( def == "magic" ){
         pro = GetMagicResistance();
         if( (x = random(pro)) > speed ){
-            if(!fail && !estatep(agent))
+            if(!fail && !estatep(agent)) 
                 eventTrainSkill("magic defense", pro, speed, 1, bonus);
             ret = 0;
         }
@@ -975,12 +975,12 @@ varargs int eventReceiveAttack(int speed, string def, object agent){
         pro = GetDefenseChance(GetSkillLevel(def + " defense"));
         x = random(pro = pro/2);
         if( !fail && x > speed ){
-            if(!estatep(agent))
+            if(!estatep(agent)) 
                 eventTrainSkill(def + " defense", pro, speed, 1, bonus);
             ret = 0;
         }
         else {
-            if(!fail && !estatep(agent))
+            if(!fail && !estatep(agent)) 
                 eventTrainSkill(def + " defense", pro, speed, 0, bonus);
             ret = 1;
         }
@@ -1011,7 +1011,7 @@ void eventKillEnemy(object ob){
         foreach(object member in loot_sharers){
             member->AddExperiencePoints(spoils);
         }
-    }
+    } 
 
     else {
         this_object()->AddExperiencePoints(reward);
@@ -1020,7 +1020,7 @@ void eventKillEnemy(object ob){
     if( member_array(ob, GetHostiles()) == -1 ){
         int x;
 
-        if(!estatep(ob)) eventTrainSkill("murder", GetLevel(), level, 1,GetCombatBonus(level));
+        if(!estatep(ob)) eventTrainSkill("murder", GetLevel(), level, 1,GetCombatBonus(level)); 
         x = ob->GetMorality();
         if( x > 0 ) x = -x;
         else if( GetMorality() > 200 ) x = 100;
@@ -1043,7 +1043,7 @@ void eventEnemyDied(object ob){
     if( !ob ) return;
     Enemies -= ({ ob });
     Hostiles -= ({ ob });
-    if(!sizeof(SpecialTargets) || (!sizeof(Enemies) || !sizeof(Hostiles)))
+    if(!sizeof(SpecialTargets) || (!sizeof(Enemies) || !sizeof(Hostiles))) 
         NonTargets = ({});
 }
 
@@ -1144,7 +1144,7 @@ int eventWimpy(int i){
     return eventForce(cmd);
 }
 
-protected void heart_beat(){
+static void heart_beat(){
     race::heart_beat();
     AttacksPerHB = 0;
     if( GetSleeping() || GetDying() ){

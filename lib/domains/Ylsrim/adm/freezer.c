@@ -9,7 +9,7 @@
 
 inherit LIB_ROOM;
 
-nosave private object *Old;
+static private object *Old;
 
 void create() {
     room::create();
@@ -23,7 +23,7 @@ void create() {
     call_out("clean_room", MAX_NET_DEAD_TIME);
 }
 
-protected void clean_room() {
+static void clean_room() {
     object *clean_me;
     object ob;
 

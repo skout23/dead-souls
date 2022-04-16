@@ -6,7 +6,7 @@
  *    Last modified: 96/12/17
  */
 
-private nosave mapping Help = ([ "default" : "No help has been provided." ]);
+private static mapping Help = ([ "default" : "No help has been provided." ]);
 
 string GetHelp(string topic){
     if( !topic || !Help[topic] ){
@@ -15,7 +15,7 @@ string GetHelp(string topic){
     return Help[topic];
 }
 
-protected mapping SetHelp(mixed val){
+static mapping SetHelp(mixed val){
     if( stringp(val) ){
         val = ([ "default" : val ]);
     }

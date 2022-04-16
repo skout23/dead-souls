@@ -9,7 +9,7 @@
 #include <climb.h>
 #include <function.h>
 
-nosave private mapping Climb = 0;
+static private mapping Climb = 0;
 int ccc = 0;
 
 // abstract methods
@@ -20,16 +20,16 @@ mapping GetClimbs(){
     return Climb;
 }
 
-int SetCanClimbCarried(int i){
-    ccc = i;
-    return 1;
+int SetCanClimbCarried(int i){ 
+    ccc = i; 
+    return 1; 
 }
 
-int GetCanClimbCarried(){
-    return ccc;
+int GetCanClimbCarried(){ 
+    return ccc;  
 }
 
-varargs nosave mapping SetClimb(mixed val, int type){
+varargs static mapping SetClimb(mixed val, int type){
     if( !type ){
         type = CLIMB_UP;
     }
@@ -43,7 +43,7 @@ varargs nosave mapping SetClimb(mixed val, int type){
 }
 
 mixed CanClimb(object who, int type){
-    int* tmp;
+    int array tmp;
     object dude;
     string thingname;
 

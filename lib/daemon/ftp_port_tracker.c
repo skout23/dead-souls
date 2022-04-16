@@ -11,7 +11,7 @@
 
 inherit LIB_DAEMON;
 
-nosave int* UsedPorts = ({ });
+static int array UsedPorts = ({ });
 
 /*
  ** Adds the specified port to the UsedPorts list. Returns
@@ -50,7 +50,7 @@ void ClearUsedPorts()
 /*
  ** Returns a list of used ports.
  */
-int* QueryUsedPorts()
+int array QueryUsedPorts()
 {
     return UsedPorts;
 }

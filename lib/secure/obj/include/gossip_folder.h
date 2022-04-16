@@ -1,7 +1,7 @@
 #ifndef l_gossip_folder_h
 #define l_gossip_folder_h
 
-protected void create(string user);
+static void create(string user);
 void SetPostRead(string group, int post);
 mixed *GetPostsRead(string group);
 

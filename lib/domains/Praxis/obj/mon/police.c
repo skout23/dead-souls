@@ -32,7 +32,7 @@ void go_home() {
     eventMove("/domains/Praxis/sheriff");
 }
 
-protected int cmd_surrender(string unused) {
+static int cmd_surrender(string unused) {
     if(this_player() != __Target) return 0;
     this_player()->cease_all_attacks();
     this_player()->move("/domains/Praxis/sheriff");

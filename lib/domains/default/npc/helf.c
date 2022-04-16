@@ -2,7 +2,7 @@
 
 inherit LIB_SENTIENT;
 
-protected void create() {
+static void create() {
     sentient::create();
     SetKeyName("optis");
     SetId( ({"half elf", "half-elf", "half-human", "half human"}) );

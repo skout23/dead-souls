@@ -3,7 +3,7 @@
 #include <vendor_types.h>
 
 inherit LIB_ITEM;
-protected void create(){
+static void create(){
     item::create();
     SetKeyName("rod");
     SetId( ({ "staff", "stick", "pole" , "rod of asclepius", "rod of aesculapius"}) );

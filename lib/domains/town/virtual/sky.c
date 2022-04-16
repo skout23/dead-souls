@@ -7,7 +7,7 @@
 
 inherit LIB_VIRT_SKY;
 
-nosave private int XPosition, YPosition, ZPosition;
+static private int XPosition, YPosition, ZPosition;
 int overland;
 string dexit;
 int max_north = 1000000;
@@ -27,7 +27,7 @@ varargs int LimitTravel(int requested, int maximum, int lessthan, int minimum){
     else return requested;
 }
 
-varargs protected void create(int x, int y, int z) {
+varargs static void create(int x, int y, int z) {
     string n, s, e, w, u, d;
     string ne, nw, se, sw;
 
@@ -96,7 +96,7 @@ varargs protected void create(int x, int y, int z) {
             if( (x < 10 && x > -26) && (y < 26 && y > -10) ){
                 wut = "forest";
             }
-            else {
+            else { 
                 wut = "surface";
             }
             RemoveExit("down");
@@ -129,7 +129,7 @@ varargs void SetLongAndItems(int x, int y, int z) {
 //    if(this_object() && ob && (living(ob) || ob->GetMapper())){
 //       tc("1");
 //        if(MASTER_D->GetPerfOK()){
-//            int* Coords = ROOMS_D->SetRoom(this_object(), ob);
+//            int array Coords = ROOMS_D->SetRoom(this_object(), ob);
 //            tc("2: "+identify(Coords));
 //            CompileNeighbors(Coords);
 //        }

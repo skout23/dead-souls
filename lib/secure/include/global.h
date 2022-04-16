@@ -1,10 +1,6 @@
 #ifndef __GLOBAL_H
 #define __GLOBAL_H
 
-#ifdef FLUFFOS
-#define __FLUFFOS__
-#endif
-
 #define CONFIG_H "/secure/include/config.h"
 #define NETWORK_H "/secure/include/network.h"
 #define ROOMS_H "/secure/include/rooms.h"
@@ -26,8 +22,6 @@
 #ifdef debug
 #undef debug
 #endif /* debug */
-
-#define __HAS_RUSAGE__
 
 //#ifdef DEBUG
 //#define debug(x, y)      (find_player(x) || master())->eventPrint(x)

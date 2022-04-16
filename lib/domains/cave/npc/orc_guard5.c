@@ -4,7 +4,13 @@ inherit "/domains/cave/etc/cave_orc";
 
 int GetEnemyChaser() { return 0; }
 
-protected void create() {
+//This function defines what conditions override the guarding of the northeast exit
+int AllowPass(object who, object what){
+    if(who->GetRace() == "orc") return 1;
+    return ::AllowPass(who, what);
+}
+
+static void create() {
     ::create();
     SetKeyName("orc");
     SetId(({"orc"}));

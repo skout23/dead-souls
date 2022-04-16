@@ -8,8 +8,8 @@
 
 #include <function.h>
 
-nosave private mixed   Listen  = 0;
-nosave private mapping Listens = ([]);
+static private mixed   Listen  = 0;
+static private mapping Listens = ([]);
 
 // abstract methods
 string GetShort();
@@ -39,7 +39,7 @@ varargs string GetListen(string str, object who){
     else return val;
 }
 
-string* GetListens(){
+string array GetListens(){
     return keys(Listens);
 }
 
@@ -53,7 +53,7 @@ mapping RemoveListen(string item){
     return Listens;
 }
 
-varargs mixed SetListen(mixed* args...){
+varargs mixed SetListen(mixed array args...){
     if( sizeof(args) == 1 ){
         if( mapp(args[0]) ){
             if( args[0]["default"] ){

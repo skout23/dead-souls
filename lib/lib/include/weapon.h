@@ -1,8 +1,8 @@
 #ifndef l_weapon_h
 #define l_weapon_h
 
-protected void create();
-protected void init();
+static void create();
+static void init();
 mixed direct_remove_obj();
 mixed direct_unwield_obj();
 mixed direct_wear_obj();
@@ -37,7 +37,7 @@ string SetWeaponType(string str);
 string GetWeaponType();
 mixed SetWield(mixed val);
 mixed GetWield();
-protected string *SetWorn(string *limbs);
+static string *SetWorn(string *limbs);
 string *GetWorn();
 
 /* pure virtual */ string GetKeyName();

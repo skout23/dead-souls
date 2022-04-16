@@ -1,6 +1,6 @@
 #include <lib.h>
 inherit LIB_ROOM;
-protected void create() {
+static void create() {
     room::create();
     SetCoordinates("3999,4000,-2");
     SetClimate("indoors");

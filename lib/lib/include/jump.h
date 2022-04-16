@@ -1,7 +1,7 @@
 #ifndef l_jump_h
 #define l_jump_h
 
-protected void create();
+static void create();
 
 mixed direct_jump_word_obj(string prep, object target, string id);
 varargs mixed direct_jump_word_word_obj(mixed args...);

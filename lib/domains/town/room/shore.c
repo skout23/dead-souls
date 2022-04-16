@@ -48,7 +48,7 @@ int ActionFunction2(){
     return 1;
 }
 
-protected void create() {
+static void create() {
     fishing::create();
     SetClimate("outdoors");
     SetAmbientLight(30);

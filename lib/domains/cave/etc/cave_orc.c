@@ -3,7 +3,7 @@
 #include <lib.h>
 
 inherit LIB_SENTIENT;
-nosave private string *exempted = ({ "orc","half-orc","rodent","bear" });
+static private string *exempted = ({ "orc","half-orc","rodent","bear" });
 
 int GetEnemyChaser() { return 1; }
 

@@ -5,7 +5,7 @@
 
 inherit LIB_POTION;
 
-protected void create() {
+static void create() {
     ::create();
     SetKeyName("spazalin");
     SetId(({"pill","stimulant"}));

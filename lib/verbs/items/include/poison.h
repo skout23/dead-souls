@@ -1,7 +1,7 @@
 #ifndef l_poison_h
 #define l_poison_h
  
-protected void create();
+static void create();
 
 mixed can_poison_obj_with_obj(string verb);
 

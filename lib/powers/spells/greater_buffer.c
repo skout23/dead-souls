@@ -1,6 +1,6 @@
 /*    /spells/buffer.c
  *    From Dead Souls LPMud
- *    Created by Blitz
+ *    Created by Blitz 
  *    Converted to new spell system by BillGates 961119
  *    Version: @(#) buffer.c 1.6@(#)
  *    Last modified: 96/11/10
@@ -17,7 +17,7 @@ inherit LIB_SPELL;
 int hitCallback(object who, object agent, int x, class MagicProtection cl);
 void endCallback(object who);
 
-protected void create() {
+static void create() {
     spell::create();
     SetSpell("greater buffer");
     SetRules("", "LIV");
@@ -33,7 +33,7 @@ protected void create() {
             "a glowing shield around the LIVing object named.\n\n");
 }
 
-int eventCast(object who, int level, string race, object* targets) {
+int eventCast(object who, int level, string race, object array targets) {
     class MagicProtection protection;
     class MagicProtection *Protections;
     object target = targets[0];
@@ -45,7 +45,7 @@ int eventCast(object who, int level, string race, object* targets) {
     foreach(class MagicProtection tmp in Protections){
         if(!tmp->obname) continue;
         if(tmp->obname == file_name(this_object())){
-            if(!(functionp(tmp->hit) & FP_OWNER_DESTED)){
+            if(!(functionp(tmp->hit) & FP_OWNER_DESTED)){ 
                 if(target == this_player()){
                     write("You are already protected by a greater buffer!");
                 }
@@ -101,7 +101,7 @@ int hitCallback(object who, object agent, int x, class MagicProtection cl) {
     }
     else if( Caster && playerp(who) && Caster != who ) {
         Caster->eventTrainSkill("magic defense",cl->args,0,1);
-    }
+    } 
 
     send_messages("", "The %^YELLOW%^magical shield%^RESET%^ around "
             "$agent_name wavers as $target_name strikes it.",

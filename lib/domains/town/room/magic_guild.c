@@ -30,7 +30,7 @@ string ReadList(){
     if(this_player()->GetClass() == "mage") return mageret;
     return muggleret;
 }
-protected void create() {
+static void create() {
     room::create();
     SetClimate("indoors");
     SetAmbientLight(30);

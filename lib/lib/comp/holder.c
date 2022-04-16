@@ -13,7 +13,7 @@ inherit LIB_CONTAINER;  // Determines whether something can be contained
 inherit LIB_GET_FROM;   // Let's players things from it and put them in
 inherit LIB_INVENTORY;  // Let's cres specify an initial inventory
 
-private nosave int Persist = 0;
+private static int Persist = 0;
 
 int isBag(){
     return 1;
@@ -28,7 +28,7 @@ int SetOpacity(int x){
 }
 
 varargs string GetInternalDesc(){
-    object* items = all_inventory();
+    object array items = all_inventory();
     string desc;
     int surfacep;
 
@@ -43,7 +43,7 @@ varargs string GetInternalDesc(){
     if(surfacep) desc = "On "+add_article(GetShort(), 1);
     items = filter(items, (: !($1->isDummy()) && !($1->GetInvis()) :));
     if( sizeof(items) ){
-        if(surfacep){
+        if(surfacep){ 
             desc = desc+" you see " + item_list(items) + ".";
         }
         else desc = desc + " contains " + item_list(items) + ".";
@@ -55,7 +55,7 @@ varargs string GetInternalDesc(){
     return desc;
 }
 
-protected mixed* AddSave(mixed* vars){
+static mixed array AddSave(mixed array vars){
     return ({});
 }
 
@@ -70,7 +70,7 @@ int CanReceive(object ob){
     return container::CanReceive(ob);
 }
 
-protected void eventLoadInventory(){
+static void eventLoadInventory(){
     if( !environment() || Persist ){
         return;
     }
@@ -102,7 +102,7 @@ int eventReleaseObject(object ob){
     return x;
 }
 
-protected void create(){
+static void create(){
     AddSave(({ "Persist" }));
     SetSaveRecurse(1);
     call_out((: reset :), 0);

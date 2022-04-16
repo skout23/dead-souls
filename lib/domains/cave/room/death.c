@@ -8,7 +8,7 @@ string FunkyPic();
 int CheckChat();
 int StartHeart(object ob);
 
-protected void create() {
+static void create() {
     ::create();
     SetClimate("indoors");
     SetAmbientLight(30);

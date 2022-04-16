@@ -5,7 +5,7 @@
 
 inherit LIB_VIRT_LAND;
 
-nosave private int XPosition, YPosition;
+static private int XPosition, YPosition;
 
 int max_north = 4999;
 int max_south = 4989;
@@ -33,7 +33,7 @@ int PreExit(mixed arg1, mixed arg2){
 }
 #endif
 
-varargs protected void create(int x, int y) {
+varargs static void create(int x, int y) {
     string n, s, e, w;
     string ne, nw, se, sw;
     string fly;
@@ -125,7 +125,7 @@ varargs void SetLongAndItems(int x, int y, int z) {
                 ]) );
 
     if(y == max_north) {
-        AddItem( ({ "rock wall","wall","stone wall"}),
+        AddItem( ({ "rock wall","wall","stone wall"}), 
                 "This vast stone wall prevents further travel north." );
     }
     else if(y == max_south) {

@@ -5,7 +5,7 @@ inherit LIB_LIMB;
 
 int stank;
 
-protected void create(){
+static void create(){
     limb::create();
 }
 

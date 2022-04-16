@@ -25,7 +25,7 @@ object cmd = load_object(CMD_ROUTER);
 object rsocket = find_object(RSOCKET_D);
 object ssocket = find_object(SSOCKET_D);
 
-protected void validate(){
+static void validate(){
     if( previous_object() != cmd && previous_object() != rsocket &&
             previous_object() != this_object() && previous_object() != ssocket &&
             !((int)master()->valid_apply(({ "ASSIST" }))) ){
@@ -44,7 +44,7 @@ mapping connected_muds;
 // (key=mudname, value=fd)
 string router_name; // Name of the router.
 string router_ip;
-nosave string *router_list = ({}); // Ordered list of routers to use.
+static string *router_list = ({}); // Ordered list of routers to use.
 mapping mudinfo = ([]); // Info about all the muds which the router knows about.
 mapping channels; // Info about all the channels the router handles.
 mapping channel_updates; // Tells when a channel was last changed.
@@ -53,43 +53,43 @@ int channel_update_counter; // Counter for the most recent change.
 // Because I need to remember that some channels got deleted.
 mapping mudinfo_updates; // Like channel_updates except for muds.
 int mudinfo_update_counter; // Similar to channel_update_counter
-nosave int max_age = 604800;
-//nosave int max_age = 86400;
+static int max_age = 604800;
+//static int max_age = 86400;
 mapping Blacklist = ([]);
 
 //Unsaved globals
-nosave mapping gtargets = ([]);
+static mapping gtargets = ([]);
 
 // Prototypes
-protected mapping muds_on_this_fd(int fd);
-protected mapping muds_not_on_this_fd(int fd);
+static mapping muds_on_this_fd(int fd);
+static mapping muds_not_on_this_fd(int fd);
 void write_data(int fd, mixed data);
-protected void close_connection(int fd);
-protected void broadcast_data(mapping targets, mixed data);
+static void close_connection(int fd);
+static void broadcast_data(mapping targets, mixed data);
 
 // Ones with their own files...
 string clean_fd(string fd);
-protected void broadcast_chanlist(string channame);
+static void broadcast_chanlist(string channame);
 void broadcast_mudlist(string mudname);
-nosave varargs void Debug(string str, int level);
-protected void process_channel(int fd, mixed *info);
-protected void process_startup_req(int protocol, mixed info, int fd);
-protected void read_callback(int fd, mixed info);
-protected void remove_mud(string mudname, int forced);
-protected void send_chanlist_reply(string mudname, int old_chanid);
-protected void send_mudlist(string mudname);
-protected void send_mudlist_updates(string updating_mudname, int old_mudlist_id);
-protected void send_startup_reply(string mudname);
-protected void send_error(string mud, string user, string errcode, string errmsg, mixed *info);
+static varargs void Debug(string str, int level);
+static void process_channel(int fd, mixed *info);
+static void process_startup_req(int protocol, mixed info, int fd);
+static void read_callback(int fd, mixed info);
+static void remove_mud(string mudname, int forced);
+static void send_chanlist_reply(string mudname, int old_chanid);
+static void send_mudlist(string mudname);
+static void send_mudlist_updates(string updating_mudname, int old_mudlist_id);
+static void send_startup_reply(string mudname);
+static void send_error(string mud, string user, string errcode, string errmsg, mixed *info);
 void send_full_mudlist(string mud);
 // core_stuff.h...
-protected void create();
-protected void setup();
+static void create();
+static void setup();
 void remove();
 // funcs.h...
-protected mapping muds_on_this_fd(int fd);
+static mapping muds_on_this_fd(int fd);
 int value_equals(string a,int b, int c);
-protected mapping muds_not_on_this_fd(int fd);
+static mapping muds_not_on_this_fd(int fd);
 int value_not_equals(string a,int b, int c);
 // socket_stuff.h
 varargs string *SetList();
@@ -115,7 +115,7 @@ varargs string *SetList();
 #include "./hosted_channels.h"
 #include "./send_full_mudlist.h"
 
-protected void close_connection(int fd){
+static void close_connection(int fd){
     if(!socket_status(fd) || socket_status(fd)[0] == -1) return;
     trr("trying to close "+fd);
     if(base_name(socket_status(fd)[5]) == RSOCKET_D){
@@ -152,7 +152,7 @@ varargs void write_data(int fd, mixed data, int override){
     targetmud = this_object()->query_connected_fds()[fd];
     if(!sstat || sstat[1] != "DATA_XFER") return;
     if(!fd || (!data[4] && targetmud) ||  member_array(fd, keys(irn_sockets)) != -1 ||
-            (targetmud && targetmud == data[4]) ){
+            (targetmud && targetmud == data[4]) ){  
         if(rsock && sstat[5] == rsock) RSOCKET_D->write_data(fd, data);
         else IMC2_SERVER_D->write_data(fd, data);
     }
@@ -160,7 +160,7 @@ varargs void write_data(int fd, mixed data, int override){
     }
 }
 
-protected void broadcast_data(mapping targets, mixed data){
+static void broadcast_data(mapping targets, mixed data){
     object imc2d = find_object(IMC2_SERVER_D);
     RSOCKET_D->broadcast_data(targets, data);
     if(imc2d) imc2d->broadcast_data(targets, data);
@@ -250,12 +250,12 @@ mixed get_info(int auto) {
     return 1;
 }
 
-void clear(){
-    string mudname;
+void clear(){ 
+    string mudname; 
     validate();
-    server_log("%^RED%^Clearing all mud data!");
-    foreach(mudname in keys(mudinfo)) remove_mud(mudname,1);
-    SaveObject(SAVE_ROUTER);
+    server_log("%^RED%^Clearing all mud data!"); 
+    foreach(mudname in keys(mudinfo)) remove_mud(mudname,1); 
+    SaveObject(SAVE_ROUTER);    
 }
 
 string GetRouterName(){
@@ -267,7 +267,7 @@ string SetRouterName(string str){
     validate();
     if(first(str,1) != "*") str = "*"+str;
     router_name = str;
-    server_log(" setting router name to: "+str);
+    server_log(" setting router name to: "+str); 
     SetList();
     return router_name;
 }
@@ -387,7 +387,7 @@ mixed GetRemoteIP(int fd){
     conn = explode(conn[4],".");
     ret = implode(conn[0..3],".");
     return ret;
-}
+}  
 
 void check_blacklist(){
     int timenow = time();
@@ -446,13 +446,13 @@ void check_discs(){
                     socket_status(element)[1] == "CLOSED" || !GetRemoteIP(element) ||
                     ( mudinfo[query_connected_fds()[element]] && GetRemoteIP(element) != mudinfo[query_connected_fds()[element]]["ip"])){
                 foreach(string key, mixed val in mudinfo){
-                    if(undefinedp(connected_muds[key])
+                    if(undefinedp(connected_muds[key]) 
                             && mudinfo[key]["router"]){
                         if(mudinfo[key]["router"] == my_name){
                             server_log("Cleaning my connection info from "+key);
                             if(!mudinfo[key]["disconnect_time"])
                                 mudinfo[key]["disconnect_time"] = time();
-                            if(mudinfo[key]["connect_time"])
+                            if(mudinfo[key]["connect_time"]) 
                                 mudinfo[key]["connect_time"] = 0;
                         }
                         else {
@@ -460,7 +460,7 @@ void check_discs(){
                                     " connection info from "+key);
                             if(!mudinfo[key]["disconnect_time"])
                                 mudinfo[key]["disconnect_time"] = 0;
-                            if(mudinfo[key]["connect_time"])
+                            if(mudinfo[key]["connect_time"]) 
                                 mudinfo[key]["connect_time"] = 0;
                         }
                     }
@@ -481,7 +481,7 @@ varargs void clean_ghosts(int force){
     int tmp,i;
     object rsockd = find_object(RSOCKET_D);
     object ssockd = find_object(SSOCKET_D);
-    mixed* incoming = socket_status();
+    mixed array incoming = socket_status();
     mixed *legit_socks = keys(this_object()->query_socks());
     legit_socks += keys(this_object()->query_irn_sockets());
 
@@ -489,16 +489,16 @@ varargs void clean_ghosts(int force){
 
     tmp=sizeof(socket_status())-1;
 
-    for(i=0;i < tmp;i++){
-        if(!incoming[i][5] ||
+    for(i=0;i < tmp;i++){ 
+        if(!incoming[i][5] || 
                 (incoming[i][5] != rsockd && incoming[i][5] != ssockd)) continue;
-        if(member_array(i,legit_socks) == -1 && incoming[i][1] == "DATA_XFER"){
+        if(member_array(i,legit_socks) == -1 && incoming[i][1] == "DATA_XFER"){ 
             if(!force){
                 string ip = clean_fd(socket_address(i));
                 // keep blacklisted connections sandboxed, in case
                 // they're the reconnecting kind.
                 if(member_array(ip, blacklisted_muds) != -1) continue;
-            }
+            }                
             this_object()->close_connection(i);
         }
     }
@@ -520,7 +520,7 @@ void clean_chans(){
     foreach(mixed key, mixed val in channels){
         mixed *tmp_chan = ({});
         if(sizeof(val) == 3){
-            tmp_chan = ({ (intp(val[0]) ? val[0] : 0),
+            tmp_chan = ({ (intp(val[0]) ? val[0] : 0), 
                     val[1], distinct_array(val[2]) });
             channels[key] = tmp_chan;
         }
@@ -530,8 +530,8 @@ void clean_chans(){
     trr("channel cleanup: cleaned from listening: "+implode(cleaned,"\n"));
 }
 
-varargs void clear_discs(mixed arg){
-    string mudname;
+varargs void clear_discs(mixed arg){ 
+    string mudname; 
     string *disclist, *muds;
     int i = 1;
 
@@ -541,7 +541,7 @@ varargs void clear_discs(mixed arg){
         if(arrayp(arg)) disclist = arg;
     }
 
-    if(!disclist) disclist = keys(mudinfo);
+    if(!disclist) disclist = keys(mudinfo); 
     muds = keys(mudinfo);
 
     trr("%^B_BLACK%^Discarding excessively old disconnects.","white");
@@ -565,7 +565,7 @@ varargs void clear_discs(mixed arg){
             deadsince = time() - mudinfo[mudname]["disconnect_time"];
 
             if(undefinedp(connected_muds[mudname]) && mudinfo[mudname]["router"]){
-                if(mudinfo[mudname]["router"] != my_name &&
+                if(mudinfo[mudname]["router"] != my_name && 
                         member_array(mudinfo[mudname]["router"],keys(irn_connections)) == -1){
                     if(!mudinfo[mudname]["disconnect_time"])
                         mudinfo[mudname]["disconnect_time"] = 0;
@@ -736,7 +736,7 @@ varargs int purge_ips(int rude){
 }
 
 void update_imc2(string mud, mapping foo){
-    validate();
+    validate(); 
     if(!mudinfo[mud]) return;
     if(!mudinfo[mud]["other_data"]) mudinfo[mud]["other_data"] = ([]);
     foreach(mixed key, mixed val in foo){

@@ -12,7 +12,7 @@ private int BaitStrength = 0;
 
 // abstract methods
 string GetShort();
-protected int Destruct();
+static int Destruct();
 // end abstract methods
 
 int GetBaitStrength(){

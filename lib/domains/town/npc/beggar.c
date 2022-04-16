@@ -5,7 +5,7 @@
 inherit LIB_SENTIENT;
 inherit LIB_DONATE;
 
-protected void create() {
+static void create() {
     sentient::create();
     SetKeyName("beggar");
     SetId(({"beggar"}));

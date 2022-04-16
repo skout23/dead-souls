@@ -2,7 +2,7 @@
 inherit LIB_ROOM;
 
 int CheckQuest(object ob);
-protected void create() {
+static void create() {
     room::create();
     SetClimate("indoors");
     SetAmbientLight(30);

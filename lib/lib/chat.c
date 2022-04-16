@@ -9,11 +9,11 @@
 #include "include/chat.h"
 
 private string *RestrictedChannels;
-private nosave mapping Channels;
+private static mapping Channels;
 private int NoChanColors = 0;
 private mapping GagMutes = ([]);
 
-protected void create(){
+static void create(){
     RestrictedChannels = ({ });
     Channels = ([ ]);
     GagMutes = (["local_mute":0,"remote_mute":0,"local_gag":0,"remote_gag":0]);
@@ -23,7 +23,7 @@ mapping returnChannels(){
     return Channels;
 }
 
-protected string chat_command(string str){
+static string chat_command(string str){
     string cmd, arg, tmp;
     int x;
     if( (x = strsrch(str, " ")) == -1){
@@ -45,7 +45,7 @@ protected string chat_command(string str){
     else return str;
 }
 
-protected void net_dead(){
+static void net_dead(){
     CHAT_D->eventRemoveMember(keys(Channels));
 }
 

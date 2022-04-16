@@ -40,11 +40,11 @@ inherit LIB_UNIQUENESS;
 private int            Size          = 0;
 private int            Fingers       = 5;
 private mapping        Protection    = ([]);
-private string*   RestrictLimbs = 0;
-private string*   BaseLimbs     = 0;
-private nosave mixed   Wear          = 0;
-private nosave mapping MaxProtection = ([]);
-private nosave mixed my_save = ({});
+private string array   RestrictLimbs = 0;
+private string array   BaseLimbs     = 0;
+private static mixed   Wear          = 0;
+private static mapping MaxProtection = ([]);
+private static mixed my_save = ({});
 
 int GetMaxProtection(int type);
 
@@ -118,8 +118,8 @@ string *LimbGuess(object who){
             foreach(limb in hands){
                 if((memb = member_array(limb[0..(sizeof(limb)-5)]+"arm",
                                 tmp)) != -1 ){
-                    if(who->CanWear(this_object(),({limb, tmp[memb]}))
-                            == 1){
+                    if(who->CanWear(this_object(),({limb, tmp[memb]})) 
+                            == 1){ 
                         limbs += ({limb, tmp[memb]});
                         base_limbs = remove_member(base_limbs,
                                 member_array("arm", base_limbs));
@@ -129,7 +129,7 @@ string *LimbGuess(object who){
                             break;
                     }
                 }
-            }
+            } 
         }
         if(member_array("foot", base_limbs) != -1 &&
                 member_array("leg", base_limbs) != -1){
@@ -228,7 +228,7 @@ int GetMaxProtection(int type){
 }
 
 int GetProtection(int type){
-    int* types;
+    int array types;
     int i;
 
     foreach(int t, int val in Protection){
@@ -254,27 +254,27 @@ int SetAC(int i){
     return i;
 }
 
-string* GetRestrictLimbs(){
+string array GetRestrictLimbs(){
     return RestrictLimbs;
 }
 
-string* SetRestrictLimbs(string* limbs){
+string array SetRestrictLimbs(string array limbs){
     return (RestrictLimbs = limbs);
 }
 
-string* GetBaseLimbs(){
+string array GetBaseLimbs(){
     return BaseLimbs;
 }
 
-string* SetBaseLimbs(string* limbs){
+string array SetBaseLimbs(string array limbs){
     return (BaseLimbs = limbs);
 }
 
-string* GetSave(){
+string array GetSave(){
     return persist::GetSave();
 }
 
-protected mixed* AddSave(mixed* vars){
+static mixed array AddSave(mixed array vars){
     if(!vars) vars = ({});
     my_save = distinct_array( my_save + vars );
     return persist::AddSave(my_save);
@@ -288,8 +288,8 @@ mixed SetWear(mixed val){
     return (Wear = val);
 }
 
-/* ****************** armor.c modals ********************* */
-mixed CanEquip(object who, string* limbs){
+/* ****************** armor.c modals ********************* */ 
+mixed CanEquip(object who, string array limbs){
     mixed tmp;
 
     if(Size && !( Size & who->GetSize() ) ){
@@ -297,7 +297,7 @@ mixed CanEquip(object who, string* limbs){
     }
 
     if( !limbs ){ /* let's try and guess */
-        string* guess = who->GetLimbs();
+        string array guess = who->GetLimbs();
         int armor = GetArmorType();
         string limb;
         if( !guess ){
@@ -363,8 +363,8 @@ mixed CanSteal(object who){
     return steal::CanSteal(who);
 }
 
-/* ********************* armor.c events *********************** */
-protected int Destruct(){
+/* ********************* armor.c events *********************** */ 
+static int Destruct(){
     if( GetWorn() && environment() ){
         eventUnequip(environment());
     }
@@ -389,7 +389,7 @@ void eventDeteriorate(int type){
     SetValue(GetValue()/2);
 }
 
-mixed eventEquip(object who, string* limbs){
+mixed eventEquip(object who, string array limbs){
     mixed tmp;
 
     if( !limbs ){ /* let's try and guess */
@@ -453,7 +453,7 @@ mixed eventEquip(object who, string* limbs){
 
 int eventMove(mixed dest){
     if( !environment() && GetWorn() ){
-        mixed* limbs = GetWorn();
+        mixed array limbs = GetWorn();
 
         SetWorn(0);
         call_out((: eventRestoreEquip :), 0, limbs);
@@ -516,7 +516,7 @@ varargs int restrict(mixed arg, int i){
 }
 
 /* ******************** armor.c driver applies ******************** */
-protected void create(){
+static void create(){
     steal::create();
     object::create();
     my_save = equip::GetSave() + value::GetSave() + mass::GetSave() +
@@ -546,7 +546,7 @@ void init(){
     if(atype & A_ARMOR ) restrict(({"torso","right arm","left arm"}));
     if(atype & A_COLLAR ) restrict(({"neck"}));
     if(atype & A_BODY_ARMOR ) restrict(({"torso","right arm","left arm","left leg","right leg"}) );
-}
+} 
 
 mapping GetProtectionMap(){
     return copy(Protection);

@@ -5,7 +5,7 @@ inherit LIB_BARKEEP;
 
 mixed NoKill(object attacker);
 
-protected void create() {
+static void create() {
     barkeep::create();
     SetKeyName("lars");
     SetId( ({ "lars", "owner", "barkeep", "bartender", "keeper" }) );

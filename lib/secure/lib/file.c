@@ -11,11 +11,11 @@
 
 inherit LIB_CLEAN;
 
-private nosave string FileName    = 0;
-private nosave int    LinePointer = 0;
-private nosave int    MaxBytes    = get_config(__MAX_BYTE_TRANSFER__);
-private nosave int    MaxFile     = get_config(__MAX_READ_FILE_SIZE__);
-private nosave int    TempFile    = 0;
+private static string FileName    = 0;
+private static int    LinePointer = 0;
+private static int    MaxBytes    = get_config(__MAX_BYTE_TRANSFER__);
+private static int    MaxFile     = get_config(__MAX_READ_FILE_SIZE__);
+private static int    TempFile    = 0;
 
 int isDirectory() {
     return (file_size(FileName) == -2);
@@ -63,14 +63,14 @@ string GetCharacters(int start, int length) {
     return read_bytes(FileName, start, length);
 }
 
-string* GetDirectoryList() {
+string array GetDirectoryList() {
     if( !isDirectory() ) {
         return 0;
     }
     return get_dir(FileName + "/");
 }
 
-mixed* GetDirectoryShort() {
+mixed array GetDirectoryShort() {
     if( !isDirectory() ) {
         return 0;
     }
@@ -258,7 +258,7 @@ mixed eventWrite(mixed val) {
     return 1;
 }
 
-varargs protected void create(string file) {
+varargs static void create(string file) {
     if( !clonep() ) {
         return;
     }

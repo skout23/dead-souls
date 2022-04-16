@@ -2,7 +2,7 @@
 
 inherit LIB_SENTIENT;
 
-protected void create() {
+static void create() {
     sentient::create();
     SetKeyName("claire");
     SetId( ({"nymph", "danes", "claire danes", "woman"}) );

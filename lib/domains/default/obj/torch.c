@@ -3,7 +3,7 @@
 inherit LIB_TORCH;
 
 
-protected void create() {
+static void create() {
     torch::create();
     SetKeyName("torch");
     SetId( ({ "torch", "old torch", "wooden torch" }) );

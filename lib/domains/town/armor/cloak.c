@@ -5,7 +5,7 @@
 #include <damage_types.h>
 inherit LIB_ARMOR;
 
-protected void create(){
+static void create(){
     armor::create();
     SetKeyName("a green cloak");
     SetId(({"cloak"}));

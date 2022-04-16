@@ -12,7 +12,7 @@ int CheckOrc(){
     return write(ret);
 }
 
-protected void create() {
+static void create() {
     item::create();
     SetKeyName("sword");
     SetId( ({ "short sword", "shortsword"}));

@@ -5,7 +5,7 @@ inherit LIB_DAEMON;
 string savefile = SAVE_MEETINGS;
 mapping schedule = ([]);
 
-protected void create() {
+static void create() {
     daemon::create();
     RestoreObject(savefile,1);
 }

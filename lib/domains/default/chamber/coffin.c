@@ -3,7 +3,7 @@
 
 inherit LIB_CHAMBER;
 
-protected void create() {
+static void create() {
     chamber::create();
     SetKeyName("coffin");
     SetId(({"box"}));

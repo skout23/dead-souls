@@ -1,7 +1,7 @@
 #ifndef l_extinguish_h
 #define l_extinguish_h
 
-protected void create();
+static void create();
 
 mixed can_extinguish_obj();
 

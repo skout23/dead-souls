@@ -9,7 +9,7 @@
 
 inherit LIB_VERB;
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("ask");
     SetRules("LIV STR", "STR", "LIV to STR", "LIV for STR", "LIV about STR");

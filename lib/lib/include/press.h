@@ -1,7 +1,7 @@
 #ifndef l_press_h
 #define l_press_h
 
-protected void create();
+static void create();
 mixed direct_press_obj(object target);
 mixed direct_press_str_on_obj(string str, object target);
 
@@ -11,7 +11,7 @@ varargs mixed eventPress(object who, string component);
 varargs mapping SetPress(mixed key, mixed desc);
 mapping RemovePress(string item);
 mixed GetPress(string str);
-string* GetPresses();
+string array GetPresses();
 
 /* pure virtual */ string GetShort();
 

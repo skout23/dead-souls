@@ -6,7 +6,7 @@
  *    Last modified: 96/12/22
  */
 
-nosave int CarriedMass = 0;
+static int CarriedMass = 0;
 int MaxCarry    = 0;
 
 int CanCarry(int amount);
@@ -26,7 +26,7 @@ int GetCarriedMass(){
     return CarriedMass ;
 }
 
-protected int SetCarriedMass(int x){
+static int SetCarriedMass(int x){
     return CarriedMass = x;
 }
 

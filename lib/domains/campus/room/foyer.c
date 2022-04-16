@@ -6,7 +6,7 @@ int readSign() {
     this_player()->more("/domains/campus/txt/warning.txt");
     return 1;
 }
-protected void create() {
+static void create() {
     room::create();
     SetClimate("indoors");
     SetAmbientLight(40);

@@ -2,7 +2,7 @@
 
 inherit LIB_SENTIENT;
 
-protected void create() {
+static void create() {
     sentient::create();
     SetKeyName("horse");
     SetId(({"horse","large horse","hands","quadruped","ungulate"}));

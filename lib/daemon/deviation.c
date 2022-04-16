@@ -4,10 +4,10 @@
 #include <privs.h>
 
 inherit LIB_DAEMON;
-nosave string SaveFile;
+static string SaveFile;
 mapping StatDeviation = ([]);
 
-protected void create() {
+static void create() {
     daemon::create();
     SaveFile = save_file(SAVE_DEVIATION);
     SetSaveFile(SaveFile);

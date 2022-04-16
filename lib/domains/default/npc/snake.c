@@ -3,7 +3,7 @@
 
 inherit LIB_SENTIENT;
 
-protected void create() {
+static void create() {
     sentient::create();
     SetKeyName("snake");
     SetId( ({"garter snake", "reptile"}) );

@@ -35,7 +35,7 @@ int eventDispel(){
     return eventDematerialize();
 }
 
-protected void create() {
+static void create() {
     item::create();
     AddSave( ({ "Duration" }) );
     SetKeyName("energy whip");

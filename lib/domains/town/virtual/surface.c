@@ -6,7 +6,7 @@
 
 inherit LIB_VIRT_LAND;
 
-nosave private int XPosition, YPosition;
+static private int XPosition, YPosition;
 int max_north = 1000000;
 int max_south = -1000000;
 int max_east = 1000000;
@@ -23,7 +23,7 @@ varargs int LimitTravel(int requested, int maximum, int lessthan){
     else return requested;
 }
 
-varargs protected void create(int x, int y) {
+varargs static void create(int x, int y) {
     string n, s, e, w;
     string ne, nw, se, sw;
     string sink, fly;

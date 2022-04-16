@@ -38,7 +38,7 @@ int closeDoor(object who){
     return 1;
 }
 
-protected void create() {
+static void create() {
     dummy::create();
     SetKeyName("lever");
     SetId(({"lever","lever on the wall" }));

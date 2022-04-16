@@ -12,8 +12,8 @@
 inherit LIB_DAEMON;
 
 mixed cmd(string args){
-    string* rules = ({ "", "STR" });
-    string* adverbs;
+    string array rules = ({ "", "STR" });
+    string array adverbs;
     string emote, xtra, prep;
     if( !(master()->valid_apply(({ "ASSIST" }))) &&
             !member_group(this_player(), "EMOTES") ){

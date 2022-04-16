@@ -32,7 +32,7 @@ string GetInternalDesc(){
     }
 }
 
-mixed SetInternalDesc(mixed str){
+string SetInternalDesc(string str){
     return (InternalDesc = str);
 }
 

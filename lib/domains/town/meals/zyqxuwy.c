@@ -4,7 +4,7 @@
 
 inherit LIB_FISH;
 
-protected void create() {
+static void create() {
     fish::create();
     SetKeyName("zyqxuwy");
     SetId( ({ "fish", "pinkfish" }) );

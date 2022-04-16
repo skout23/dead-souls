@@ -7,7 +7,7 @@ void SetStuff(int level);
 void SetType(string what);
 int count;
 
-protected void create(int level) {
+static void create(int level) {
     string type;
     npc::create();
     SetId(({"blob"}));

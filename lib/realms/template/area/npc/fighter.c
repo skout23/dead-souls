@@ -15,7 +15,7 @@ int CheckVisitor(object who){
     return 1;
 }
 
-protected void create(){
+static void create(){
     npc::create();
     privs = query_privs();
     SetKeyName("fighter");

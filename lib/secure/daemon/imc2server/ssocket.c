@@ -7,18 +7,18 @@
 
 inherit LIB_DAEMON;
 
-nosave private int router_socket;
-nosave private mapping sockets = ([]);
-nosave private int incept_date;
+static private int router_socket;
+static private mapping sockets = ([]);
+static private int incept_date;
 int verbose = 0;
 
-protected void close_callback(int fd, int force);
+static void close_callback(int fd, int force);
 void write_data(int fd, mixed data);
 varargs void yenta(mixed arg1, mixed arg2);
 object cmd = load_object(CMD_ROUTER);
 object router = find_object(IMC2_SERVER_D);
 
-varargs protected void validate(int i){
+varargs static void validate(int i){
     if(i){
         if(!socket_status(i) || !socket_status(i)[5]){
             server_log("%^RED%^BAD SOCKET ALERT. fd "+i+":  "+
@@ -35,7 +35,7 @@ varargs protected void validate(int i){
     }
 }
 
-protected void create(){
+static void create(){
     incept_date = time();
     call_out("setup",1);
     SetNoClean(1);
@@ -63,7 +63,7 @@ void close_connection(int fd){
     yenta("%^WHITE%^---\n","ssocket");
 }
 
-protected void close_callback(int fd, int force){
+static void close_callback(int fd, int force){
     string mudname;
     mapping muds_on_this_fd = ([]);
 
@@ -84,7 +84,7 @@ protected void close_callback(int fd, int force){
     close_connection(fd);
 }
 
-protected void listen_callback(int fd){
+static void listen_callback(int fd){
     int fdstat;
 
     validate(fd);
@@ -99,7 +99,7 @@ protected void listen_callback(int fd){
     }
 }
 
-protected void read_callback(int fd, mixed info){
+static void read_callback(int fd, mixed info){
 
     validate(fd);
     if(bufferp(info)){
@@ -112,7 +112,7 @@ protected void read_callback(int fd, mixed info){
     IMC2_SERVER_D->read_callback(fd,info);
 }
 
-protected void write_callback(int fd){
+static void write_callback(int fd){
 
     validate(fd);
 
@@ -120,13 +120,13 @@ protected void write_callback(int fd){
     if(sockets[fd]["write_status"] == EEALREADY) {
         write_data(fd, sockets[fd]["pending"]);
         map_delete(sockets[fd], "pending");
-    }
+    } 
     else {
         sockets[fd]["write_status"] = EESUCCESS;
     }
 }
 
-protected void write_data_retry(int fd, mixed data, int counter){
+static void write_data_retry(int fd, mixed data, int counter){
     int rc;
     int maxtry;
 
@@ -169,7 +169,7 @@ protected void write_data_retry(int fd, mixed data, int counter){
                 if(counter < 2 || counter > maxtry-1)
                     trr("SSOCKET_D write_data_retry "+counter+" to "+
                             ROUTER_D->query_connected_fds()[fd]+", fd"+fd+" error,  code "+rc+": " + socket_error(rc));
-                call_out( (: write_data_retry :), 2 , fd, data, counter + 1 );
+                call_out( (: write_data_retry :), 2 , fd, data, counter + 1 ); 
                 return;
             }
     }
@@ -188,7 +188,7 @@ void broadcast_data(mapping targets, mixed data){
             }
             }
 
-            protected void setup(){
+            static void setup(){
             int router_port;
 
             if(!find_object(IMC2_SERVER_D)) return;
@@ -251,7 +251,7 @@ int GetVerbose(){
 }
 
 varargs void yenta(mixed arg1, mixed arg2){
-    if(verbose){
+    if(verbose){ 
         if(arg2) server_log(arg1, arg2);
         else server_log(arg1);
     }

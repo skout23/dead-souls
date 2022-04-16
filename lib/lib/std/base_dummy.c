@@ -28,7 +28,7 @@ inherit LIB_SINK;
 int isDummy(){
     return 1;
 }
-varargs string* SetId(mixed ids...){
+varargs string array SetId(mixed ids...){
     ids = id::SetId(ids);
     if( sizeof(ids) && !GetKeyName() ){
         SetKeyName(ids[0]);
@@ -43,7 +43,7 @@ varargs string* SetId(mixed ids...){
 //}
 
 /* ********************* dummy.c events ****************** */
-protected int Destruct(){
+static int Destruct(){
     object env;
     int x;
 
@@ -91,11 +91,11 @@ mixed eventMove(mixed dest){
             return 1;
         }
     }
-    return 0;
+    return 0; 
 }
 
 /* ******************* dummy.c driver applies ******************** */
-varargs protected void create(string* id, mixed long, string* adj){
+varargs static void create(string array id, mixed long, string array adj){
     string str;
     str = "I am "+file_name(this_object())+" and I have been created ";
     str += "by "+identify(previous_object(-1));

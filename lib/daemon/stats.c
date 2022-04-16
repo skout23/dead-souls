@@ -4,10 +4,10 @@
 #include <privs.h>
 
 inherit LIB_DAEMON;
-nosave string SaveFile;
+static string SaveFile;
 mapping Stats = ([]);
 
-protected void create() {
+static void create() {
     daemon::create();
     SaveFile = save_file(SAVE_STATS);
     SetSaveFile(SaveFile);
@@ -43,7 +43,7 @@ varargs int SetStat(string what, string race, int statcl){
     return 1;
 }
 
-protected void SetStats(){
+static void SetStats(){
     foreach(string race in RACES_D->GetRaces()){
         mapping stats = RACES_D->GetRace(race)["Stats"];
         foreach(mixed key, mixed val in stats){

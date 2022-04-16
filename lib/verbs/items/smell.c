@@ -11,7 +11,7 @@
 
 inherit LIB_VERB;
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("smell");
     SetRules("", "OBJ", "STR on OBJ", "STR of OBJ");

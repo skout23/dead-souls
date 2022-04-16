@@ -80,7 +80,7 @@ mixed eventTurn(object who){
     return 1;
 }
 
-protected void heart_beat(){
+static void heart_beat(){
     string type;
 
     if( !GetUndead() ){

@@ -4,7 +4,7 @@
 
 inherit LIB_ITEM;
 
-protected void create() {
+static void create() {
     item::create();
     SetKeyName("javelin");
     SetAdjectives( ({"throwing", "small", "light"}) );
@@ -12,8 +12,9 @@ protected void create() {
     SetShort("a javelin");
     SetLong("This is a small, light throwing spear.");
     SetMass(50);
+    SetBaseCost("silver",20);
     SetVendorType(VT_WEAPON);
-    SetClass(30);
+    SetClass(5);
     SetDamageType(PIERCE);
     SetWeaponType("projectile");
 }

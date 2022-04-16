@@ -1,7 +1,7 @@
 #ifndef l_throw_h
 #define l_throw_h
 
-protected void create();
+static void create();
 
 mixed can_throw_obj();
 mixed can_throw_obj_word_obj();

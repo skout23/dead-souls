@@ -10,7 +10,7 @@
 
 inherit LIB_VERB;
 
-protected void eventBury(object who, object tool, object what, object check) {
+static void eventBury(object who, object tool, object what, object check) {
     if( !who || environment(who) != check ) {
         return;
     }
@@ -21,7 +21,7 @@ protected void eventBury(object who, object tool, object what, object check) {
     tool->eventBuryWith(who, what);
 }
 
-varargs protected void eventPrepareBury(object who, object tool, object what) {
+varargs static void eventPrepareBury(object who, object tool, object what) {
     function f = (: eventBury($(who), $(tool), $(what),environment($(who))) :);
 
     if( who->GetInCombat() ) {
@@ -35,7 +35,7 @@ varargs protected void eventPrepareBury(object who, object tool, object what) {
     }
 }
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("bury");
     SetErrorMessage("Bury what with what?");

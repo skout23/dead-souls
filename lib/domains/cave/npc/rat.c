@@ -17,7 +17,7 @@ int RatEncounter(mixed val){
     return 0;
 }
 
-protected void create() {
+static void create() {
     sentient::create();
     SetKeyName("rat");
     SetAdjectives( ({"ratlike","unusual","large","very","dangerous",

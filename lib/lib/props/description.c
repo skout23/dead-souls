@@ -157,7 +157,7 @@ varargs mixed SetShort(mixed val, int proper){
     return (Short = val);
 }
 
-object* GetDummyItems(){
+object array GetDummyItems(){
     object *DummyItems = ({});
     foreach(object item in all_inventory(this_object())){
         if(base_name(item) == LIB_DUMMY){

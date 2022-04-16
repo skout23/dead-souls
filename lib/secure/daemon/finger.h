@@ -1,7 +1,7 @@
 #ifndef __FINGER_H__
 #define __FINGER_H__
 
-protected void create();
+static void create();
 varargs string GetFinger(string who);
 string GetTitle();
 

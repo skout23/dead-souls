@@ -4,7 +4,7 @@
 
 inherit LIB_POTION;
 
-protected void create() {
+static void create() {
     potion::create();
     SetKeyName("potion");
     SetId( ({ "bottle", "potion","philtrum","potion of healing","potion of greater healing" }) );
@@ -16,7 +16,7 @@ protected void create() {
     SetStrength(15);
     SetMealMessages("You drink a potion.",
             "$N drinks a potion.");
-    SetBaseCost("silver",5500);
+    SetBaseCost("silver",2000);
     SetPoints( ([ "HP" : 1000 ]) );
     SetVendorType(VT_MAGIC);
 }

@@ -19,7 +19,7 @@ int CheckHuman(mixed val){
     }
     return 1;
 }
-protected void create() {
+static void create() {
     npc::create();
     SetKeyName("troll");
     SetId(({"troll"}));

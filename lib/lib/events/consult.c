@@ -1,6 +1,6 @@
 #include <function.h>
 
-nosave private mapping Consult = ([]);
+static private mapping Consult = ([]);
 
 // abstract methods
 string GetDefiniteShort();
@@ -13,12 +13,12 @@ varargs mixed GetConsult(string str){
     return Consult[str];
 }
 
-string* GetConsults(){
+string array GetConsults(){
     return keys(Consult);
 }
 
-mapping RemoveConsult(string item){
-    map_delete(Consult, item);
+mapping RemoveConsult(string item){ 
+    map_delete(Consult, item); 
     return Consult;
 }
 

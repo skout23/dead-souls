@@ -10,7 +10,7 @@
 
 inherit LIB_VERB;
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("unlock");
     SetRules("OBJ with OBJ", "OBJ with STR");

@@ -13,16 +13,16 @@
 
 inherit LIB_DAEMON;
 
-private nosave int CurrentDay, CurrentYear;
-private nosave int Dawn, Morning, Noon, Twilight, Night;
-private nosave int ticktock, pending;
-private nosave string CurrentSeason, TimeOfDay;
-private nosave mapping Moons;
-private nosave class month CurrentMonth;
-private nosave string *Days;
-private nosave function *DawnCalls, *MorningCalls, *NoonCalls;
-private nosave function *TwilightCalls, *NightCalls, *MidnightCalls;
-private nosave class month *Months;
+private static int CurrentDay, CurrentYear; 
+private static int Dawn, Morning, Noon, Twilight, Night;
+private static int ticktock, pending;
+private static string CurrentSeason, TimeOfDay;
+private static mapping Moons;
+private static class month CurrentMonth;
+private static string *Days;
+private static function *DawnCalls, *MorningCalls, *NoonCalls;
+private static function *TwilightCalls, *NightCalls, *MidnightCalls;
+private static class month *Months;
 
 int eventTickTock(int tick){
     if(!this_player() || !archp(this_player())) return 0;
@@ -41,7 +41,7 @@ int *GetMudTime(){
     return ({ GetHour(time()+ticktock), GetMinutes(time()+ticktock) });
 }
 
-protected void create() {
+static void create() {
     string *lines;
     int i, maxi;
 
@@ -77,7 +77,7 @@ protected void create() {
     eventConfigure();
 }
 
-protected void eventConfigure() {
+static void eventConfigure() {
     int i, x, days, tot, maxi;
 
     DawnCalls = ({});
@@ -140,7 +140,7 @@ protected void eventConfigure() {
     }
 }
 
-protected void eventDawn() {
+static void eventDawn() {
     object *obs;
     int i;
 
@@ -157,7 +157,7 @@ protected void eventDawn() {
     while(i--) catch(evaluate(DawnCalls[i]));
 }
 
-protected void eventMorning() {
+static void eventMorning() {
     object *obs;
     int i;
 
@@ -173,7 +173,7 @@ protected void eventMorning() {
     while(i--) catch(evaluate(MorningCalls[i]));
 }
 
-protected void eventNoon() {
+static void eventNoon() {
     int i;
     pending = call_out( (: eventTwilight :), Twilight - GetCurrentTime());
     TimeOfDay = "day";
@@ -181,7 +181,7 @@ protected void eventNoon() {
     while(i--) catch(evaluate(NoonCalls[i]));
 }
 
-protected void eventTwilight() {
+static void eventTwilight() {
     object *obs;
     int i;
 
@@ -197,7 +197,7 @@ protected void eventTwilight() {
     while(i--) catch(evaluate(TwilightCalls[i]));
 }
 
-protected void eventNight() {
+static void eventNight() {
     object *obs;
     int i,x;
 
@@ -219,7 +219,7 @@ protected void eventNight() {
     }
 }
 
-protected void eventMidnight() {
+static void eventMidnight() {
     int i;
 
     CurrentDay++;
@@ -412,7 +412,7 @@ string GetYearString(int x) {
 /*
  * Moon functions
  */
-string* GetMoons() {
+string array GetMoons() {
     return map(keys(Moons), (: ((class moon)Moons[$1])->Name :));
 }
 
@@ -463,7 +463,7 @@ int GetMoonLight() {
 }
 
 string GetLong(string arg) {
-    string* arr, *mn;
+    string array arr, mn;
     object env;
     string tmp;
     int i;
@@ -526,7 +526,7 @@ string GetLong(string arg) {
                 if( sky = env->GetSky() ) {
                     env = find_object(sky);
                     if( env ) {
-                        object* obs = filter(all_inventory(env),
+                        object array obs = filter(all_inventory(env),
                                 (: living($1) &&
                                  !$1->GetInvis(this_player()) :));
                         /* function(object ob) { */

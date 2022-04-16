@@ -8,7 +8,7 @@
 
 #include <function.h>
 
-nosave private mapping Press = ([]);
+static private mapping Press = ([]);
 
 // abstract methods
 string GetDefiniteShort();
@@ -21,12 +21,12 @@ varargs mixed GetPress(string str){
     return Press[str];
 }
 
-string* GetPresses(){
+string array GetPresses(){
     return keys(Press);
 }
 
-mapping RemovePress(string item){
-    map_delete(Press, item);
+mapping RemovePress(string item){ 
+    map_delete(Press, item); 
     return Press;
 }
 

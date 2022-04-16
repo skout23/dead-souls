@@ -8,7 +8,7 @@ inherit LIB_VERB;
 
 mixed do_add_obj_to_obj(object ob, object ob2);
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("add");
     SetRules("OBJ", "OBJ to OBJ", "OBJ to here", "OBJ to room");

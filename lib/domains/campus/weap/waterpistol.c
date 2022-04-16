@@ -11,7 +11,7 @@
 inherit LIB_PISTOL;
 
 
-protected void create() {
+static void create() {
     ::create();
     SetKeyName("water pistol");
     SetId(({"pistol","gun"}));

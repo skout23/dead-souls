@@ -7,12 +7,12 @@
 
 inherit LIB_DAEMON;
 mapping Reloadees = ([]);
-nosave int *reload_handles = ({});
-nosave int stage2, stilldirty, roomscleaned, warm_boot_in_progress = 0;
+static int *reload_handles = ({});
+static int stage2, stilldirty, roomscleaned, warm_boot_in_progress = 0;
 string savefile = save_file(SAVE_RELOAD);
-nosave string *exceptions = ({ RELOAD_D, RSOCKET_D });
+static string *exceptions = ({ RELOAD_D, RSOCKET_D });
 object *grooms = ({}), *occupied_rooms = ({});
-nosave int last_deep_player_load, virtual_void;
+static int last_deep_player_load, virtual_void;
 
 varargs void validate(){
     if((!master()->valid_apply(({ "SECURE", "ASSIST" })))){
@@ -23,7 +23,7 @@ varargs void validate(){
     }
 }
 
-protected void create() {
+static void create() {
     daemon::create();
     occupied_rooms = ({});
     RestoreObject(savefile);

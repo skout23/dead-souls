@@ -4,7 +4,7 @@
 
 inherit LIB_ITEM;
 
-protected void create() {
+static void create() {
     item::create();
     SetKeyName("carving knife");
     SetAdjectives( ({"8-inch", "serrated", "sharp", "razor-sharp", "razor", "steel", "hefty", "stainless", "carving"}) );

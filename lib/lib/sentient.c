@@ -21,9 +21,9 @@ private mapping     EmoteResponses   = ([]);
 private mapping     RequestResponses = ([]);
 private mapping     TalkResponses    = ([]);
 private mapping     ConsultResponses = ([]);
-nosave private int  WanderCount      = 0;
-nosave private int  WanderMarker     = 0;
-private mixed* WanderPath       = ({});
+static private int  WanderCount      = 0;
+static private int  WanderMarker     = 0;
+private mixed array WanderPath       = ({});
 private int         WanderRecurse    = 0;
 private int         WanderSpeed      = 0;
 private int         permit_load      = 0;
@@ -35,7 +35,7 @@ private int      SpellChance      = 50;
  * the NPC to keep its heart beat going.
  * @return true if the heart beat should continue
  */
-protected int ContinueHeart(){
+static int ContinueHeart(){
     if( WanderSpeed ){
         return 1;
     }
@@ -196,11 +196,11 @@ varargs int SetWander(int speed, mixed *path, int recurse){
     WanderRecurse = recurse;
 }
 
-mixed* GetWanderPath(){
+mixed array GetWanderPath(){
     return WanderPath;
 }
 
-mixed* SetWanderPath(mixed* path){
+mixed array SetWanderPath(mixed array path){
     return (WanderPath = path);
 }
 
@@ -388,7 +388,7 @@ mixed eventWander(){
             if(!RACES_D->CanSwim(this_player()->GetRace())){
                 eventForce("climb out");
             }
-        }
+        }            
 
         outs = env->GetExits();
         sorties = ({});
@@ -425,7 +425,7 @@ mixed eventWander(){
         }
         else return 0;
     }
-    if( arrayp(WanderPath[WanderMarker]) )
+    if( arrayp(WanderPath[WanderMarker]) ) 
         foreach(mixed cmd in WanderPath[WanderMarker]){
             if( fp = functionp(cmd) ){
                 if( fp != FP_OWNER_DESTED ) evaluate(cmd);
@@ -444,7 +444,7 @@ mixed eventWander(){
 }
 
 /********************** sentient.c driver applies ************************/
-protected void heart_beat(){
+static void heart_beat(){
     if( !this_object() || !environment() ){
         return;
     }

@@ -86,7 +86,7 @@ varargs mixed eventPut(object who, object storage, string prep){
     return 1;
 }
 
-protected void create(){
+static void create(){
     PreventPut = 0;
 }
 

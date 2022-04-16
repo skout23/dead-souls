@@ -1,7 +1,7 @@
 #ifndef l_follow_h
 #define l_follow_h
 
-protected void create();
+static void create();
 object SetLeader(object leader);
 object GetLeader();
 varargs mixed CanFollow(object ob);

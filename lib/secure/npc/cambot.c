@@ -7,7 +7,7 @@ int recording;
 string baseshort, recfile, gstr, gstr2;
 mixed owner;
 
-protected void create() {
+static void create() {
     sentient::create();
     SetKeyName("cambot");
     SetId( ({"bot", "robot"}) );
@@ -31,7 +31,7 @@ void init(){
     add_action("SetRecordingFile","setfile");
 }
 
-protected mixed SetOwner(mixed foo){
+static mixed SetOwner(mixed foo){
     owner = foo;
     return owner;
 }

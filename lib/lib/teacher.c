@@ -11,7 +11,7 @@
 
 inherit LIB_SENTIENT;
 
-private string* TeachingLanguages;
+private string array TeachingLanguages;
 private mapping Students;
 private int commercial = 0;
 private int AllLangs = 0;
@@ -68,9 +68,9 @@ int SetTeachingFee(int i){
 
 /**** driver applies ****/
 
-protected void create(){
+static void create(){
     sentient::create();
-    TeachingLanguages = ({});
+    TeachingLanguages = ({});   
     Students = ([]);
     SetNoClean(1);
     SetCommandResponses( ([
@@ -85,13 +85,13 @@ protected void create(){
                 ]) );
 }
 
-protected void init(){
+static void init(){
     string str;
     sentient::init();
     if( !living(this_player()) ) return;
     str = this_player()->GetKeyName();
     if( Students[str] ){
-        eventForce("speak You will have to start your "
+        eventForce("speak You will have to start your "             
                 "studies anew, "+this_player()->GetName());
         map_delete(Students, str);
     }
@@ -110,13 +110,13 @@ mixed AddTeachingLanguages(string *args){
 }
 
 mixed RemoveTeachingLanguages(string *args...){
-    if( !args || !arrayp(args) )
+    if( !args || !arrayp(args) ) 
         error("Bad argument 1 to RemoveTeachingLanguages.");
     TeachingLanguages -= args;
     return TeachingLanguages;
 }
 
-string* GetTeachingLanguages(){ return copy(TeachingLanguages); }
+string array GetTeachingLanguages(){ return copy(TeachingLanguages); }
 
 string Expertise(){
     string tmp, expertises;
@@ -170,7 +170,7 @@ int eventTeachLanguage(object who, string verb, string language){
             return 0;
         }
         if( !commercial && this_player()->GetTrainingPoints() < 1 ){
-            eventForce("speak You need more training points.");
+            eventForce("speak You need more training points.");        
             return 0;
         }
         if(commercial && this_player()->GetCurrency(GetLocalCurrency()) < teaching_fee){
@@ -186,7 +186,7 @@ int eventTeachLanguage(object who, string verb, string language){
     return 1;
 }
 
-nosave int ContinueTeaching(object who, string language, int x){
+static int ContinueTeaching(object who, string language, int x){
     language = capitalize(language);
     if( !who || !Students[who->GetKeyName()] ) return 0;
     if( !present(who, environment()) ||
@@ -211,8 +211,8 @@ nosave int ContinueTeaching(object who, string language, int x){
 /**** message handling events ****/
 
 /*  The three following events are purely *aesthetic*,
- *  Hopefully prolific coders will override them for
- *  more interesting teaching techniques. :)
+ *  Hopefully prolific coders will override them for  
+ *  more interesting teaching techniques. :) 
  */
 
 int eventStart(object who, string language){

@@ -86,7 +86,7 @@ int eventDrain(mixed args...){
     return 0;
 }
 
-protected void create() {
+static void create() {
     sentient::create();
     SetKeyName("archwraith");
     SetAdjectives( ({"arch", "shadowy", "undead", "unholy", "malevolent", "spiteful"}) );

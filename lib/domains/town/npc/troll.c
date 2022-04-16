@@ -22,7 +22,7 @@ int CheckHuman(mixed val){
     }
     return 1;
 }
-protected void create() {
+static void create() {
     npc::create();
     SetKeyName("troll");
     SetId(({"troll"}));
@@ -43,6 +43,9 @@ protected void create() {
     SetStat("coordination",50,1);
     SetStat("speed",50,1);
     AddCurrency("silver",221+random(157));
+    SetInventory( ([
+                "/domains/town/obj/bait_can" : 1,
+                ]) );
 }
 void init(){
     ::init();

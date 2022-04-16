@@ -10,7 +10,7 @@
 
 inherit LIB_VERB;
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("cast");
     SetRules("STR", "STR on OBJ", "STR on STR", "STR on STR of OBJ",

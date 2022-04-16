@@ -2,7 +2,7 @@
 #include <meal_types.h>
 inherit LIB_MEAL;
 
-protected void create() {
+static void create() {
     meal::create();
     SetKeyName("roast beast");
     SetId( ({ "meat","beast","roast","hunk"}) );

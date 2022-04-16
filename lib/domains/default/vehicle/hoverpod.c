@@ -3,7 +3,7 @@
 
 inherit LIB_VEHICLE;
 
-protected void create() {
+static void create() {
     vehicle::create();
     SetKeyName("hoverpod");
     SetId(({"pod", "vehicle","transport"}));

@@ -14,12 +14,12 @@ inherit LIB_DAEMON;
 
 mapping InstData = ([]);
 mapping sockets = ([]);
-nosave string SaveFile;
+static string SaveFile;
 string Name, Myname;
-nosave int verbose = 0;
-nosave private int icp_socket;
+static int verbose = 0;
+static private int icp_socket;
 
-varargs protected void yenta(string arg, string clr){
+varargs static void yenta(string arg, string clr){
     if(verbose){
         debug_message(arg);
     }
@@ -27,7 +27,7 @@ varargs protected void yenta(string arg, string clr){
                     " " + strip_colours($(arg)) + "\n") :) );
 }
 
-varargs nosave int validate(int i, int soft){
+varargs static int validate(int i, int soft){
     if(!undefinedp(i)){
         if(!socket_status(i) || !socket_status(i)[5]){
             yenta(mud_name()+" stack: "+get_stack());
@@ -46,7 +46,7 @@ varargs nosave int validate(int i, int soft){
     return 1;
 }
 
-protected void create() {
+static void create() {
     daemon::create();
     Myname = "global";
     if(!sizeof(InstData)) InstData = ([]);
@@ -148,7 +148,7 @@ mixed InstCreate(string name, string addy, int port){
             if(mbin) mbin = trim(mbin);
             newcfg = replace_string(newcfg, "TEMPLATE_LIB", mlib);
             newcfg = replace_string(newcfg, "TEMPLATE_BIN", mbin);
-            newcfg = replace_string(newcfg, "TEMPLATE_GLOBAL",
+            newcfg = replace_string(newcfg, "TEMPLATE_GLOBAL", 
                     "global."+port+".h");
             write_file("/secure/cfg/mudos."+port+".cfg", newcfg, 1);
             write_file("/secure/cfg/mudos."+port+".win32", newcfg, 1);
@@ -200,7 +200,7 @@ mixed InstDelete(mixed arg){
     else return "No such instance exists.";
 }
 
-string* GetInstances(){
+string array GetInstances(){
     return filter(keys(InstData), (: $1 :));
 }
 
@@ -212,8 +212,8 @@ mapping GetInstData(){
     return ret;
 }
 
-protected void SendData(mixed fd, mixed data){
-    int* targets = ({});
+static void SendData(mixed fd, mixed data){
+    int array targets = ({});
     if(stringp(fd) && !undefinedp(InstData[fd])) fd = InstData[fd]["fd"];
     if(fd == -2) return;
     if(fd == -1){
@@ -248,7 +248,7 @@ varargs void SendWhoUpdate(string name, int status){
                 data["state"] = "(%^YELLOW%^idle%^RESET%^)";
             }
             if(ob->GetSleeping() > 0){
-                data["state"] = "(%^BLUE%^sleeping%^RESET%^)";
+                data["state"] = "(%^BLUE%^sleeping%^RESET%^)"; 
             }
             if(ob->GetProperty("afk")){
                 data["state"] = "(%^MAGENTA%^afk%^RESET%^)";
@@ -263,13 +263,13 @@ varargs void SendWhoUpdate(string name, int status){
     }
     else data["status"] = 0;
     SendData(-1, ({ "who-update", 5, Myname, name, 0, 0, data }) );
-}
+} 
 
 void UpdateInvis(int i){
     object ob = previous_object();
     string name;
     if(!ob || !interactive(ob)) return;
-    name = ob->GetKeyName();
+    name = ob->GetKeyName(); 
     if(!sizeof(name)) return;
     call_out("SendWhoUpdate", 0, name);
 }
@@ -289,7 +289,7 @@ varargs void SendTell(string who, string msg, string interwho){
     SendData(-1, ({ "tell", 5, Myname, sender, 0, who, vname, msg }) );
 }
 
-protected void ProcessStartup(mixed data, string addy, int port, int fd){
+static void ProcessStartup(mixed data, string addy, int port, int fd){
     string name = data[2];
     InstData[name] = ([]);
     InstData[name]["addy"] = addy;
@@ -309,7 +309,7 @@ protected void ProcessStartup(mixed data, string addy, int port, int fd){
     }
 }
 
-protected void ProcessClose(string name){
+static void ProcessClose(string name){
     if(!sizeof(InstData[name])) return;
     if(InstData[name]["fd"] > -1){
         this_object()->close_connection(InstData[name]["fd"]);
@@ -318,7 +318,7 @@ protected void ProcessClose(string name){
     InstData[name]["online"] = 0;
 }
 
-protected void ProcessWhoUpdate(mixed data){
+static void ProcessWhoUpdate(mixed data){
     if(!sizeof(InstData[data[2]])) return;
     if(!sizeof(InstData[data[2]]["users"])){
         InstData[data[2]]["users"] = ([]);
@@ -326,7 +326,7 @@ protected void ProcessWhoUpdate(mixed data){
     InstData[data[2]]["users"][data[3]] = data[6];
 }
 
-protected void ProcessTell(mixed data){
+static void ProcessTell(mixed data){
     object who = find_player(data[5]);
     string ret;
     if(!who) return;
@@ -338,7 +338,7 @@ protected void ProcessTell(mixed data){
     who->eventTellHist(ret);
 }
 
-protected void ProcessShout(mixed data){
+static void ProcessShout(mixed data){
     Name = capitalize(data[3]);
     users()->eventHearTalk(this_object(), 0, TALK_WORLD,
             "shout", data[6][0], data[6][1]);
@@ -348,7 +348,7 @@ string GetName(){
     return Name;
 }
 
-protected void ReceiveICPData(mixed data, string addy, int port, int fd){
+static void ReceiveICPData(mixed data, string addy, int port, int fd){
     string name;
     if(!arrayp(data)){
         return;
@@ -365,7 +365,7 @@ protected void ReceiveICPData(mixed data, string addy, int port, int fd){
             if(InstData[name]["port"] != port ){
                 return;
             }
-            if(!undefinedp(InstData[name]["fd"]) &&
+            if(!undefinedp(InstData[name]["fd"]) && 
                     InstData[name]["fd"] != fd){
                 return;
             }
@@ -410,7 +410,7 @@ string *GetRemoteUsers(string inst){
     return ret;
 }
 
-void eventSendChannel(string name, string ch, string msg, int emote,
+void eventSendChannel(string name, string ch, string msg, int emote, 
         string target, string targmsg){
     mixed packet = ({ name, ch, msg, emote, target, targmsg });
     if(base_name(previous_object()) != CHAT_D) return;
@@ -427,11 +427,11 @@ void eventSendShout(string msg, string lang){
     SendData(-1, ({ "shout", 5, Myname, name, 0, 0, packet }) );
 }
 
-protected void eventWrite(mixed *packet){
+static void eventWrite(mixed *packet){
     SendData(packet[4], packet);
 }
 
-protected void close_connection(int fd){
+static void close_connection(int fd){
     int sockerr;
     mixed *sockstat = ({});
     validate();
@@ -448,7 +448,7 @@ protected void close_connection(int fd){
     yenta("---\n","white");
 }
 
-protected void close_callback(int fd){
+static void close_callback(int fd){
     yenta("close_callback: fd="+fd+"\n");
     if(fd < 0 || !sizeof(socket_status(fd))) return;
     if(socket_status(fd)[1] == "LISTEN") return;
@@ -456,7 +456,7 @@ protected void close_callback(int fd){
     close_connection(fd);
 }
 
-protected void listen_callback(int fd){
+static void listen_callback(int fd){
     mixed fdstat,newfd;
     validate();
 
@@ -469,7 +469,7 @@ protected void listen_callback(int fd){
     }
 }
 
-protected void read_callback(int fd, mixed info){
+static void read_callback(int fd, mixed info){
     mixed sstat;
     string addy;
     int port;
@@ -480,7 +480,7 @@ protected void read_callback(int fd, mixed info){
         int p, i;
         i = sscanf(sstat[4],"%s.%s.%s.%s.%d",a,b,c,d,p);
         if(i > 4){
-            port = (p - OFFSET_ICP);
+            port = (p - OFFSET_ICP); 
             addy = a+"."+b+"."+c+"."+d;
         }
     }
@@ -492,19 +492,19 @@ protected void read_callback(int fd, mixed info){
     ReceiveICPData(info, addy, port, fd);
 }
 
-protected void write_callback(int fd){
+static void write_callback(int fd){
     validate(fd);
     if(!sockets[fd]) return;
     if(sockets[fd]["write_status"] == EEALREADY) {
         this_object()->write_data(fd, sockets[fd]["pending"]);
         sockets[fd]["pending"] = 0;
-    }
+    } 
     else {
         sockets[fd]["write_status"] = EESUCCESS;
     }
 }
 
-protected void write_data_retry(int fd, mixed data, int counter){
+static void write_data_retry(int fd, mixed data, int counter){
     int rc;
     int maxtry = 20;
     if(fd < 0) return;
@@ -537,13 +537,13 @@ protected void write_data_retry(int fd, mixed data, int counter){
         default:
             if (counter < maxtry) {
                 if(counter < 2 || counter > maxtry-1)
-                    call_out( (: write_data_retry :), 2 , fd, data, counter + 1 );
+                    call_out( (: write_data_retry :), 2 , fd, data, counter + 1 ); 
                 return;
             }
     }
 }
 
-nosave int write_data(int fd, mixed data){
+static int write_data(int fd, mixed data){
     int ret;
     if(fd < 0) return;
     if(!validate(fd, 1)) return 0;
@@ -551,7 +551,7 @@ nosave int write_data(int fd, mixed data){
     return ret;
 }
 
-protected void Setup(){
+static void Setup(){
     //yenta("icp setup got called");
     if ((icp_socket = socket_create(MUD, "read_callback", "close_callback")) < 0){
         log_file(LOG_ICP, "setup: Failed to create socket.\n");
@@ -585,7 +585,7 @@ int eventCreateSocket(string host, int port){
         log_file(LOG_ICP, "Error in socket_bind(): "+x);
         return 0;
     }
-    x = socket_connect(ret, host + " " + (port + OFFSET_ICP),
+    x = socket_connect(ret, host + " " + (port + OFFSET_ICP), 
             "read_callback", "close_callback");
     if( x != EESUCCESS ) {
         socket_close(ret);
@@ -605,7 +605,7 @@ int DoConnect(string ip, int port, string myname, string name){
     return sstat;
 }
 
-protected void InstConnect(string wat){
+static void InstConnect(string wat){
     int ret = DoConnect(InstData[wat]["addy"],
             InstData[wat]["port"],"global",wat);
     if(ret > -1){
@@ -617,7 +617,7 @@ protected void InstConnect(string wat){
     }
 }
 
-protected void SendStartup(int fd){
+static void SendStartup(int fd){
     string name;
     foreach(mixed key, mixed val in InstData){
         if(key && val["fd"] == fd){
@@ -625,15 +625,15 @@ protected void SendStartup(int fd){
             break;
         }
     }
-    SendData(fd,
-            ({"startup-req", 5, Myname, 0, name, 0, INSTANCE_PW,
+    SendData(fd, 
+            ({"startup-req", 5, Myname, 0, name, 0, INSTANCE_PW, 
              local_users(), mud_name()}));
     foreach(string user in local_users()){
         call_out("SendWhoUpdate", 0, user, 1);
     }
 }
 
-protected void CheckConnections(){
+static void CheckConnections(){
     mixed socks = socket_names();
     mapping conns = ([]);
     if(ENABLE_INSTANCES){
@@ -665,7 +665,7 @@ protected void CheckConnections(){
     foreach(string foo in keys(InstData)){
         if(!foo || !InstData[foo]) continue;
         InstData[foo]["online"] = 0;
-        if(member_array(foo, keys(conns)) == -1
+        if(member_array(foo, keys(conns)) == -1 
                 || InstData[foo]["fd"] == -1){
             InstConnect(foo);
         }

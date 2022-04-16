@@ -1,7 +1,7 @@
 #ifndef l_unlock_h
 #define l_unlock_h
 
-protected void create();
+static void create();
 
 varargs mixed can_unlock_obj_with_obj(object ob, object key, mixed *args...);
 

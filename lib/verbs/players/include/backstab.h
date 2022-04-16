@@ -1,7 +1,7 @@
 #ifndef l_backstab_h
 #define l_backstab_h
 
-protected void create();
+static void create();
 mixed can_backstab_liv();
 mixed do_backstab_liv(object ob);
 int eventBackstab(object backstabber, object target);

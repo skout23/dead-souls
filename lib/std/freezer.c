@@ -15,7 +15,7 @@ void create() {
     SetNoModify(1);
 }
 
-protected void clean_room(){
+static void clean_room(){
     object ob;
     call_out((: clean_room :), MAX_NET_DEAD_TIME);
     foreach(ob in filter(all_inventory(), (: living($1) :))){

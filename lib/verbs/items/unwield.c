@@ -10,7 +10,7 @@
 
 inherit LIB_VERB;
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("unwield");
     SetRules("OBS");
@@ -33,8 +33,8 @@ mixed do_unwield_obj(object ob) {
     return ob->eventUnequip(this_player());
 }
 
-mixed do_unwield_obs(mixed* targs) {
-    object* obs;
+mixed do_unwield_obs(mixed array targs) {
+    object array obs;
 
     if( !sizeof(targs) ) {
         this_player()->eventPrint("There is no such thing to be unwielded.");

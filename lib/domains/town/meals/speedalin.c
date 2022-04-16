@@ -5,7 +5,7 @@
 
 inherit LIB_POTION;
 
-protected void create() {
+static void create() {
     ::create();
     SetKeyName("speedalin");
     SetId(({"pill","stimulant"}));
@@ -20,8 +20,8 @@ protected void create() {
     SetMealMessages("You swallow a pill.",
             "$N swallows a pill.");
     SetDuration(20);
-    SetStats( ([ "speed" : 1 ]) );
-    SetPoints( ([ "caffeine" : 30 ]) );
+    SetStats( ([ "speed" : 2 ]) );
+    SetPoints( ([ "caffeine" : 35 ]) );
     SetVendorType(VT_MAGIC);
 }
 

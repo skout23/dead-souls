@@ -11,7 +11,7 @@
 
 inherit LIB_VERB;
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("whisper");
     SetRules("to LIV", "in WRD", "in WRD to LIV", "to LIV STR",

@@ -14,7 +14,7 @@ inherit LIB_VERB;
 
 mixed do_climb_word_obj(string word, object ob);
 
-protected void create(){
+static void create(){
     verb::create();
     SetVerb("climb");
     SetErrorMessage("Climb up or down what?");

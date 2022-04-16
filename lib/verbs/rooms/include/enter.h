@@ -1,7 +1,7 @@
 #ifndef l_enter_h
 #define l_enter_h
 
-protected void create();
+static void create();
 mixed can_enter();
 mixed can_enter_str(string str);
 mixed can_enter_into_str(string str);

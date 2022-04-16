@@ -1,7 +1,7 @@
 #include <lib.h>
 inherit LIB_CHAPEL;
 
-protected void create() {
+static void create() {
     chapel::create();
     SetTown("town");
     SetClimate("indoors");

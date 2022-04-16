@@ -7,7 +7,7 @@
 #include <damage_types.h>
 inherit LIB_ARMOR;
 
-protected void create(){
+static void create(){
     armor::create();
     SetKeyName("gray amulet");
     SetId(({"amulet", "gray", "idler_amulet" }));

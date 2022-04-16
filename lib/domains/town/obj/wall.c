@@ -11,7 +11,7 @@ int PushThePainting();
 int OpenSesame();
 string ShowDali();
 
-protected void create() {
+static void create() {
     dummy::create();
     SetKeyName("wall");
     SetId("wall");

@@ -1,9 +1,9 @@
 #ifndef l_npc_h
 #define l_npc_h
 
-protected void create();
-protected void init();
-protected void heart_beat();
+static void create();
+static void init();
+static void heart_beat();
 void receive_message(string cl, string msg);
 void catch_tell(string msg);
 void restart_heart();
@@ -15,7 +15,7 @@ int cmdListen(string str);
 int cmdSearch(string str);
 int cmdSmell(string str);
 int cmdTouch(string str);
-protected int cmdAll(string arg);
+static int cmdAll(string arg);
 
 varargs int eventDie(mixed agent);
 int eventMove(mixed dest);
@@ -31,7 +31,7 @@ varargs int eventShow(object who, string str);
 int CanCarry(int amount);
 int CanReceive(object ob);
 
-protected int ContinueHeart();
+static int ContinueHeart();
 
 mapping SetInventory(mapping mp);
 varargs string SetRace(string race, mixed extra);

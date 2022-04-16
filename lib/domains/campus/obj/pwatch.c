@@ -6,7 +6,7 @@ inherit LIB_ARMOR;
 
 string l_time;
 string l_time,tzone;
-protected void create(){
+static void create(){
     armor::create();
     SetKeyName("pocket watch");
     SetId(({"watch","pocketwatch","pocket watch","timepiece"}));

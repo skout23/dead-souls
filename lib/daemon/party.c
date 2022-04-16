@@ -13,10 +13,10 @@
 inherit LIB_DAEMON;
 
 mapping Parties;
-nosave string SaveFile;
+static string SaveFile;
 string *old_parties;
 
-protected void create() {
+static void create() {
     daemon::create();
     SaveFile = save_file(SAVE_PARTIES);
     Parties = ([]);
@@ -30,15 +30,15 @@ protected void create() {
     SaveObject(SaveFile);
 }
 
-protected void eventDestroyParty(string party){
+static void eventDestroyParty(string party){
     if(!party || !Parties[party]) return;
     foreach(mixed member in this_object()->GetPartyMembers(party)){
         if(member){
-            member->SetParty(0);
+            member->SetParty(0); 
         }
     }
     if(member_array(party, CHAT_D->GetLocalChannels()) != -1){
-        CHAT_D->eventSendChannel("System", party, "The party " + party +
+        CHAT_D->eventSendChannel("System", party, "The party " + party + 
                 " has been disbanded.");
         CHAT_D->RemoveLocalChannel(party);
     }
@@ -51,9 +51,9 @@ string *GetOldParties(){
     return sort_array((copy(old_parties || ({})) - keys(Parties || ([]))),1);
 }
 
-protected void eventCleanParties(){
+static void eventCleanParties(){
     foreach(mixed key, mixed val in Parties){
-        mixed* members = this_object()->GetPartyMembers(key);
+        mixed array members = this_object()->GetPartyMembers(key);
         members -= ({ 0 });
         if(!sizeof(members)) eventDestroyParty(key);
     }
@@ -63,7 +63,7 @@ void heart_beat(){
     eventCleanParties();
 }
 
-mixed* GetParties(){
+mixed array GetParties(){
     return keys(Parties);
 }
 
@@ -138,7 +138,7 @@ mixed CanRemoveMember(object who, object targ) {
     if( !(p = Parties[pname]) ) return "There is no such party.";
     if( p->Leader != who ) return "Only the party leader may remove people.";
     return 1;
-}
+}	
 
 mixed CanRemoveParty(object who) {
     class party p;
@@ -187,7 +187,7 @@ mixed eventInviteMember(object who, object targ) {
     this_party = Parties[name];
     this_party->Invited += ({ targ });
     CHAT_D->eventSendChannel("System", name, targ->GetName() +
-            " has been invited to join the party.");
+            " has been invited to join the party.");    
     call_out((: RemoveInvitiation :), 60, name, targ);
     targ->eventPrint("You have been invited to join the party \"" + name +
             "\".\nType \"party join " + name + "\" in 60 "
@@ -207,7 +207,7 @@ mixed eventJoinParty(object who, string name) {
     this_party->Invited -= ({ who });
     this_party->Members += ({ who });
     CHAT_D->eventSendChannel("System", name, who->GetName() +
-            " has joined the party.");
+            " has joined the party.");    
     SaveObject(SaveFile);
     return 1;
 }
@@ -270,7 +270,7 @@ object *GetPartyMembers(string name) {
     return 0;
 }
 
-protected void RemoveInvitiation(string name, object who) {
+static void RemoveInvitiation(string name, object who) {
     if( !Parties[name] ) return;
     if( member_array(who, ((class party)Parties[name])->Invited) == -1 )
         return;

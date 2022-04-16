@@ -11,8 +11,6 @@
 #include <daemons.h>
 #include <message_class.h>
 
-#define IMCTESTING
-
 //Which IMC version you wish to support.
 #define IMC_VERSION 2
 
@@ -58,7 +56,7 @@
 
 #ifndef LOG_IMC2
 #define DATA_LOG "/secure/log/intermud/imc2"
-#else
+#else 
 #define DATA_LOG LOG_IMC2
 #endif
 
@@ -141,10 +139,10 @@
 inherit LIB_DAEMON;
 
 string tmpstr, host, who_str;
-nosave string SaveFile, serverpass, clientpass;
+static string SaveFile, serverpass, clientpass;
 
-nosave int socket_num, counter;
-nosave int heart_count = 0;
+static int socket_num, counter;
+static int heart_count = 0;
 int mode, autodisabled = 1;
 mapping ping_requests; // Keeps track of who sent a ping request.
 // Ping requests aren't labelled with names, so replies are destined to this MUD
@@ -152,12 +150,12 @@ mapping ping_requests; // Keeps track of who sent a ping request.
 string buf=""; // Buffer for incoming packets (aren't always sent 1 at a time)
 
 // Variables
-nosave int xmit_to_network_room = 1; //enable this to make a lot of noise
-nosave string hub_name, network_name;
+static int xmit_to_network_room = 1; //enable this to make a lot of noise
+static string hub_name, network_name;
 float server_version;
-nosave string lterm;
-nosave float client_version = IMC_VERSION;
-nosave mapping chaninfo;
+static string lterm;
+static float client_version = IMC_VERSION;
+static mapping chaninfo;
 mapping localchaninfo; // (["chan": ([ "perm":1, "name":"something", "users":({ }) ]) ])
 mapping mudinfo;
 mapping genders;
@@ -198,7 +196,7 @@ private void send_ice_refresh();
 private void resolve_callback(string address, string resolved, int key);
 
 // Sanity check: a null socket write tends to be a crasher
-varargs protected void validate(int i){
+varargs static void validate(int i){
     if(i){
         if(!socket_status(i) || !socket_status(i)[5]){
             tn("%^RED%^BAD SOCKET ALERT. fd "+i+":  "+
@@ -314,7 +312,7 @@ void read_callback(int socket, mixed info){
                 //if(IMC_VERSION > 2) tc("LFCR: "+a,"red");
                 got_packet(a);
                 buf=b;
-            }
+            } 
             else if(sscanf(buf,"%s\r\n%s",a,b)==2){ // found a break...
                 //if(IMC_VERSION < 2.1) tc("CRLF","green");
                 got_packet(a);
@@ -425,10 +423,10 @@ private void got_packet(string info){
             if(my_ip == "127.0.0.1"){
                 my_ip = "dead-souls.net";
                 my_port = 8000;
-            }
+            } 
             else my_port = query_host_port();
             who_str=CGI_WHO->gateway(1)+URL+"\ntelnet://"+my_ip+":"+my_port+"\n";
-            who_str += repeat_string("_", 75);
+            who_str += repeat_string("_", 75); 
             send_packet("*","who-reply",sender,origin,
               "text="+escape(pinkfish_to_imc2(who_str)));
             CHAT_D->eventSendChannel("SYSTEM","intermud","[" + capitalize(sender)+"@"+origin+
@@ -567,7 +565,7 @@ void create(){
 }
 
 void Setup(){
-    int kill, my_port;
+    int temp, kill, my_port;
     string my_ip;
 
 #ifdef DISABLE_IMC2
@@ -644,7 +642,7 @@ void heart_beat(){
             tn("sending keepalive");
             send_keepalive_request();
         }
-        if( lastmsg > 400
+        if( lastmsg > 400 
           ||!sstat || sstat[1] != "DATA_XFER"){
             socket_close(socket_num);
             tn("IMC2 heartbeat: reloading IMC2_D due to timeout");
@@ -668,9 +666,9 @@ void remove(){
 #endif
 }
 
-protected mixed GetChanInfo(){
+static mixed GetChanInfo(){
     mixed foo = copy(chaninfo);
-    return foo;
+    return 1;
 }
 
 string *GetChanList(){
@@ -794,13 +792,13 @@ void start_logon(){
                  write("what="+what+", rest="+rest+"\n");
                */
               // At this point, what is the key, rest is value plus rest.
-              if(sizeof(rest) && rest[0]==34){ // value is in quotes, tons of fun!
+              if(rest[0]==34){ // value is in quotes, tons of fun!
                   // find first quote without a backslash in front?
                   /*
                      write("rest begings with a quote\n");
                    */
                   i = 1;
-                  while((i<sizeof(rest)) && ((rest[i]!=34) || (rest[i-1]==92))){ // 34 = ", 92 = \
+                  while(((rest[i]!=34) || (rest[i-1]==92)) && (i<sizeof(rest))){ // 34 = ", 92 = \
                       // While this is not a quote, or if this is an escaped quote, keep looking.
                       i++;
                   }
@@ -867,11 +865,11 @@ void start_logon(){
 
         if(data["emote"]) emote = data["emote"];
         //Following fix courtesy of Tricky
-        if (emote == 1 && strsrch(data["text"], "$N") == -1)
+        if (emote == 1 && strsrch(data["text"], "$N") == -1) 
             data["text"] = "$N " + data["text"];
 
         localchan = CHANNEL_BOT->GetLocalChannel(data["channel"]);
-        CHANNEL_BOT->eventSendChannel(sender, localchan,
+        CHANNEL_BOT->eventSendChannel(sender, localchan, 
          imc2_to_pinkfish(data["text"]), emote, "", "");
     }
 
@@ -880,7 +878,7 @@ void start_logon(){
         send_packet(user,"ice-msg-b","*","*", sprintf("channel=%s text=%s emote=%d echo=0", chan,escape(pinkfish_to_imc2(msg)),emote));
     }
 
-    varargs protected void tell_out(object from, string targname, string targmud, string msg, int reply, int emote){
+    varargs static void tell_out(object from, string targname, string targmud, string msg, int reply, int emote){
         string ret = "%^BOLD%^RED%^You tell " + capitalize(targname) +
           "@" + targmud + ":%^RESET%^ " + msg;
 
@@ -986,7 +984,7 @@ void start_logon(){
         }
         tell_out(who, targplayer, this_object()->find_mud(targmud), msg, 0, 0);
         return 1;
-    }
+    } 
 
     string pinkfish_to_imc2(string str){
         // Foreground
@@ -1268,7 +1266,6 @@ void start_logon(){
         string output;
         string mud,*muds;
 
-        if(!mudinfo || sizeof(mudinfo) == 0) {return;}
         muds = sort_array(filter(keys(mudinfo), (: stringp($1) :)),1);
         if (!mode==MODE_CONNECTED) {
             message("system",MUDNAME+" is not connected to the "+NETWORK_ID+" network!\n",towho);
@@ -1508,6 +1505,11 @@ EndText,
     int command(string str){
         // Takes the arguments given to the command which does IMC2 stuff.
         string cmd, args;
+        string output;
+        string a,b,c;
+        int x,y;
+        int emote,reply;
+        object usr, *usrs=({ });
 
         if(IMC2_D->getonline() != 1) return 0;
 
@@ -1655,12 +1657,12 @@ EndText, NETWORK_ID,COMMAND_NAME);
         }
     }
 
-    int clean_up(int x){ return 0; }
+    int clean_up(){ return 0; }
 
 
     void forget_user(string str){ map_delete(tells,str); }
 
-    protected void eventChangeIMC2Passwords(){
+    static void eventChangeIMC2Passwords(){
         clientpass = alpha_crypt(10);
         serverpass = alpha_crypt(10);
         SECRETS_D->SetSecret("IMC2_CLIENT_PW", clientpass);

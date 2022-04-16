@@ -6,7 +6,7 @@
 
 inherit LIB_VIRT_SKY;
 
-nosave private int XPosition, YPosition, ZPosition;
+static private int XPosition, YPosition, ZPosition;
 int max_north = 2100000000;
 int max_south = -2100000000;
 int max_east = 2100000000;
@@ -23,7 +23,7 @@ varargs int LimitTravel(int requested, int maximum, int lessthan, int minimum){
     else return requested;
 }
 
-varargs protected void create(int x, int y, int z) {
+varargs static void create(int x, int y, int z) {
     string n, s, e, w, u, d;
     string ne, nw, se, sw;
     string neu, nwu, seu, swu;

@@ -6,7 +6,7 @@
 inherit LIB_ARMOR;
 
 
-protected void create() {
+static void create() {
     armor::create();
     SetKeyName("leather glove");
     SetId( ({ "glove" }) );

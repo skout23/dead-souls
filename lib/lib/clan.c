@@ -5,7 +5,7 @@ private class ClanClass Clan;
 
 private int isWelcomed;
 
-protected void create(){
+static void create(){
     Clan = new(class ClanClass);
     Clan->leader = 0;
     Clan->name = 0;
@@ -14,7 +14,7 @@ protected void create(){
     isWelcomed = 0;
 }
 
-protected void init(){
+static void init(){
     if(!present(this_object(), this_player())) return;
     if(this_player()->GetClan() != GetClanName()) return;
     if(this_player()->GetKeyName() == GetLeader()){

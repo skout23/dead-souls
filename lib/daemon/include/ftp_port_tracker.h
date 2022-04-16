@@ -5,6 +5,6 @@
 int AddUsedPort(int port);
 int RemoveUsedPort(int port);
 void ClearUsedPorts();
-int* QueryUsedPorts();
+int array QueryUsedPorts();
 
 

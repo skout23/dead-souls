@@ -18,7 +18,7 @@ string *Currencies;
 int LocalFee, NonLocalFee, OpenFee;
 float ExchangeFee;
 
-protected void create(){
+static void create(){
     sentient::create();
     BankName = "Town Trust";
     LocalCurrency = "silver";

@@ -35,17 +35,17 @@ inherit LIB_SHADOW_HOOK;
 private int CustomXP, ActionChance, CombatActionChance, AutoStand;
 private mixed Encounter;
 private string *EnemyNames;
-private nosave int NPCLevel, Unique;
-private nosave mixed Die, Action, CombatAction;
-private nosave mapping Inventory;
-private nosave string MountStyle = "ridden";
+private static int NPCLevel, Unique;
+private static mixed Die, Action, CombatAction;
+private static mapping Inventory;
+private static string MountStyle = "ridden";
 private int VisibleRiders = 1;
 private int actions_enabled = 1;
 mapping Equipped = ([]);
 
 int eventExtraAction(){ return 1; }
 
-protected void create(){
+static void create(){
     SetSaveRecurse(1);
     chat::create();
     command::create();
@@ -95,7 +95,7 @@ void CheckEncounter(){
             if( functionp(Encounter) ){
                 x = evaluate(Encounter, dude);
             }
-            else if( arrayp(Encounter) ){
+            else if( arrayp(Encounter) ){	    
                 if( member_array(dude->GetKeyName(), Encounter) > -1 ){
                     x = 1;
                 }
@@ -113,12 +113,12 @@ void CheckEncounter(){
     }
 }
 
-protected void init(){
+static void init(){
     guard::init();
     CheckEncounter();
 }
 
-protected void heart_beat(){
+static void heart_beat(){
     int position;
     living::heart_beat();
     guard::heart_beat();
@@ -129,11 +129,11 @@ protected void heart_beat(){
     eventExtraAction();
     position = GetPosition();
     if( position == POSITION_LYING || position == POSITION_SITTING ){
-        if(AutoStand &&
-                !RACES_D->GetLimblessRace(this_object()->GetRace()))
+        if(AutoStand && 
+                !RACES_D->GetLimblessRace(this_object()->GetRace())) 
             eventForce("stand up");
-        if(GetInCombat() &&
-                !RACES_D->GetLimblessRace(this_object()->GetRace()) )
+        if(GetInCombat() && 
+                !RACES_D->GetLimblessRace(this_object()->GetRace()) ) 
             eventForce("stand up");
     }
     if( !GetInCombat() && actions_enabled && ActionChance > random(100) ){
@@ -182,7 +182,7 @@ protected void heart_beat(){
     }
 }
 
-protected int Destruct(){
+static int Destruct(){
     if( GetParty() ) PARTY_D->eventLeaveParty(this_object());
     living::Destruct();
     return object::Destruct();
@@ -191,7 +191,7 @@ protected int Destruct(){
 void eventReconnect(){ }
 
 /* ***************  /lib/npc.c command functions  ************** */
-protected int cmdAll(string arg){
+static int cmdAll(string arg){
     object env;
     string verb;
 
@@ -237,7 +237,7 @@ int eventCompleteMove(mixed dest){
 }
 
 int eventDestruct(){
-    mixed* worn = ({});
+    mixed array worn = ({});
     if(!valid_event(previous_object(), this_object())) return 0;
     if(room_environment() && room_environment()->GetPersistent()){
         if(!Equipped) Equipped = ([]);
@@ -353,8 +353,8 @@ varargs int eventPrint(string msg, mixed arg2, mixed arg3){
             if(sizeof(previous_object(-1)) &&
                     (member_array(previous_object(),riders) != -1 ||
                      member_array(previous_object(-1)[i1],riders) != -1) &&
-                    (!intp(arg2) || (!(arg2 & MSG_CONV) && !(arg2 & MSG_ENV))) &&
-                    member_array(this_object(),previous_object(-1)) == -1){
+                    (!intp(arg2) || (!(arg2 & MSG_CONV) && !(arg2 & MSG_ENV))) && 
+                    member_array(this_object(),previous_object(-1)) == -1){ 
                 if(objectp(arg2)) targs = riders - ({ arg2 });
                 else if(arrayp(arg2)) targs = riders - arg2;
                 else targs = riders;
@@ -362,7 +362,7 @@ varargs int eventPrint(string msg, mixed arg2, mixed arg3){
                 else targs->eventPrint(msg, arg2);
             }
         }
-    }
+    }  
     return 1;
 }
 
@@ -402,7 +402,7 @@ int CanReceive(object ob){ return CanCarry(ob->GetMass()); }
 
 /*  ***************  /lib/npc.c lfuns  ***************  */
 
-protected int ContinueHeart(){
+static int ContinueHeart(){
     object env;
 
     if( !(env = environment()) ) return 0;
@@ -554,7 +554,7 @@ string GetName(){ return object::GetName(); }
 string GetCapName(){ return object::GetCapName(); }
 
 string GetShort(){
-    string ret = object::GetShort();
+    string ret = object::GetShort(); 
     object *riders = GetRiders();
     string *names = ({});
     if(sizeof(riders)) riders = filter(riders,

@@ -8,11 +8,11 @@
 
 inherit LIB_ITEM;
 
-nosave int LifeSpan = 0;
-nosave string Caster = "Blitz",
+static int LifeSpan = 0;
+static string Caster = "Blitz",
               LinkRoom;
 
-protected void create() {
+static void create() {
     item::create();
     SetKeyName("portal");
     SetId("portal");

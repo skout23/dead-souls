@@ -1,7 +1,7 @@
 #include <lib.h>
 inherit LIB_ITEM;
 
-protected void create(){
+static void create(){
     item::create();
     SetKeyName("painting in the room");
     SetId("painting");

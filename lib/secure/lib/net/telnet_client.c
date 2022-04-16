@@ -7,7 +7,7 @@ int attempting, connected, socket ;
 object person ;
 object player;
 
-protected void create()
+static void create()
 {
     item::create();
     SetKeyName( "client" ) ;

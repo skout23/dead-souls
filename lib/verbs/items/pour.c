@@ -4,7 +4,7 @@
 
 inherit LIB_VERB;
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("pour");
     SetRules("from OBJ into OBJ","from OBJ in OBJ", "OBJ in OBJ","OBJ into OBJ","OBJ on OBJ","OBJ onto OBJ","OBJ out","out OBJ");

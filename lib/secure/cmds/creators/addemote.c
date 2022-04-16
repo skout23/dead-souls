@@ -12,20 +12,20 @@
 
 inherit LIB_DAEMON;
 
-protected void MainMenu();
-protected void EditErrorMessage(string emote);
-protected void ShowEmote(string emote);
-protected void AddEmote(string emote);
-protected void AddRule(string rule, string emote);
+static void MainMenu();
+static void EditErrorMessage(string emote);
+static void ShowEmote(string emote);
+static void AddEmote(string emote);
+static void AddRule(string rule, string emote);
 
-private void validate() {
+static private void validate() {
     if(!this_player()) return 0;
     if( !(master()->valid_apply(({ "ASSIST" }))) &&
             !member_group(this_player(), "EMOTES") )
         error("Illegal attempt to access addemote: "+get_stack()+" "+identify(previous_object(-1)));
 }
 
-protected void EnterEmote(string emote, string* emotes) {
+static void EnterEmote(string emote, string array emotes) {
     int x = to_int(emote);
     validate();
     if( x < 1 || x > sizeof(emotes) ) {
@@ -43,7 +43,7 @@ protected void EnterEmote(string emote, string* emotes) {
     ShowEmote(emote);
 }
 
-protected void EnterEditChoice(string str, string* rules, string emote) {
+static void EnterEditChoice(string str, string array rules, string emote) {
     int x = to_int(str);
     validate();
     if( x < 1 || x > sizeof(rules) ) {
@@ -76,9 +76,9 @@ protected void EnterEditChoice(string str, string* rules, string emote) {
     }
 }
 
-protected void AddAdverbs(string adv, string emote, string* rules,
-        string* verbs, string msg) {
-    string* adverbs;
+static void AddAdverbs(string adv, string emote, string array rules,
+        string array verbs, string msg) {
+    string array adverbs;
     validate();
     if( !adv || adv == "" ) {
         adverbs = ({});
@@ -92,8 +92,8 @@ protected void AddAdverbs(string adv, string emote, string* rules,
     this_player()->eventPrint("Emote '" + emote + "' added.");
 }
 
-protected void AddMessage(string msg, string emote, string* rules,
-        string* verbs) {
+static void AddMessage(string msg, string emote, string array rules,
+        string array verbs) {
     validate();
     if( !msg || msg == "" ) {
         this_player()->eventPrint("Which message? [q to quit] ", MSG_PROMPT);
@@ -108,16 +108,16 @@ protected void AddMessage(string msg, string emote, string* rules,
     input_to((: AddAdverbs :), emote, rules, verbs, msg);
 }
 
-protected void AddVerbs(string list, string emote, string* rules) {
-    string* verbs = map(explode(list, ","), (: trim :));
+static void AddVerbs(string list, string emote, string array rules) {
+    string array verbs = map(explode(list, ","), (: trim :));
     validate();
 
     this_player()->eventPrint("Enter message: ", MSG_PROMPT);
     input_to((: AddMessage :), emote, rules, verbs);
 }
 
-protected void AddRule(string rule, string emote) {
-    string* rules = map(explode(rule, ","), (: trim :));
+static void AddRule(string rule, string emote) {
+    string array rules = map(explode(rule, ","), (: trim :));
     validate();
 
     if( !sizeof(rules) ) {
@@ -127,7 +127,7 @@ protected void AddRule(string rule, string emote) {
     input_to((: AddVerbs :), emote, rules);
 }
 
-protected void AddErrorMessage(string msg, string emote) {
+static void AddErrorMessage(string msg, string emote) {
     validate();
     if( !msg || msg == "" ) {
         this_player()->eventPrint("Which message? [q to quit] ", MSG_PROMPT);
@@ -138,7 +138,7 @@ protected void AddErrorMessage(string msg, string emote) {
         this_player()->eventPrint("Which emote? [q to quit] ", MSG_PROMPT);
         input_to((: AddEmote :));
         return;
-    }
+    }	
     emote = lower_case(emote);
     if( lower_case(msg) == "q" ) {
         this_player()->eventPrint("Addition of emote aborted.");
@@ -150,7 +150,7 @@ protected void AddErrorMessage(string msg, string emote) {
     input_to((: AddRule :), emote);
 }
 
-protected void AddEmote(string emote) {
+static void AddEmote(string emote) {
     validate();
     if( !emote || emote == "" ) {
         this_player()->eventPrint("Which emote? [q to quit] ", MSG_PROMPT);
@@ -166,10 +166,10 @@ protected void AddEmote(string emote) {
     input_to((: AddErrorMessage :), emote);
 }
 
-protected void MainMenu() {
-    string* emotes = SOUL_D->GetEmotes();
-    string* display = allocate(sizeof(emotes));
-    int* screen = this_player()->GetScreen() || ({ 80, 25 });
+static void MainMenu() {
+    string array emotes = SOUL_D->GetEmotes();
+    string array display = allocate(sizeof(emotes));
+    int array screen = this_player()->GetScreen() || ({ 80, 25 });
     string tmp;
     int i;
     validate();
@@ -184,7 +184,7 @@ protected void MainMenu() {
     input_to((: EnterEmote :), emotes);
 }
 
-protected void EditErrorMessage(string emote) {
+static void EditErrorMessage(string emote) {
     validate();
     this_player()->eventPrint("Enter new error message: ", MSG_PROMPT);
     input_to(function(string str, string emote) {
@@ -195,20 +195,20 @@ protected void EditErrorMessage(string emote) {
             }, emote);
 }
 
-protected void ShowEmote(string emote) {
+static void ShowEmote(string emote) {
     string err = SOUL_D->GetErrorMessage(emote);
     mapping rules = SOUL_D->GetRules(emote);
-    int* screen = this_player()->GetScreen() || ({ 80, 25 });
+    int array screen = this_player()->GetScreen() || ({ 80, 25 });
     string tmp = center("Dead Souls Emote Editor", screen[0]) + "\n\n";
     string tmp2 = "";
-    string* rule_array = allocate(sizeof(rules));
+    string array rule_array = allocate(sizeof(rules));
     int i = 0;
     validate();
 
     tmp += "%^GREEN%^Emote%^RESET%^: " + emote + "\n";
     tmp += "%^GREEN%^Error Message%^RESET%^: " + err + "\n";
     tmp += "%^GREEN%^Rules%^RESET%^:\n";
-    foreach(string rule, mixed* data in rules) {
+    foreach(string rule, mixed array data in rules) {
         rule_array[i] = rule;
         tmp += "[" + (i+1) + "] \"" + rule + "\": " + data[1][1] + "\n";
         tmp += "  Adverbs: " + wrap(item_list(data[0]), screen[0]) + "\n";

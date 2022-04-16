@@ -17,15 +17,15 @@ class client {
     mixed *Buffer;
 }
 
-private nosave int DestructOnClose, SocketType = -1;
-private nosave string LogFile;
-private nosave function Read;
-private nosave class client Socket;
+private static int DestructOnClose, SocketType = -1;
+private static string LogFile;
+private static function Read;
+private static class client Socket;
 
-protected void eventClose(class client sock);
-protected void eventRead(mixed val);
-protected void eventSocketClose();
-protected void eventSocketError(string str, int x);
+static void eventClose(class client sock);
+static void eventRead(mixed val);
+static void eventSocketClose();
+static void eventSocketError(string str, int x);
 
 function SetRead(function f) { return (Read = f); }
 
@@ -52,7 +52,7 @@ int eventCreateSocket(string host, int port) {
         eventSocketError("Error in socket_bind().", x);
         return x;
     }
-    x = socket_connect(Socket->Descriptor, host + " " + port,
+    x = socket_connect(Socket->Descriptor, host + " " + port, 
             "eventReadCallback", "eventWriteCallback");
     if( x != EESUCCESS ) {
         eventClose(Socket);
@@ -62,20 +62,20 @@ int eventCreateSocket(string host, int port) {
     return ret;
 }
 
-protected void eventAbortCallback(int fd) {
+static void eventAbortCallback(int fd) {
     if( !Socket ) return;
     if( fd != Socket->Descriptor ) return;
     eventClose(Socket);
 }
 
-protected void eventReadCallback(int fd, mixed val) {
+static void eventReadCallback(int fd, mixed val) {
     if( functionp(Read) ) evaluate(Read, val);
     else eventRead(val);
 }
 
-protected void eventRead(mixed val) { }
+static void eventRead(mixed val) { }
 
-protected void eventWriteCallback(int fd) {
+static void eventWriteCallback(int fd) {
     int x;
     if( !Socket ) return;
     Socket->Blocking = 0;
@@ -107,7 +107,7 @@ protected void eventWriteCallback(int fd) {
     }
 }
 
-protected void eventWrite(mixed val) {
+static void eventWrite(mixed val) {
     if( !Socket ) return;
     if( Socket->Buffer ) Socket->Buffer += ({ val });
     else Socket->Buffer = ({ val });
@@ -119,10 +119,10 @@ protected void eventWrite(mixed val) {
     }
 }
 
-protected void eventClose(mixed arg) {
+static void eventClose(mixed arg) {
     class client sock;
     if(!arg) return;
-    if(classp(arg)) sock = arg;
+    if(classp(arg)) sock = arg; 
     if(!classp(arg)){
         trr("arg: "+identify(arg),"yellow");
         trr("prevs: "+identify(previous_object(-1)),"yellow");
@@ -138,14 +138,14 @@ protected void eventClose(mixed arg) {
     if( DestructOnClose ) Destruct();
 }
 
-protected void eventSocketClose() { }
+static void eventSocketClose() { }
 
 int eventDestruct() {
     eventClose(Socket);
     return daemon::eventDestruct();
 }
 
-protected void eventSocketError(string str, int x) {
-    if( LogFile )
+static void eventSocketError(string str, int x) { 
+    if( LogFile ) 
         log_file(LogFile, ctime(time()) + "\n" + socket_error(x) + "\n");
 }

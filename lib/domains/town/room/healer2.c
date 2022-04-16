@@ -1,7 +1,7 @@
 #include <lib.h>
 inherit LIB_ROOM;
 
-protected void create() {
+static void create() {
     room::create();
     SetClimate("indoors");
     SetAmbientLight(30);
@@ -13,6 +13,7 @@ protected void create() {
                 "/domains/town/obj/slip_regenerate" : 10,
                 "/domains/town/obj/slip_excise" : 10,
                 "/domains/town/meals/potion_antidote" : 20,
+                "/domains/town/meals/potion_cure" : 20,
                 ]));
     SetExits( ([ 
                 ]) );

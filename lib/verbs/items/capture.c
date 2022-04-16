@@ -10,7 +10,7 @@
 
 inherit LIB_VERB;
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("capture");
     SetRules("LIV with OBJ", "LIV in OBJ");

@@ -13,8 +13,8 @@
 
 private mixed   ExternalDesc = 0;
 private int     Invisible    = 0;
-private nosave string  look_globalval;
-nosave function f;
+private static string  look_globalval;
+static function f;
 mapping Items        = ([]);
 
 // abstract methods
@@ -102,7 +102,7 @@ varargs mixed AddItem(mixed item, mixed val){
 }
 
 //TMI2 back-compat hack
-protected mixed AddItem_func(mixed foo){
+static mixed AddItem_func(mixed foo){
     foreach(mixed key, mixed val in foo){
         look_globalval = val;
         AddItem(key, (: look_globalval :) );
@@ -110,7 +110,7 @@ protected mixed AddItem_func(mixed foo){
     return foo;
 }
 
-protected mixed SetItem_func(mixed foo){
+static mixed SetItem_func(mixed foo){
     foreach(mixed key, mixed val in foo){
         look_globalval = val;
         f =  bind( (: call_other, this_object(), look_globalval :), this_object() );
@@ -140,7 +140,7 @@ varargs mixed GetItem(string item, object who){
     }
 }
 
-string* GetItems(){
+string array GetItems(){
     return keys(Items);
 }
 
@@ -181,7 +181,7 @@ varargs string GetLong(string str){
     }
 }
 
-mixed SetLong(mixed str){
+string SetLong(string str){
     return SetExternalDesc(str);
 }
 
@@ -220,7 +220,7 @@ mixed direct_look_obj(){
     if(!this_object()->GetInvis()){
         if( env != this_player() && env != environment(this_player()) ){
             return "#Perhaps \"look at "+this_object()->GetKeyName()+
-                " on\" something?";
+                " on\" something?"; 
         }
     }
     return 1;
@@ -246,7 +246,7 @@ mixed direct_look_at_obj_on_obj(object target, object ob,mixed arg, mixed arg2){
     }
 
     if(!target->GetInvis()){
-        if((inherits(LIB_SURFACE,ob) || living(ob)) &&
+        if((inherits(LIB_SURFACE,ob) || living(ob)) && 
                 environment(target) == ob){
             if(this_player()->GetEffectiveVision() == VISION_CLEAR){
                 if(living(target)) return target->GetLong();

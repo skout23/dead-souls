@@ -8,7 +8,7 @@
 inherit LIB_VERB;
 string *carried = ({});
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("resurrect");
     SetRules("OBJ", "here");

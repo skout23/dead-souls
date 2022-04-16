@@ -4,7 +4,7 @@ inherit LIB_SENTIENT;
 inherit LIB_MOUNT;
 inherit LIB_DOMESTICATE;
 
-protected void create() {
+static void create() {
     sentient::create();
     SetKeyName("horse");
     SetId(({"horse","large horse"}));

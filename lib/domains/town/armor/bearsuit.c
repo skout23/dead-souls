@@ -5,7 +5,7 @@ inherit LIB_ARMOR;
 
 object bearshadow;
 
-protected void create(){
+static void create(){
     armor::create();
     SetKeyName("bearsuit");
     SetId(({"costume","bear costume","suit","bear suit"}));
@@ -27,7 +27,7 @@ void init(){
     ::init();
 }
 
-mixed eventEquip(object who, string* limbs){
+mixed eventEquip(object who, string array limbs){
     mixed success = armor::eventEquip(who, limbs);
     bearshadow = new("/shadows/bear");
     if(success){

@@ -3,7 +3,7 @@ inherit LIB_ROOM;
 
 int doorcounter,callfloor,closed,floor,my_counter,moving;
 string floorname;
-protected void create() {
+static void create() {
     room::create();
     SetClimate("indoors");
     SetAmbientLight(30);

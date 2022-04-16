@@ -5,7 +5,7 @@
  *    created by Descartes of Borg 951021
  */
 
-private nosave object Agent;
+private static object Agent;
 
 varargs object this_agent(mixed val) {
     object old_agent;

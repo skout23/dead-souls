@@ -3,10 +3,10 @@ inherit LIB_BOT;
 inherit LIB_ACTIVATE;
 
 object player, bot, ob, noobster;
-nosave string name, watchline;
-nosave int count, active, tip, tipnumber, current_tip, hb, mooch, greeting, greetwait;
+static string name, watchline;
+static int count, active, tip, tipnumber, current_tip, hb, mooch, greeting, greetwait;
 string *watchlist = ({});
-nosave string save_file = save_file("/domains/campus/save/jennybot");
+static string save_file = save_file("/domains/campus/save/jennybot");
 
 mixed GreetingResponse(object who, mixed foo, string message, mixed bar){
     int greet;
@@ -39,7 +39,7 @@ string LongDesc(){
 }
 
 
-protected void create(){
+static void create(){
     watchlist = ({});
     ::create();
     RestoreObject(save_file);
@@ -62,7 +62,7 @@ protected void create(){
     SetRace("android");
     SetAction(1, ({
                 "Jenny straightens her hair.",
-                "Jenny the guide bot touches up her rouge a bit.",
+                "Jenny the guide bot touches up her rouge a bit.", 
                 "Jenny smiles."}));
     AddCommandResponse("shutdown", (: eventTurnOff :));
     AddCommandResponse("shut down", (: eventTurnOff :) );
@@ -109,7 +109,7 @@ varargs int eventGreet(string newbie){
 }
 
 int eventCheckNoob(){
-    object* people;
+    object array people;
     people=(get_livings(environment(this_object()),1));
     if(sizeof(people)){
         foreach(object dude in people){
@@ -157,7 +157,7 @@ int refreshlist(){
     return 1;
 }
 
-int eventTurnOff(mixed arg){
+int eventTurnOff(){
     if( active == 0 ){
         write("Jennybot is already inactive.");
     }
@@ -172,7 +172,7 @@ int eventTurnOff(mixed arg){
     return 1;
 }
 
-int eventTurnOn(mixed arg){
+int eventTurnOn(){
     if(!ob) ob = this_object();
     player=this_player();
     name=this_player()->GetName();
@@ -212,10 +212,10 @@ int eventAct4(){
 }
 
 int eventAct6(){
-    if(!new("/domains/campus/obj/map")->eventMove(this_object())){
+    if(!new("/domains/campus/obj/map")->eventMove(this_object())){ 
         tell_room(environment(this_object()),"Oops! There's a bug, "+
-                "and I don't have a map for you. Let's pretend I gave you "+
-                "one and move on. Please email your admin about this, though.");
+                "and I don't have a map for you. Let's pretend I gave you "+ 
+                "one and move on. Please email your admin about this, though."); 
         return 1;
     }
     if(player && environment(this_object()) == environment(player)) {

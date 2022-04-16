@@ -10,7 +10,7 @@
 
 inherit LIB_ARMOR;
 
-protected void create() {
+static void create() {
     armor::create();
     SetKeyName("leather armor");
     SetId( ({ "armor", "leather armor" }) );

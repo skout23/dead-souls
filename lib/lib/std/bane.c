@@ -1,14 +1,14 @@
-string* bane;
+string array bane;
 
-string* GetBane(){
+string array GetBane(){
     if(bane) return bane;
 }
 
-string* QueryBane(){
+string array QueryBane(){
     if(bane) return bane;
 }
 
-int SetBane(mixed* arr){
+int SetBane(array arr){
     if(arr) bane = arr;
     return 1;
 }

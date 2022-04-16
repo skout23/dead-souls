@@ -8,8 +8,8 @@
 
 #include <function.h>
 
-nosave private mixed Smell    = 0;
-nosave private mapping Smells = ([]);
+static private mixed Smell    = 0;
+static private mapping Smells = ([]);
 
 // abstract methods
 string GetShort();
@@ -39,7 +39,7 @@ varargs string GetSmell(string str, object who){
     else return val;
 }
 
-string* GetSmells(){
+string array GetSmells(){
     return keys(Smells);
 }
 
@@ -56,11 +56,11 @@ mapping RemoveSmell(string item){
 /**
  * SetSmell(string description)
  * SetSmell(function call_for_description)
- * SetSmell(string* day_and_night_descriptions)
+ * SetSmell(string array day_and_night_descriptions)
  * SetSmell(mapping thing_desc_pairs)
- * SetSmell(string thing, string|function|string* description)
+ * SetSmell(string thing, string|function|string array description)
  */
-varargs mixed SetSmell(mixed* args...){
+varargs mixed SetSmell(mixed array args...){
     if( sizeof(args) == 1 ){
         if( mapp(args[0]) ){
             if( args[0]["default"] ){

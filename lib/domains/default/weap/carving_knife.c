@@ -5,7 +5,7 @@
 inherit LIB_ITEM;
 
 
-protected void create() {
+static void create() {
     item::create();
     SetKeyName("carving knife");
     SetId( ({ "knife"}));

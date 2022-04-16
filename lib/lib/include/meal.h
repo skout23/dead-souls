@@ -1,7 +1,7 @@
 #ifndef l_meal_h
 #define l_meal_h
 
-protected void create();
+static void create();
 mixed direct_drink_obj();
 mixed direct_drink_from_obj();
 mixed direct_eat_obj();
@@ -22,7 +22,7 @@ int SetMealType(int x);
 int GetMealType();
 int SetStrength(int x);
 int GetStrength();
-varargs void SetMealMessages(mixed* val...);
+varargs void SetMealMessages(mixed array val...);
 mixed *GetMessages();
 int GetValue();
 

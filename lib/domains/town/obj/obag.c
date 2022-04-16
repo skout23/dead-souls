@@ -4,7 +4,7 @@
 #include <damage_types.h>
 inherit "/lib/std/storage";
 
-protected void create() {
+static void create() {
     ::create();
     SetKeyName("overnight");
     SetId(({"bag"}));

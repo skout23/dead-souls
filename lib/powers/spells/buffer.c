@@ -1,6 +1,6 @@
 /*    /spells/buffer.c
  *    From Dead Souls LPMud
- *    Created by Blitz
+ *    Created by Blitz 
  *    Converted to new spell system by BillGates 961119
  *    Version: @(#) buffer.c 1.6@(#)
  *    Last modified: 96/11/10
@@ -17,7 +17,7 @@ inherit LIB_SPELL;
 int hitCallback(object who, object agent, int x, class MagicProtection cl);
 void endCallback(object who);
 
-protected void create() {
+static void create() {
     spell::create();
     SetSpell("buffer");
     SetRules("", "LIV");
@@ -33,15 +33,12 @@ protected void create() {
             "a glowing shield around the LIVing object named.\n\n");
 }
 
-int eventCast(object who, int level, string race, object* targets) {
-    class MagicProtection protection;
+varargs int CanCast(object who, int level, string limb, object array targets){
     class MagicProtection *Protections;
     object target = targets[0];
-    int prot_level, skill, wis, maxprot;
-
-    maxprot = (who->GetMaxHealthPoints()) / 2;
 
     Protections = target->GetMagicProtection();
+
     foreach(class MagicProtection tmp in Protections){
         if(!tmp->obname) continue;
         if(tmp->obname == file_name(this_object())){
@@ -52,10 +49,20 @@ int eventCast(object who, int level, string race, object* targets) {
                 else {
                     write("They are already protected by a buffer!");
                 }
-                return 1;
+                return 0;
             }
         }
     }
+    return ::CanCast(who, level, limb, targets);
+}
+
+
+int eventCast(object who, int level, string race, object array targets) {
+    class MagicProtection protection;
+    object target = targets[0];
+    int prot_level, skill, wis, maxprot;
+
+    maxprot = (who->GetMaxHealthPoints()) / 2;
 
     wis = who->GetStatLevel("wisdom");
     skill = who->GetSkillLevel("magic defense");
@@ -100,7 +107,7 @@ int hitCallback(object who, object agent, int x, class MagicProtection cl) {
     }
     else if( Caster && playerp(who) && Caster != who ) {
         Caster->eventTrainSkill("magic defense",cl->args,0,1);
-    }
+    } 
 
     send_messages("", "The %^YELLOW%^magical shield%^RESET%^ around "
             "$agent_name wavers as $target_name strikes it.",

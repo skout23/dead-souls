@@ -1,7 +1,7 @@
 #ifndef l_drink_h
 #define l_drink_h
 
-protected void create();
+static void create();
 
 mixed can_drink_obj(string verb);
 mixed can_drink_from_obj(string verb);

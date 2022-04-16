@@ -5,7 +5,7 @@
 
 inherit LIB_VERB;
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("modify");
     SetRules("OBJ STR", "here STR", "room STR");

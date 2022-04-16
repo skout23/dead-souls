@@ -105,7 +105,7 @@ int ActivateTurret(){
     return 1;
 }
 
-protected void create() {
+static void create() {
     sentient::create();
     visited = ({});
     incept = time();

@@ -1,6 +1,6 @@
 #include <function.h>
 
-nosave private mapping Scratch = ([]);
+static private mapping Scratch = ([]);
 
 // abstract methods
 string GetDefiniteShort();
@@ -13,12 +13,12 @@ varargs mixed GetScratch(string str){
     return Scratch[str];
 }
 
-string* GetScratches(){
+string array GetScratches(){
     return keys(Scratch);
 }
 
-mapping RemoveScratch(string item){
-    map_delete(Scratch, item);
+mapping RemoveScratch(string item){ 
+    map_delete(Scratch, item); 
     return Scratch;
 }
 

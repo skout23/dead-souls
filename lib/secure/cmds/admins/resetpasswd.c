@@ -5,8 +5,8 @@
 
 inherit LIB_DAEMON;
 
-protected void NewPass(string pass);
-protected void ConfirmPass(string str, string newpass);
+static void NewPass(string pass);
+static void ConfirmPass(string str, string newpass);
 
 string savefile;
 
@@ -60,7 +60,7 @@ mixed cmd(string args) {
     return 1;
 }
 
-protected void NewPass(string pass) {
+static void NewPass(string pass) {
     if( !pass || strlen(pass) < 5 ) {
         this_player()->eventPrint("Password must be at least 5 "
                 "characters, password change failed.",
@@ -71,7 +71,7 @@ protected void NewPass(string pass) {
     input_to( (: ConfirmPass :), I_NOECHO | I_NOESC, pass);
 }
 
-protected void ConfirmPass(string str, string newpass) {
+static void ConfirmPass(string str, string newpass) {
     string *lines;
     if( str != newpass ) {
         this_player()->eventPrint("Passwords do not match.", MSG_SYSTEM);

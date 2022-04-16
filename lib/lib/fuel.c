@@ -12,7 +12,7 @@ private int MaxFuel = 100;
 private int Refuelable = 1;
 private string FuelType = "oil";
 
-protected void create(){
+static void create(){
     this_object()->AddSave(({ "FuelAmount" }));
 }
 
@@ -34,7 +34,7 @@ int GetFuelAmount(){
     return FuelAmount;
 }
 
-protected int SetFuelAmount(int x){
+static int SetFuelAmount(int x){
     return (FuelAmount = x);
 }
 
@@ -42,7 +42,7 @@ string GetFuelType(){
     return FuelType;
 }
 
-protected string SetFuelType(string str){
+static string SetFuelType(string str){
     return (FuelType = str);
 }
 
@@ -62,7 +62,7 @@ int GetMaxFuel(){
     return MaxFuel;
 }
 
-protected int SetMaxFuel(int x){
+static int SetMaxFuel(int x){
     return (MaxFuel = x);
 }
 
@@ -70,7 +70,7 @@ int GetRefuelable(){
     return Refuelable;
 }
 
-protected int SetRefuelable(int x){
+static int SetRefuelable(int x){
     return (Refuelable = x);
 }
 

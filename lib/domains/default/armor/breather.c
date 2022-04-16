@@ -15,7 +15,7 @@ string LongD(){
     return ret;
 }
 
-protected void create(){
+static void create(){
     armor::create();
     SetKeyName("breathing mask");
     SetId(({"mask","breather","a99","apparatus","device"}));
@@ -41,7 +41,7 @@ int SetMaxCharge(int i){
     maxcharge = i;
 }
 
-mixed eventEquip(object who, string* limbs){
+mixed eventEquip(object who, string array limbs){
     mixed success = armor::eventEquip(who, limbs);
     breathershadow = new("/shadows/breather");
     if(success){

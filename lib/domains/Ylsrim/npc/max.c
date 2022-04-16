@@ -9,7 +9,7 @@
 
 inherit LIB_VENDOR;
 
-protected void create() {
+static void create() {
     vendor::create();
     SetKeyName("max");
     SetId("max", "vendor", "shop keeper", "keeper", "shopkeeper");

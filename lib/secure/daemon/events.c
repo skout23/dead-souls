@@ -15,12 +15,12 @@ inherit LIB_DAEMON;
 
 private int RebootInterval;
 private mapping Events;
-private nosave int InReboot = 0;
-private nosave int i, callout = -1;
-nosave string SaveFile;
-nosave int *events;
+private static int InReboot = 0;
+private static int i, callout = -1;
+static string SaveFile;
+static int *events;
 
-protected void create() {
+static void create() {
     daemon::create();
     SaveFile = save_file(SAVE_EVENTS);
     if(!file_exists(SaveFile) && file_exists(old_savename(SaveFile))){
@@ -47,7 +47,7 @@ mixed eventCancelShutdown() {
     return ret;
 }
 
-varargs protected int eventSave(int ung) {
+varargs static int eventSave(int ung) {
     return SaveObject(SaveFile);
 }
 
@@ -85,7 +85,7 @@ void eventReboot(int x){
     }
 }
 
-protected void eventAnnounceReboot(int x) {
+static void eventAnnounceReboot(int x) {
     if( x == 10 ) {
         message("broadcast", "Last warning: Reboot in 10 seconds.", users());
         call_out( (: DoSaves :), 7 );
@@ -110,14 +110,14 @@ void eventShutdown() {
     Shutdown();
 }
 
-protected void Shutdown() {
+static void Shutdown() {
     message("broadcast", "Shutting down " + mud_name() + " immediately!",
             users());
     map(users(), (: catch($1->cmdQuit()) :));
     shutdown();
 }
 
-protected void eventPollEvents() {
+static void eventPollEvents() {
     int x;
     call_out((: eventPollEvents :), 60);
     x = time();

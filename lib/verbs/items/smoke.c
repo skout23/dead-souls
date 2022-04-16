@@ -5,7 +5,7 @@ inherit LIB_VERB;
 
 varargs void eventSmoke(object who, object what, string id);
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("smoke");
     SetRules("OBJ", "from OBJ");

@@ -4,7 +4,7 @@
 inherit LIB_ARMOR;
 inherit LIB_BANE;
 
-protected void create(){
+static void create(){
     armor::create();
     SetKeyName("collar");
     SetId(({"repellent_collar","bane"}));

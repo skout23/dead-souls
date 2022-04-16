@@ -11,7 +11,7 @@
 inherit LIB_ARMOR;
 
 
-protected void create() {
+static void create() {
     armor::create();
     SetKeyName("wooden helm");
     SetId("helm");

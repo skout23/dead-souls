@@ -1,6 +1,6 @@
 #include <function.h>
 
-nosave private mapping Manipulate = ([]);
+static private mapping Manipulate = ([]);
 
 // abstract methods
 string GetDefiniteShort();
@@ -13,12 +13,12 @@ varargs mixed GetManipulate(string str){
     return Manipulate[str];
 }
 
-string* GetManipulates(){
+string array GetManipulates(){
     return keys(Manipulate);
 }
 
-mapping RemoveManipulate(string item){
-    map_delete(Manipulate, item);
+mapping RemoveManipulate(string item){ 
+    map_delete(Manipulate, item); 
     return Manipulate;
 }
 

@@ -2,7 +2,7 @@
 #include <armor_types.h>
 #include <damage_types.h>
 inherit LIB_ARMOR;
-protected void create(){
+static void create(){
     armor::create();
     SetKeyName("a white t-shirt");
     SetId(({"shirt","tshirt","t-shirt","t shirt"}));

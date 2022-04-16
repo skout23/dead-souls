@@ -3,7 +3,7 @@
 inherit LIB_BASE_STORAGE;
 inherit LIB_ITEM;
 
-nosave private mixed my_save = ({});
+static private mixed my_save = ({});
 
 void create(){
     //parse_init();
@@ -16,7 +16,7 @@ int GetRadiantLight(int ambient){
     return item::GetRadiantLight(ambient) + base_storage::GetRadiantLight(ambient);
 }
 
-string* GetSave(){
+string array GetSave(){
     string *i_save;
     i_save = item::GetSave();
     my_save += i_save;
@@ -25,7 +25,7 @@ string* GetSave(){
     return my_save;
 }
 
-protected mixed* AddSave(mixed* vars){
+static mixed array AddSave(mixed array vars){
     my_save = distinct_array(my_save + vars);
     return item::AddSave(my_save);
 }

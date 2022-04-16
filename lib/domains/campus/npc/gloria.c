@@ -3,7 +3,7 @@
 
 inherit LIB_BARKEEP;
 
-protected void create() {
+static void create() {
     barkeep::create();
     SetKeyName("gloria");
     SetId(({"woman","worker","gloria","lady","lunch lady"}));

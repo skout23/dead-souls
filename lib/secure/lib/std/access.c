@@ -12,16 +12,16 @@
 inherit LIB_DAEMON;
 
 private mapping         ReadAccess    = ([]);
-private nosave function ReadFunction  = 0;
+private static function ReadFunction  = 0;
 private mapping         WriteAccess   = ([]);
-private nosave function WriteFunction = 0;
+private static function WriteFunction = 0;
 
 /* ****************** access.c attributes ****************** */
 /*
  * Note: this uses the old NM 3 naming scheme and is not worth the
  * trouble of changing
  */
-protected void set_access(string type, function f) {
+static void set_access(string type, function f) {
     if( type == "read" ) {
         ReadFunction = f;
     }
@@ -41,7 +41,7 @@ mapping query_access(string type) {
 
 /* ********************** access.c events ********************** */
 nomask int check_access(object ob, string fun, string file, string oper) {
-    string* who;
+    string array who;
     mapping access;
 
     if( oper == "read" ) {
@@ -134,7 +134,7 @@ nomask int remove_access(string type, string file, string who) {
 void create() {
     string file = base_name(this_object());
 
-    if( !strsrch(file, REALMS_DIRS) || !strsrch(file, DOMAINS_DIRS)
+    if( !strsrch(file, REALMS_DIRS) || !strsrch(file, DOMAINS_DIRS) 
             || !strsrch(file, ESTATES_DIRS) ) {
         SetSaveFile(file);
     }

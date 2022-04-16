@@ -3,7 +3,7 @@
 inherit LIB_CHAIR;
 inherit LIB_SWIVEL;
 
-protected void create() {
+static void create() {
     chair::create();
     SetKeyName("chair");
     SetId("chair");

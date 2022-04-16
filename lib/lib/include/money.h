@@ -1,8 +1,8 @@
 #ifndef __MONEY_H__
 #define __MONEY_H__
 
-protected void create();
-protected void init();
+static void create();
+static void init();
 
 int eventMove(mixed dest);
 

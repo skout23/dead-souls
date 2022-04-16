@@ -65,7 +65,7 @@ int EncounterCheck(mixed who){
     return 0;
 } 
 
-protected void create() {
+static void create() {
     ::create();
     SetKeyName("kleiner");
     SetId(({"npc","mob","character","scientist","genius"}));

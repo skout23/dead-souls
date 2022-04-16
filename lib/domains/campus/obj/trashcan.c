@@ -3,12 +3,12 @@
 inherit LIB_BASE_DUMMY;
 inherit LIB_STORAGE;
 
-protected void create() {
+static void create() {
     base_dummy::create();
     storage::create();
     SetKeyName("trashcan");
-    SetId(({"can","container"}));
-    SetAdjectives("trash");
+    SetId(({"can","container","bin"}));
+    SetAdjectives("trash","rubbish","waste");
     SetShort("a trashcan");
     SetLong("A container for discarding waste.");
     SetMass(1500);

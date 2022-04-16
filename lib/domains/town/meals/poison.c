@@ -5,7 +5,7 @@ inherit LIB_MEAL;
 inherit LIB_MEAL_POISON;
 
 
-protected void create() {
+static void create() {
     ::create();
     SetKeyName("poison");
     SetId( ({ "vial", "poison", "vial of poison" }) );

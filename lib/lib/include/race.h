@@ -1,7 +1,7 @@
 #ifndef l_race_h
 #define l_race_h
 
-protected void create();
+static void create();
 
 mixed CanDrink(object ob);
 mixed CanEat(object ob);

@@ -1,7 +1,7 @@
 #include <lib.h>
 inherit LIB_ROOM;
 
-protected void create() {
+static void create() {
     ::create();
     SetClimate("indoors");
     SetAmbientLight(30);

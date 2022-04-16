@@ -9,7 +9,7 @@ varargs mixed ClimbMe(mixed args...){
     return 1;
 }
 
-protected void create() {
+static void create() {
     ::create();
     SetKeyName("tree");
     SetId(({"oak"}));

@@ -3,7 +3,7 @@
 
 inherit LIB_VENDOR;
 
-protected void create() {
+static void create() {
     vendor::create();
     SetKeyName("kim");
     SetId(({"vendor","kim","Kim","kimmie","employee","bookstore employee"}));

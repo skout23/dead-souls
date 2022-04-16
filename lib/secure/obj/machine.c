@@ -186,14 +186,14 @@ string send_message(){
     return announce;
 }
 
-protected int log_it(string str){
+static int log_it(string str){
     f_global=str;
     name=lower_case(owner->GetKeyName());
     unguarded((: write_file(homedir(owner)+"/log/messages", f_global+"\n") :));
     return 1;
 }
 
-protected int final(){
+static int final(){
     tempy = local_ctime(time())+":\n"+cratty+"\n\n";
     if(!blocked){
         message("info",final+"\n", environment(this_object()));

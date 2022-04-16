@@ -5,7 +5,7 @@
 
 inherit LIB_SPELL;
 
-protected void create() {
+static void create() {
     spell::create();
     SetSpell("light");
     SetRules("", "LIV");
@@ -17,6 +17,16 @@ protected void create() {
     SetMorality(10);
     SetHelp("Syntax: cast light\n"
             "Surrounds you with radiating light to see in the dark.");
+}
+
+varargs int CanCast(object who, int level, string limb, object array targets){
+    object *lights = filter(all_inventory(this_player()),
+            (: base_name($1) == "/obj/light" :) );
+    if(sizeof(lights)){
+        write("You already have a magical glow.");
+        return 0;
+    }
+    return ::CanCast(who, level, limb, targets);
 }
 
 int eventCast(object who, int level) {

@@ -10,7 +10,7 @@
 
 inherit LIB_VERB;
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("turn");
     SetRules("", "OBJ", "on OBJ", "off OBJ", "OBJ on", "OBJ off");

@@ -13,7 +13,7 @@ inherit LIB_ITEM;
 int __Light, __Indoors;
 string __Short, __Long, __Exit, __NewRoom;
 
-private string create_file();
+static private string create_file();
 
 void create() {
     ::create();
@@ -39,15 +39,15 @@ void init() {
     add_action("cmd_build", "build");
 }
 
-protected int cmd_build(string str) {
+static int cmd_build(string str) {
     if(!str) return notify_fail("Build which room?\n");
     if(file_size(ESTATES_DIRS+"/"+geteuid(this_player())) != -2)
         return notify_fail("You need an estates directory!\n");
     /*
-       if(!high_mortalp(this_player()))
+       if(!high_mortalp(this_player())) 
        return notify_fail("Only high mortals may build!\n");
      */
-    if(strsrch(file_name(environment(this_player())),
+    if(strsrch(file_name(environment(this_player())), 
                 ESTATES_DIRS+"/"+geteuid(this_player())) != 0)
         return notify_fail("You can only build on your stuff!\n");
     __Short = str;
@@ -56,7 +56,7 @@ protected int cmd_build(string str) {
     return 1;
 }
 
-protected void input_indoors(string str) {
+static void input_indoors(string str) {
     int x;
 
     x = to_int(str);
@@ -71,7 +71,7 @@ protected void input_indoors(string str) {
     input_to("input_light");
 }
 
-protected void input_light(string str) {
+static void input_light(string str) {
     int x;
 
     x = to_int(str);
@@ -110,7 +110,7 @@ void done_edit(mixed *unused) {
     input_to("input_exit");
 }
 
-protected void input_exit(string str) {
+static void input_exit(string str) {
     mapping valid_exits;
     string file;
 
@@ -143,7 +143,7 @@ protected void input_exit(string str) {
     this_object()->remove();
 }
 
-private string create_file() {
+static private string create_file() {
     string dir, str;
     int x;
 

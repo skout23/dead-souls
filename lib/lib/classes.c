@@ -17,7 +17,7 @@ private string Class, Clan;
 private mapping SkillModifiers;
 private string *Religion;
 
-protected void create(){
+static void create(){
     abilities::create();
     SkillModifiers = ([]);
     Religion = allocate(2);
@@ -41,7 +41,7 @@ int eventMoralAct(int degree){
 
 int AddSkillPoints(string skill, int x){
     if( SkillModifiers[skill] ){
-        int stat_level;
+        int stat_level; 
         stat_level = GetBaseStatLevel(SkillModifiers[skill]);
         if( stat_level < 20 ) x = x - x/2;
         else if( stat_level < 40 ) x = x - x/3;
@@ -51,7 +51,7 @@ int AddSkillPoints(string skill, int x){
     return abilities::AddSkillPoints(skill, x);
 }
 
-nosave string SetSkillModifier(string skill, string stat){
+static string SetSkillModifier(string skill, string stat){
     if(!GetSkill(skill)) return 0;
     else return (SkillModifiers[skill] = stat);
 }
@@ -59,8 +59,8 @@ nosave string SetSkillModifier(string skill, string stat){
 string GetSkillModifier(string skill){ return SkillModifiers[skill]; }
 
 string SetClass(string class_name){
-    mixed* args = allocate(3);
-    mixed* tmp;
+    mixed array args = allocate(3);
+    mixed array tmp;
 
     /* The following is an example of "pass by reference" being
      * used on purpose in Dead Souls. It's generally a confusing
@@ -158,4 +158,4 @@ string *SetReligion(string adj, string noun){
     return Religion;
 }
 
-varargs string GetReligion(int flag){ return Religion[flag]; }
+varargs string GetReligion(int flag){ return Religion[flag]; } 

@@ -1,6 +1,6 @@
 #include <function.h>
 
-nosave private mapping Knock = ([]);
+static private mapping Knock = ([]);
 
 // abstract methods
 string GetDefiniteShort();
@@ -13,12 +13,12 @@ varargs mixed GetKnock(string str){
     return Knock[str];
 }
 
-string* GetKnocks(){
+string array GetKnocks(){
     return keys(Knock);
 }
 
-mapping RemoveKnock(string item){
-    map_delete(Knock, item);
+mapping RemoveKnock(string item){ 
+    map_delete(Knock, item); 
     return Knock;
 }
 

@@ -86,7 +86,7 @@ int GetLanguagePoints(string lang){
     else return Languages[lang]["points"];
 }
 
-string* GetLanguages(){
+string array GetLanguages(){
     return map(keys(Languages), (: Languages[$1]["name"] :));
 }
 

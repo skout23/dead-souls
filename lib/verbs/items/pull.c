@@ -2,7 +2,7 @@
 
 inherit LIB_VERB;
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("pull");
     SetRules("OBJ", "STR on OBJ", "STR from OBJ");

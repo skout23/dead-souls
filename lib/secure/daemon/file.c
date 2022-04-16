@@ -6,13 +6,13 @@
 inherit LIB_DAEMON;
 string *all_dirs = ({});
 string *all_files = ({});
-nosave string SaveFiles = save_file(SAVE_FILES);
+static string SaveFiles = save_file(SAVE_FILES);
 int ftilt, dtilt;
 string globaltemp;
 
-protected mixed Report();
+static mixed Report();
 
-private void validate() {
+static private void validate() {
     if( !(master()->valid_apply(({ "ASSIST" }))) ){
         log_file("adm/file","Illegal attempt to access FILE_D: "+get_stack()+" "+identify(previous_object(-1))+"\n");
         error("Illegal attempt to access FILE_D: "+get_stack()+" "+identify(previous_object(-1)));
@@ -56,7 +56,7 @@ mixed ReadDir(string str){
     if(directory_exists(str)){
         foreach(string element in get_dir(str)){
             if(file_exists(str+element)) all_files += ({ str+element });
-            if(directory_exists(str+element) &&
+            if(directory_exists(str+element) && 
                     strsrch(str+element,"/realms") &&
                     strsrch(str+element,"/estates") &&
                     strsrch(str+element,"/secure/save") &&
@@ -77,7 +77,7 @@ mixed ReadDir(string str){
     return 1;
 }
 
-protected mixed Report(){
+static mixed Report(){
     //log_file("adm/file","FILE_D Report accessed and run by: "+identify(previous_object(-1))+"\n");
     foreach(mixed arr in call_out_info()){
         if(arr[0] == this_object()){
@@ -142,16 +142,16 @@ int SearchFiles(string str){
     foreach(string element in all_files){
         string tmpstr, tmpelement;
 
-        if(!cased){
+        if(!cased){ 
             tmpelement = lower_case(element);
             tmpstr = lower_case(str);
-        }
+        } 
         else {
             tmpelement = element;
             tmpstr = str;
-        }
+        }  
 
-        if(!strict && grepp(last_string_element(tmpelement,"/"), tmpstr)) ret += element + "\n";
+        if(!strict && grepp(last_string_element(tmpelement,"/"), tmpstr)) ret += element + "\n"; 
         else if(strict && last_string_element(tmpelement,"/") == tmpstr) ret += element + "\n";
     }
     write("Matches:");
@@ -161,7 +161,7 @@ int SearchFiles(string str){
     return 1;
 }
 
-protected void create() {
+static void create() {
     object fun_d = find_object(FUNCTION_D);
 #ifndef __FLUFFOS__
     return 0;

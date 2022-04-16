@@ -14,7 +14,7 @@ private int Lit = 0;
 string GetKeyName();
 // end abstract methods
 
-protected void create(){
+static void create(){
     this_object()->AddSave(({ "Lit" }));
     this_object()->SetVendorType(VT_LIGHT);
 }
@@ -23,7 +23,7 @@ int GetLit(){
     return Lit;
 }
 
-protected int SetLit(int x){
+static int SetLit(int x){
     return (Lit = x);
 }
 

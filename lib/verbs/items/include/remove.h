@@ -1,7 +1,7 @@
 #ifndef l_remove_h
 #define l_remove_h
 
-protected void create();
+static void create();
 
 mixed can_remove_obj(string verb);
 mixed can_remove_obj_from_obj();

@@ -26,7 +26,7 @@ string GetWellDesc(){
     return ret;
 }
 
-protected void create() {
+static void create() {
     room::create();
     SetClimate("indoors");
     SetAmbientLight(0);

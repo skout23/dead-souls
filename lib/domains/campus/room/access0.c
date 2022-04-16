@@ -6,7 +6,7 @@ int eventHopDown(){
     say(this_player()->GetName()+" hops into the open manhole.",this_player());
     return 1;
 }
-protected void create() {
+static void create() {
     room::create();
     SetClimate("indoors");
     SetAmbientLight(16);

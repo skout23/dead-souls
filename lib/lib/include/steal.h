@@ -1,7 +1,7 @@
 #ifndef l_steal_h
 #define l_steal_h
 
-protected void create();
+static void create();
 mixed direct_steal_obj_from_liv();
 
 mixed CanSteal(object who);

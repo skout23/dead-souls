@@ -7,11 +7,11 @@
 
 inherit LIB_DAEMON;
 
-private mapping file_mapping(string *files);
-private string display_ls(mixed targ, int aflag, int lflag, int tflag,
+static private mapping file_mapping(string *files);
+static private string display_ls(mixed targ, int aflag, int lflag, int tflag,
         int nflag, int bflag, int sflag);
-private string long_list(string dir, mixed *files);
-private string short_list(string dir, mixed *files, int n, int s);
+static private string long_list(string dir, mixed *files);
+static private string short_list(string dir, mixed *files, int n, int s);
 
 int cmd(string str) {
     string *args, *paths, *options, *files, *tmp, *dirs;
@@ -46,7 +46,7 @@ int cmd(string str) {
     }
     for(i=0, maxi = sizeof(paths), files = ({}); i<maxi; i++)
         if(tmp = wild_card(paths[i])) files += tmp;
-    if(!sizeof(files)) {
+    if(!sizeof(files)) { 
         message("error", "No such file or directory.", this_player());
         return 1;
     }
@@ -61,7 +61,7 @@ int cmd(string str) {
         return 1;
     }
     for(i=0; i<maxi; i++){
-        show += display_ls(dirs[i], all_files, long_details, time_sort,
+        show += display_ls(dirs[i], all_files, long_details, time_sort, 
                 no_load_info, brief, size);
     }
     if(!moref && check_string_length(show)) previous_object()->eventPrint(show);
@@ -69,9 +69,9 @@ int cmd(string str) {
     return 1;
 }
 
-int is_dir(string str) { return (file_size(str) == -2); }
+static int is_dir(string str) { return (file_size(str) == -2); }
 
-private mapping file_mapping(string *files) {
+static private mapping file_mapping(string *files) {
     mapping borg;
     string *tmp;
     string dir;
@@ -87,7 +87,7 @@ private mapping file_mapping(string *files) {
     return borg;
 }
 
-private string display_ls(mixed targ, int aflag, int lflag, int tflag,
+static private string display_ls(mixed targ, int aflag, int lflag, int tflag,
         int nflag, int bflag, int sflag) {
     string *cles;
     string ret = "";
@@ -102,7 +102,7 @@ private string display_ls(mixed targ, int aflag, int lflag, int tflag,
         if(!bflag) ret = cles[i]+":\n";
         if(!aflag) targ[cles[i]] = filter(targ[cles[i]], "filter_dots",
                 this_object());
-        if(tflag)
+        if(tflag) 
             targ[cles[i]]=sort_array(targ[cles[i]],"time_sort",this_object());
         if(lflag) ret += long_list(cles[i], targ[cles[i]]);
         else ret += short_list(cles[i], targ[cles[i]], nflag, sflag);
@@ -111,15 +111,15 @@ private string display_ls(mixed targ, int aflag, int lflag, int tflag,
     return ret;
 }
 
-int filter_dots(mixed *file) { return (file[0][0] != '.'); }
+static int filter_dots(mixed *file) { return (file[0][0] != '.'); }
 
-int time_sort(mixed *alpha, mixed *beta) {
+static int time_sort(mixed *alpha, mixed *beta) {
     if(alpha[2] < beta[2]) return 1;
     else if(alpha[2] > beta[2]) return -1;
     else return 0;
 }
 
-private string long_list(string dir, mixed *files) {
+static private string long_list(string dir, mixed *files) {
     string ret, acc, loaded;
     int i, maxi;
 
@@ -135,7 +135,7 @@ private string long_list(string dir, mixed *files) {
     for(i=0, maxi=sizeof(files); i<maxi; i++) {
         if(files[i][1] == -2) loaded = "";
         else loaded = (find_object(dir+files[i][0]) ? "*" : "");
-        ret += sprintf("%:-3s%:-5s%:-30s %d\t%s",
+        ret += sprintf("%:-3s%:-5s%:-30s %d\t%s", 
                 loaded, acc, ctime(files[i][2]),
                 files[i][1], files[i][0]);
         if(files[i][1] == -2) ret += "/\n";
@@ -144,7 +144,7 @@ private string long_list(string dir, mixed *files) {
     return ret;
 }
 
-private string short_list(string dir, mixed *files, int n, int s) {
+static private string short_list(string dir, mixed *files, int n, int s) {
     string *newfiles;
     string ret, tmp;
     int i, j, max, x, long, ind, cols, rows;
@@ -170,7 +170,7 @@ private string short_list(string dir, mixed *files, int n, int s) {
     return ret;
 }
 
-string map_files(mixed *file, int *flags) {
+static string map_files(mixed *file, int *flags) {
     string tmp;
 
     if(flags[1] && flags[2]) {

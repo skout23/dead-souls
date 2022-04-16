@@ -12,7 +12,7 @@
 
 inherit LIB_VERB;
 
-protected void eventDig(object who, object tool, object what, object check) {
+static void eventDig(object who, object tool, object what, object check) {
     if( !who || check != environment(who) ) {
         return;
     }
@@ -23,7 +23,7 @@ protected void eventDig(object who, object tool, object what, object check) {
     tool->eventDigWith(who, what);
 }
 
-varargs protected void eventPrepareDig(object who, object tool, object what) {
+varargs static void eventPrepareDig(object who, object tool, object what) {
     function f = (: eventDig($(who), $(tool), $(what), environment($(who))) :);
 
     if( this_player()->GetInCombat() ) {
@@ -36,7 +36,7 @@ varargs protected void eventPrepareDig(object who, object tool, object what) {
     }
 }
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("dig");
     SetRules("with OBJ", "STR with OBJ", "OBJ with OBJ");

@@ -17,10 +17,10 @@ inherit LIB_DAEMON;
 
 private mapping Classes = ([]);
 private int converted = 0;
-nosave string SaveFile;
-nosave int player, foo;
+static string SaveFile;
+static int player, foo;
 
-protected void create() {
+static void create() {
     daemon::create();
     SaveFile = save_file(SAVE_CLASSES);
     if( unguarded((: file_exists(SaveFile) :)) ){
@@ -41,7 +41,7 @@ protected void create() {
     SaveObject(SaveFile);
 }
 
-private void validate() {
+static private void validate() {
     if( !(master()->valid_apply(({ PRIV_ASSIST }))) )
         error("Illegal attempt to modify class data");
 }
@@ -61,7 +61,7 @@ int ClassMember(string my_class, string query_class) {
 
 void AddClass(string file) {
     mapping cls = ([]);
-    string* lines, *tmp;
+    string array lines, tmp;
     string class_name;
     player = 1;
     validate();
@@ -82,7 +82,7 @@ void AddClass(string file) {
             if(!foo) player = 0;
             }
             return 0;
-            }
+            } 
             return 1;
             });
     class_name = lines[0];
@@ -120,9 +120,9 @@ void RemoveClass(string class_name) {
     SaveObject(SaveFile);
 }
 
-void SetClass(string class_name, mixed* args) {
+void SetClass(string class_name, mixed array args) {
     mapping cls = Classes[class_name];
-    mixed* primes, ots;
+    mixed array primes, ots;
     if( !cls || !cls["Complete"] || sizeof(args) != 3 ){
         return;
     }
@@ -159,7 +159,7 @@ mixed GetClass(string str){
 }
 
 int GetPlayerClass(string str){
-    if(!Classes[str]) return 0;
+    if(!Classes[str]) return ;
     return Classes[str]["Player"];
 }
 

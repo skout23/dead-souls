@@ -3,7 +3,7 @@
 
 inherit LIB_VERB;
 
-protected void create() {
+static void create() {
     verb::create();
     SetVerb("deactivate");
     SetRules("", "OBJ","OBJ on OBJ","STR on OBJ");

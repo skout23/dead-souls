@@ -5,7 +5,7 @@
 inherit LIB_DAEMON;
 
 mapping Sessions = ([]);
-nosave string LastError = "";
+static string LastError = "";
 
 int authenticate(string name, string shibboleth){
     if(!Sessions || !Sessions[name] || !Sessions[name]["shibboleth"]) return 0;
@@ -26,7 +26,7 @@ varargs void validate(string name, string shibboleth){
     }
 }
 
-protected void create() {
+static void create() {
     if(!Sessions) Sessions = ([]);
     SetSaveFile(SAVE_SESSIONS);
     daemon::create();

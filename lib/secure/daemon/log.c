@@ -5,7 +5,7 @@
 inherit LIB_DAEMON;
 mapping SpecialLogs = ([]);
 
-protected void create() {
+static void create() {
     daemon::create();
     SetNoClean(1);
     SpecialLogs = ([

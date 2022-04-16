@@ -1,7 +1,7 @@
 #ifndef l_torch_h
 #define l_torch_h
 
-protected void create();
+static void create();
 
 int GetRadiantLight(int ambient);
 string GetShort();

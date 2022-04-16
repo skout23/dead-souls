@@ -8,7 +8,7 @@ mapping Guarded = ([]);
 string *go_verbs = ({ "go", "crawl", "fly", "swim", "enter", "jump", 
         "boost" });
 
-protected void create() {
+static void create() {
     daemon::create();
     Guards = ([]);
     Guarded = (["rooms" : ([]), "objects" : ([]), 

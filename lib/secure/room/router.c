@@ -27,7 +27,7 @@ string LongDesc(){
     return ret;
 }
 
-protected void create() {
+static void create() {
     object ob;
     i3 = 1;
     oob = 1;
@@ -35,7 +35,7 @@ protected void create() {
     SetClimate("indoors");
     SetAmbientLight(30);
     SetShort("Server monitoring room");
-    SetLong( LongDesc() );
+    SetLong( (: LongDesc :) );
     SetExits(([
                 "north" : "/secure/room/network",
                 ]));

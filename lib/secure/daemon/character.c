@@ -13,9 +13,9 @@
 inherit LIB_DAEMON;
 
 private mapping Links;
-nosave string SaveFile;
+static string SaveFile;
 
-protected void create() {
+static void create() {
     daemon::create();
     SaveFile = save_file(SAVE_CHARACTER);
     SetNoClean(1);

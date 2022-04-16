@@ -3,11 +3,11 @@
 #define DEFAULT_PROMPT           "> "
 #define HOST_IP                  "127.0.0.1"
 #define MUD_STATUS               "mudlib development"
-#define ADMIN_EMAIL              "sunyucong@gmail.com"
-#define DEBUGGER                 "sunyc"
+#define ADMIN_EMAIL              "admin@here"
+#define DEBUGGER                 "DEBUG_NAME"
 #define LOCAL_NEWS_PREFIX        "nm"
 #define MUD_IS_LOCKED            0
-#define AUTO_WIZ                 1
+#define AUTO_WIZ                 0
 #define RESTRICTED_INTERMUD      0
 #define DISABLE_INTERMUD         0
 #define DISABLE_IMC2             0
@@ -64,8 +64,8 @@
 #define CARRIAGE_RETURN          "\r"
 #define OLD_STYLE_PLURALS        1
 #define NM_STYLE_EXITS           0
-#define WEB_SOURCE_IP            "97.107.133.86"
-#define WEB_SOURCE_NAME          "dead-souls.net"
+#define WEB_SOURCE_IP            "204.209.44.12"
+#define WEB_SOURCE_NAME          "lpmuds.net"
 #define DESTRUCT_LOGGING         0
 #define ROUTER_NAME              "Alpha"
 #define IRN_PASSWORD             "Alpha"
@@ -94,7 +94,5 @@
 #define GRID                     1
 #define ENABLE_INSTANCES         0
 #define CED_DISABLED             1
-#define GUEST_ALLOWED            1
-#define PLAYER_INTERTELL_ALLOWED 0
 
 #endif /* s_config_h */

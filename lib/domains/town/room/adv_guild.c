@@ -7,7 +7,7 @@ mapping Levels = PLAYERS_D->GetLevelList();
 int ReadSign();
 int ReadScroll();
 
-protected void create() {
+static void create() {
     room::create();
     SetClimate("indoors");
     SetAmbientLight(30);
@@ -32,6 +32,7 @@ protected void create() {
     SetInventory(([
                 "/domains/town/obj/bin" : 1,
                 "/domains/town/obj/table" : 1,
+                "/domains/town/obj/shelf" : 1,
                 "/domains/town/npc/dirk" : ({60, 1})
                 ]));
     SetRead( ([

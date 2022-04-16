@@ -4,7 +4,7 @@
 inherit LIB_MEAL;
 
 
-protected void create() {
+static void create() {
     meal::create();
     SetKeyName("bourbon");
     SetAdjectives( ({ "dark","green","cheap","bourbon" }) );
